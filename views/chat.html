@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Xper Social</title>
+       <!-- <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico">-->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/dist/css/AdminLTE.min.css">
+
+        <link rel="stylesheet" type="text/css" href="/style/custom.css"/>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="/scripts/chat.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-primary direct-chat direct-chat-primary">
+                    <div class="box-header with-border" style="text-align: center;">
+                        <h3 class="box-title"><img src="/images/logo.png" style="height: 40px;"></h3>
+                    </div><!-- /.box-header -->
+                    <div id="chat_box" class="content">
+
+                    </div>
+                    <div class="box-footer" >
+                        <div class="input-group">
+                            <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
+                            <input type="text" id="chatInput"  onkeypress="return newEvent(event);" class="form-control"/>
+                            <span class="input-group-btn"> <input type="button" id="send_btn" value="Enviar" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
