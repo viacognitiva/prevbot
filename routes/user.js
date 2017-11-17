@@ -1,8 +1,8 @@
+module.exports = function(app){
 
-/*
- * GET users listing.
- */
+    var controller = app.controllers.user;
 
-exports.list = function(req, res){
-  res.send("respond with a resource");
-};
+    app.route('/user')
+        .get
+
+}
