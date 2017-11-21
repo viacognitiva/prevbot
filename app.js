@@ -50,9 +50,13 @@ if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
+app.get('/user', routes.user);
+app.get('/salvar', cloudant.gravaUsuario);
+
 app.get('/', routes.chat);
 //app.get('/', routes.discovery);
 app.get('/discovery', routes.discovery);
+
 
 app.get('/nlu', routes.nlu);
 

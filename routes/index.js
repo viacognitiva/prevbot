@@ -10,13 +10,16 @@ module.exports = {
         res.render('chat.html');
     },
     discovery : function(req,res){
-            res.render('discovery.html');
+        res.render('discovery.html');
     },
     nlu : function(req,res){
-            res.render('nlu.html');
+        res.render('nlu.html');
     },
     textToSpeech : function(req,res){
-                res.render('sound.html');
-     }
+        res.render('sound.html');
+    },
+    user : function(req,res){
+        res.render('user.html');
+    }
 }
 

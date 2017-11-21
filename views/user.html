@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="usuario">
+<head>
+    <meta charset="UTF-8">
+    <title>Xper Social</title>
+
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap-theme.css">
+    <link rel="stylesheet" type="text/css" href="/style/custom.css"/>
+</head>
+<body>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="box box-primary direct-chat direct-chat-primary">
+
+            <div id="corpo" class="content">
+
+                <h1 class="text-center">Informações Pessoais</h1>
+
+                <form ng-submit="enviar()">
+
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" id="nome" name="nome" ng-model="nome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="email" class="form-control" id="email" placeholder="email@exemplo.com"
+                                   name="email" ng-model="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                            <input type="text" class="form-control" id="telefone" placeholder="Telefone"
+                            name="telefone" ng-model="telefone">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">
+                            Enviar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="vendor/angular/angular.js"></script>
+<script src="vendor/angular-route/angular-route.js"></script>
+<script src="vendor/angular-resource/angular-resource.js"></script>
+<script src="/scripts/controller-user-new.js"></script>
+
+</body>
+</html>
