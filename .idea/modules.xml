@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/nodejscloudantbp.iml" filepath="$PROJECT_DIR$/nodejscloudantbp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xpersocial.iml" filepath="$PROJECT_DIR$/xpersocial.iml" />
     </modules>
   </component>
 </project>

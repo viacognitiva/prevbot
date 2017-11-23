@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap-theme.css">
     <link rel="stylesheet" type="text/css" href="/style/custom.css"/>
 </head>
-<body>
+<body ng-controller="userController">
 
 <div class="row">
 
     <div class="col-md-3">
 
-        <div class="box box-primary direct-chat direct-chat-primary">
+       <div class="box box-primary direct-chat direct-chat-primary">
 
             <div id="corpo" class="content">
 
@@ -61,10 +61,9 @@
     </div>
 </div>
 
+<script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/angular/angular.js"></script>
-<script src="vendor/angular-route/angular-route.js"></script>
-<script src="vendor/angular-resource/angular-resource.js"></script>
-<script src="/scripts/controller-user-new.js"></script>
+<script src="scripts/controllers/controller-user.js"></script>
 
 </body>
 </html>

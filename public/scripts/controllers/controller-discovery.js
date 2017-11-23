@@ -1,8 +1,5 @@
 var app = angular.module('MinhaApp', []);
 
-
-
-
 app.controller('myController', function($scope, $http) {
       $scope.respostas=[];
       $scope.outputTabela=[];

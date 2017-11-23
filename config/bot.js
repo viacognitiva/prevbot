@@ -89,7 +89,7 @@ function insertLogs(req,params,data){
               "conversation_id": data.context.conversation_id,
               "messageWatson": data.output.text[0],
               "messageUser": data.input.text,
-              "aplicacao":"abrale"
+              "aplicacao":"xperSocial"
               }
 
     if (data.intents.length > 0) {
@@ -119,7 +119,7 @@ function callbackLog(error, response, body) {
         console.log(info);
     }
     else {
-        console.log('Error - Abrale - insertLogs: '+ error);
+        console.log('Error - xperSocial - insertLogs: '+ error);
     }
 }
 

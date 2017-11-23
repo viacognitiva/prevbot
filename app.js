@@ -1,32 +1,20 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express'),
     routes = require('./routes'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
+
 var cfenv = require('cfenv');
-
 var chatbot = require('./config/bot.js');
-
 var cloudant = require('./config/cloudant.js');
-
 var discovery = require('./config/discovery.js');
-
 var nlu = require('./config/nlu.js');
-
 var textToSpeech = require('./config/text-to-speech.js');
 
-
 var app = express();
-
-var fileToUpload;
-
-var dbCredentials = {
-    dbName: 'my_sample_db'
-};
 
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
@@ -37,9 +25,11 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -50,19 +40,24 @@ if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
-app.get('/user', routes.user);
-app.get('/salvar', cloudant.gravaUsuario);
-
 app.get('/', routes.chat);
-//app.get('/', routes.discovery);
+app.get('/chat', routes.chat);
+app.get('/user', routes.user);
 app.get('/discovery', routes.discovery);
-
-
 app.get('/nlu', routes.nlu);
-
 app.get('/som', routes.textToSpeech);
 
+app.post('/salvar', cloudant.gravaUsuario);
+app.post('/chat', routes.chat);
 
+/*
+app.post('/chat', function(req, res){
+    console.log('Post Chat:' + JSON.stringify(req.body));
+    //console.log('Post Chat:' + req.body.nome);
+    //res.status(200);
+    //res.render('chat.html');
+});
+*/
 // =====================================
 // WATSON CONVERSATION FOR ANA =========
 // =====================================
@@ -81,7 +76,6 @@ app.get('/api/discovery/:texto/:full', function (req, res) {
 
 app.get('/api/nlu/:texto/:url', function (req, res) {
    nlu.analisar(req, res);
-
 });
 
 app.post('/api/synthesize', (req, res, next) => {
@@ -100,7 +94,6 @@ function processChatMessage(req, res) {
         }
     });
 }
-
 
 http.createServer(app).listen(app.get('port'), '0.0.0.0', function() {
     console.log('Express server listening on port ' + app.get('port'));

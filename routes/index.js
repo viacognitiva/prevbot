@@ -1,9 +1,8 @@
-
 /*
  * GET home page.
  */
 module.exports = {
-    index: function(req,res){
+    index : function(req,res){
         res.render('index.html');
     },
     chat : function(req,res){
@@ -22,4 +21,3 @@ module.exports = {
         res.render('user.html');
     }
 }
-

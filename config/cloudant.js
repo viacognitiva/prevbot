@@ -42,18 +42,15 @@ var cloudant = {
 
         db.insert({ nome: req.body.nome,
                     email: req.body.email,
-                    telefone:req.body.telefone,
+                    telefone: req.body.telefone,
                     data: dataNow },
             'doc_'+req.body.conversation_id+'_'+new Date().getTime(), function(err, body, header) {
 
                 if (err) {
                     return console.log('[db.insert] ', err.message);
                 }
-               console.log('Documents is inserted');
-               //console.log(body);
-               res.status(201).json(body);
+               res.status(200).send("/chat");
         });
-
     },
 };
 
