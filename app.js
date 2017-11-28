@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 var express = require('express'),
-    routes = require('./routes'),
+    routes = require('./routes/index.js'),
     http = require('http'),
     path = require('path'),
     fs = require('fs');
