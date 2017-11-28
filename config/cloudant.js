@@ -40,11 +40,12 @@ var cloudant = {
 
         var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
-        db.insert({ nome: req.body.nome,
+        db.insert({ idchat: req.body.idchat,
+                    nome: req.body.nome,
                     email: req.body.email,
                     telefone: req.body.telefone,
                     data: dataNow },
-            'doc_'+req.body.conversation_id+'_'+new Date().getTime(), function(err, body, header) {
+            'doc_'+req.body.idchat+'_'+new Date().getTime(), function(err, body, header) {
 
                 if (err) {
                     return console.log('[db.insert] ', err.message);

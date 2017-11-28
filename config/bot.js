@@ -34,7 +34,7 @@ var request = require('request');
     // check if the workspace ID is specified in the environment
     conversationWorkspace = "43a221f4-9a0e-4fbc-9844-eaaa2ce7aa50";
     // if not, look it up by name or create one
-// Allow clients to interact
+    // Allow clients to interact
 
 var chatbot = {
     sendMessage: function (req, callback) {
@@ -71,6 +71,7 @@ var chatbot = {
                                 
                             var conv = data.context.conversation_id;
                             console.log("Got response from Ana: ", JSON.stringify(data));
+
                             //insere logs da conversação no cloudant
                             insertLogs(req,params,data);
                             return callback(null, data);
@@ -84,6 +85,7 @@ var chatbot = {
 
 
 function insertLogs(req,params,data){
+
     //data
     var USER_DATA = {
               "conversation_id": data.context.conversation_id,
@@ -100,7 +102,7 @@ function insertLogs(req,params,data){
      //console.log('The current time is ' + new Date().toLocaleDateString()+" "+new Date().toLocaleTimeString());
     // var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
     var fullUrl = req.protocol + '://' + 'analistic-logs-conversationpediculicide-purificator.mybluemix.net'
-    console.log(fullUrl+'/api/logs');
+    //console.log(fullUrl+'/api/logs');
           var options = {
               method: 'POST',
               uri: fullUrl+'/api/logs',
@@ -114,18 +116,17 @@ function insertLogs(req,params,data){
 }
 
 function callbackLog(error, response, body) {
+
+    //console.log('CallbackLog:' + JSON.stringify(body));
+
     if (!error) {
         var info = JSON.parse(JSON.stringify(body));
-        console.log(info);
+        //console.log(info);
     }
     else {
         console.log('Error - xperSocial - insertLogs: '+ error);
     }
 }
-
-
-
-
 
 // ===============================================
 // LOG MANAGEMENT FOR USER INPUT FOR ANA =========

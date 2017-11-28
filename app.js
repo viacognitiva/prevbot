@@ -13,6 +13,7 @@ var cloudant = require('./config/cloudant.js');
 var discovery = require('./config/discovery.js');
 var nlu = require('./config/nlu.js');
 var textToSpeech = require('./config/text-to-speech.js');
+var correio = require('./config/api');
 
 var app = express();
 
@@ -35,29 +36,20 @@ app.use(methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/style', express.static(path.join(__dirname, '/views/style')));
 
+
 // development only
 if ('development' == app.get('env')) {
     app.use(errorHandler());
 }
 
 app.get('/', routes.chat);
-app.get('/chat', routes.chat);
-app.get('/user', routes.user);
 app.get('/discovery', routes.discovery);
 app.get('/nlu', routes.nlu);
 app.get('/som', routes.textToSpeech);
 
 app.post('/salvar', cloudant.gravaUsuario);
-app.post('/chat', routes.chat);
+app.post('/sendmail',correio.enviaCorreio);
 
-/*
-app.post('/chat', function(req, res){
-    console.log('Post Chat:' + JSON.stringify(req.body));
-    //console.log('Post Chat:' + req.body.nome);
-    //res.status(200);
-    //res.render('chat.html');
-});
-*/
 // =====================================
 // WATSON CONVERSATION FOR ANA =========
 // =====================================

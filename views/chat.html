@@ -1,4 +1,4 @@
-<html>
+<html ng-app="usuario">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,10 +15,80 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
 </head>
-<body>
-<div class="row">
+<body ng-init="inicializa()" ng-controller="chatController">
+<!--DADOS USUÁRIO-->
+<div class="row" id="divDados" ng-hide="mostrarDados">
+
+    <div class="col-md-3">
+
+        <div class="box box-primary direct-chat direct-chat-primary">
+            <div class="box-header with-border" style="text-align: center;">
+                <h3 class="box-title"><img src="/images/logo.png" style="height: 40px;"></h3>
+            </div>
+            <div id="corpo" class="content">
+
+                <h1 class="text-center">Informações Pessoais</h1>
+
+                <form ng-submit="enviar()">
+
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" class="form-control" id="nome" name="nome" ng-model="nome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="email" class="form-control" id="email" placeholder="email@exemplo.com"
+                                   name="email" ng-model="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                            <input type="text" class="form-control" id="telefone" placeholder="Telefone"
+                                   name="telefone" ng-model="telefone">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                        <label for="idchat">ID BOT</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-check"></span></span>
+                            <input type="text" class="form-control" id="idchat" name="idchat" ng-model="idchat">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display:none">
+                        <label for="intent">Intent</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-check"></span></span>
+                            <input type="text" class="form-control" id="intent" name="intent" ng-model="intent">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-primary">
+                            Enviar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--CHAT -->
+<div class="row" id="divChat" ng-hide="mostrarChat">
     <div class="col-md-3">
         <div class="box box-primary direct-chat direct-chat-primary">
             <div class="box-header with-border" style="text-align: center;">
@@ -28,20 +98,32 @@
 
             </div>
             <div class="box-footer" >
-                <div class="input-group">
+                <div class="input-group" ng-hide="mostrarEnviar">
                     <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
                     <input type="text" id="chatInput"  onkeypress="return newEvent(event);" class="form-control"/>
-                    <span class="input-group-btn"> <input type="button" id="send_btn" value="Enviar" onclick="sendMessage();" class="btn btn-primary btn-flat">
-                            </span>
+                    <span class="input-group-btn">
+                        <input type="button" id="send_btn" value="Enviar" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                    </span>
                 </div>
+
+                <div ng-hide="mostrarFim">
+                    <span class="input-group-btn">
+                        <input type="button" id="novoChat" value="Reiniciar Chat" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                        <input type="button" id="enviaMail" value="Enviar conversa por e-mail" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                    </span>
+                </div>
+
+
             </div>
         </div>
     </div>
 </div>
+<!--FIM CHAT -->
 
 <script src="vendor/jquery/dist/jquery.js"></script>
 <script src="vendor/angular/angular.js"></script>
-<script src="scripts/controller-chat.js"></script>
+<script src="scripts/services/emailService.js"></script>
+<script src="scripts/controllers/controllerChat.js"></script>
 <script src="scripts/watson/chat.js"></script>
 
 </body>

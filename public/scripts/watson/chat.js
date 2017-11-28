@@ -45,7 +45,6 @@ $(document).ready(function () {
     $("#chatInput").focus();
 });
 
-
 var params = {},
     watson = 'Watson',
     context;
@@ -56,11 +55,14 @@ function userMessage(message) {
     if (context) {
         params.context = context;
     }
+
     var xhr = new XMLHttpRequest();
     var uri = '/api/watson';
     xhr.open('POST', uri, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
+
     xhr.onload = function () {
+
         // Verify if there is a success code response and some text was sent
         if (xhr.status === 200 && xhr.responseText) {
             var response = JSON.parse(xhr.responseText);
@@ -68,37 +70,28 @@ function userMessage(message) {
             context = response.context; // Store the context for next round of questions
             console.log("Got response from Watson: ", JSON.stringify(response));
 
-         /* if(text.toString().length==0){
-             callCloudantById( function ( value ) {
-                 console.log( 'response'+response );
-                 text = value;
-                 displayMessage(text, watson);
-                 var chat = document.getElementById('chat_box');
-                 chat.scrollTop = chat.scrollHeight;
+            for (var txt in text) {
 
-               },response.intents[0].intent );
+                displayMessage(text[txt], watson);
+            }
 
-          }else {*/
-               for (var txt in text) {
-                    displayMessage(text[txt], watson);
-                 }
-               var chat = document.getElementById('chat_box');
-               chat.scrollTop = chat.scrollHeight;
+            $('#idchat').val(response.context.conversation_id).trigger("change");
 
-         // }
+            var chat = document.getElementById('chat_box');
+            chat.scrollTop = chat.scrollHeight;
 
-
-        }
-        else {
+        } else {
             console.error('Server error for Conversation. Return status of: ', xhr.statusText);
             displayMessage("Putz, deu um tilt aqui. Você pode tentar novamente.", watson);
         }
     };
+
     xhr.onerror = function () {
         console.error('Network error trying to send message!');
         displayMessage("Ops, acho que meu cérebro está offline. Espera um minutinho para continuarmos por favor.", watson);
     };
     console.log(JSON.stringify(params));
+    //MENSAGEM ENVIADA
     xhr.send(JSON.stringify(params));
 }
 
@@ -213,7 +206,6 @@ function displayMessage(text, user) {
 
          var textoFormatado=text;
          textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
-                // console.log('Texto Formatado '+textoFormatado);
 
         //loadSound(textoFormatado) ;
 
