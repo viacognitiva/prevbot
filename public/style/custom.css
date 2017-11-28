@@ -7,6 +7,14 @@
     margin: 0;
     padding: 0;
   }
+  h1{
+    color:#fff;
+    font-weight:bold;
+    font-size:28px
+  }
+  label{
+    color:#fff
+  }
   .box-header{
     background-color:#fff;
   }
