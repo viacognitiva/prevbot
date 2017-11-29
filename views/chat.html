@@ -28,12 +28,12 @@
             </div>
             <div id="corpo" class="content">
 
-                <h1 class="text-center">Acesso - Mister Xper</h1>
+                <h1 class="text-center">Acesso - Mister <i>Xper</i></h1>
 
                 <form ng-submit="enviar()">
 
                     <div class="form-group">
-                        <label for="nome">Nome</label>
+                        <label for="nome">Nome*</label>
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                             <input type="text" class="form-control" id="nome" name="nome" ng-model="nome" required>
@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email*</label>
                         <div class="input-group">
                             <span class="input-group-addon">@</span>
                             <input type="email" class="form-control" id="email" placeholder="email@exemplo.com"
@@ -73,7 +73,7 @@
                             <input type="text" class="form-control" id="intent" name="intent" ng-model="intent">
                         </div>
                     </div>
-
+                    <div class="observacao">(*) Campo de preenchimento obrigatório</div>
                     <div style="text-align:center">
                         <button type="submit" class="btn btn-primary">
                             Acessar
