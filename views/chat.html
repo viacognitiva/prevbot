@@ -12,9 +12,6 @@
 
     <link rel="stylesheet" type="text/css" href="/style/custom.css"/>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
 </head>
 <body ng-init="inicializa()" ng-controller="chatController">
 <!--DADOS USUÁRIO-->
@@ -67,10 +64,10 @@
                     </div>
 
                     <div class="form-group" style="display:none">
-                        <label for="intent">Intent</label>
+                        <label for="history">Histórico</label>
                         <div class="input-group">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-check"></span></span>
-                            <input type="text" class="form-control" id="intent" name="intent" ng-model="intent">
+                            <input type="text" class="form-control" id="history" name="history" ng-model="history">
                         </div>
                     </div>
                     <div class="observacao">(*) Campo de preenchimento obrigatório</div>
@@ -94,25 +91,25 @@
             <div class="box-header with-border" style="text-align: center;">
                 <h3 class="box-title"><img src="/images/logo.png" style="height: 40px;"></h3>
             </div><!-- /.box-header -->
-            <div id="chat_box" class="content">
+            <div id="chat_box" class="content" ng-bind-html="chat_box">
 
             </div>
             <div class="box-footer" >
+
                 <div class="input-group" ng-hide="mostrarEnviar">
                     <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
-                    <input type="text" id="chatInput"  onkeypress="return newEvent(event);" class="form-control"/>
+                    <input type="text" id="chatInput" ng-keypress="newEvent($event);" class="form-control"/>
                     <span class="input-group-btn">
-                        <input type="button" id="send_btn" value="Enviar" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                        <input type="button" id="send_btn" value="Enviar" ng-click="sendMessage();" class="btn btn-primary btn-flat">
                     </span>
                 </div>
 
                 <div ng-hide="mostrarFim">
                     <span class="input-group-btn">
-                        <input type="button" id="novoChat" value="Reiniciar Chat" onclick="sendMessage();" class="btn btn-primary btn-flat">
-                        <input type="button" id="enviaMail" value="Enviar conversa por e-mail" onclick="sendMessage();" class="btn btn-primary btn-flat">
+                        <input type="button" id="novoChat" value="Reiniciar Chat" onclick="" class="btn btn-primary btn-flat">
+                        <input type="button" id="enviaMail" value="Enviar conversa por e-mail" onclick="" class="btn btn-primary btn-flat">
                     </span>
                 </div>
-
 
             </div>
         </div>
@@ -122,9 +119,9 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
 <script src="scripts/controllers/controllerChat.js"></script>
-<script src="scripts/watson/chat.js"></script>
 
 </body>
 </html>

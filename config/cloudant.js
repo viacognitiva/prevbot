@@ -51,6 +51,7 @@ var cloudant = {
                     return console.log('[db.insert] ', err.message);
                 }
                res.status(200).send("/chat");
+
         });
     },
 };
