@@ -8,11 +8,11 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
 
     $scope.inicializa = function() {
         $scope.mostrarChat = true;
-        $scope.mostrarEnviar = false;
         $scope.mostrarDados = false;
+        $scope.mostrarEnviar = false;
         $scope.mostrarFim = true;
-        $scope.mostrarAcessar = false;
-        $scope.mostrarReinicio = true;
+        //$scope.mostrarAcessar = false;
+        //$scope.mostrarReinicio = true;
         userMessage('');
     },
 
@@ -149,7 +149,11 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
 
                 if(response.intents.length > 0 ){
                     if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
-                        $('#history').val('FIM CONVERSA').trigger("change");
+                        console.log('Encerrar');
+                        $scope.mostrarEnviar = true;
+                        $scope.mostrarFim = false;
+                        $form.commit();
+                        //$('#history').val('FIM CONVERSA').trigger("change");
                     }
                 }
 
