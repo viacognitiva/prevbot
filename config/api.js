@@ -12,7 +12,7 @@ var smtpTransport = nodemailer.createTransport({
 
 var correio = {
 
-    enviaCorreio : function (req, res, next) {
+    enviaCorreio: function (req, res, next) {
 
         var mailOptions = {
             from: req.body.from,

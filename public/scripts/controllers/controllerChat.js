@@ -11,10 +11,8 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
         $scope.mostrarDados = false;
         $scope.mostrarEnviar = false;
         $scope.mostrarFim = true;
-        //$scope.mostrarAcessar = false;
-        //$scope.mostrarReinicio = true;
         userMessage('');
-    },
+    }
 
     $scope.enviar = function() {
 
@@ -48,6 +46,7 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
                 console.log('Erro: ' + JSON.stringify(erro));
             }
         );
+
     }
 
     $scope.sendHistory = function(){
@@ -147,16 +146,6 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
                 context = response.context; // Store the context for next round of questions
                 //console.log("Got response from Watson: ", JSON.stringify(response));
 
-                if(response.intents.length > 0 ){
-                    if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
-                        console.log('Encerrar');
-                        $scope.mostrarEnviar = true;
-                        $scope.mostrarFim = false;
-                        $form.commit();
-                        //$('#history').val('FIM CONVERSA').trigger("change");
-                    }
-                }
-
                 for (var txt in text) {
                     displayMessage(text[txt], watson);
                 }
@@ -165,6 +154,13 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
 
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
+
+                if(response.intents.length > 0 ){
+                    if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
+                        $scope.mostrarEnviar = true;
+                        $scope.mostrarFim = false;
+                    }
+                }
 
             } else {
                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);

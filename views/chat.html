@@ -62,13 +62,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group" style="display:none">
-                        <label for="history">Histórico</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-check"></span></span>
-                            <input type="text" class="form-control" id="history" name="history" ng-model="history">
-                        </div>
-                    </div>
                     <div class="observacao">(*) Campo de preenchimento obrigatório</div>
                     <div style="text-align:center;margin-top:30px">
                         <button type="submit" class="btn btn-primary">
@@ -93,9 +86,9 @@
             <div id="chat_box" class="content" ng-bind-html="chat_box">
 
             </div>
-            <div class="box-footer" >
+            <div class="box-footer">
 
-                <div class="input-group" ng-hide="mostrarEnviar">
+                <div class="input-group ng-hide" ng-hide="mostrarEnviar">
                     <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
                     <input type="text" id="chatInput" ng-keypress="newEvent($event);" class="form-control"/>
                     <span class="input-group-btn">
@@ -103,7 +96,7 @@
                     </span>
                 </div>
 
-                <div ng-hide="mostrarFim">
+                <div ng-hide="mostrarFim" class="ng-hide">
                     <span class="input-group-btn">
                         <input type="button" id="novoChat" value="Reiniciar Chat" onclick="" class="btn btn-primary btn-flat">
                         <input type="button" id="enviaMail" value="Enviar conversa por e-mail" onclick="" class="btn btn-primary btn-flat">
