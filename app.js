@@ -47,6 +47,7 @@ app.get('/discovery', routes.discovery);
 app.get('/nlu', routes.nlu);
 app.get('/som', routes.textToSpeech);
 
+app.post('/', routes.chat);
 app.post('/salvar', cloudant.gravaUsuario);
 app.post('/sendmail',correio.enviaCorreio);
 

@@ -1,12 +1,15 @@
 var nodemailer = require("nodemailer");
+var usuario = 'rodrigo.florentino@vbofficeware.com.br';
+var senha = 'phenrique3'
+var enviado = 'Mister Xper '
 
 var smtpTransport = nodemailer.createTransport({
     host: "mail.vbofficeware.com.br",
     port: 25,
     secure: false,
     auth: {
-        user: "rodrigo.florentino@vbofficeware.com.br",
-        pass: "phenrique3"
+        user: usuario,
+        pass: senha
     }
 });
 
@@ -14,11 +17,18 @@ var correio = {
 
     enviaCorreio: function (req, res, next) {
 
+        var enviarP = '';
+
+        if(req.body.sendTo == '-'){
+            enviarP = usuario
+        }else{
+            enviarP = req.body.sendTo;
+        }
+
         var mailOptions = {
-            from: req.body.from,
-            sender: req.body.from,
-            to: req.body.sendTo,
-            cc: req.body.copyTo,
+            from: enviado + '<'+ usuario + '>',
+            sender: enviado + '<'+ usuario + '>',
+            to: enviarP,
             subject: req.body.subject,
             text: req.body.vtext,
             html: req.body.vhtml

@@ -1,6 +1,6 @@
 var app = angular.module('usuario',['ngSanitize']);
 
-app.controller('chatController', ['$scope','$http', function($scope,$http) {
+app.controller('chatController', ['$scope','$http','$window', function($scope,$http,$window) {
 
     var params = {},
     watson = 'Watson',
@@ -26,9 +26,7 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
         }
 
         var mailData = {
-            from: 'Mister Xper <renato.filho@vbofficeware.com.br>',
-            sendTo: 'renato.filho@vbofficeware.com.br',
-            copyTo: 'rodrigo.florentino@vbofficeware.com.br',
+            sendTo: '-',
             subject: 'Novo Usuário ChatBot - Mister Xper',
             vtext: '',
             vhtml: '<p>Um novo usuário está acessando o Mister Xper, seguem os dados:</p><b>Nome: </b>' + $scope.nome
@@ -52,7 +50,6 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
     $scope.sendHistory = function(){
 
         var mailData = {
-            from: 'Mister Xper <renato.filho@vbofficeware.com.br>',
             sendTo: $scope.email,
             subject: 'Histórico - Mister Xper',
             vtext: '',
@@ -60,7 +57,12 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
         }
 
         enviaCorreio(mailData);
+        $window.alert('Mensagem enviada');
 
+    }
+
+    $scope.reiniciarChat = function(){
+        myRedirect('/','','');
     }
 
     enviaCorreio = function(dados) {
@@ -82,25 +84,19 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
 
     $scope.newEvent = function(event) {
 
-        // Only check for a return/enter press - Event 13
         if (event.which === 13 || event.keyCode === 13) {
 
             var userInput = document.getElementById('chatInput');
             text = userInput.value; // Using text as a recurring variable through functions
             text = text.replace(/(\r\n|\n|\r)/gm, ""); // Remove erroneous characters
-            // If there is any input then check if this is a claim step
-            // Some claim steps are handled in newEvent and others are handled in userMessage
 
             if (text) {
-                // Display the user's text in the chat box and null out input box
-                //            userMessage(text);
                 $("#chatInput").css("border-color", "#d2d6de");
                 displayMessage(text, 'user');
                 userInput.value = '';
                 userMessage(text);
 
             } else {
-                // Blank user message. Do nothing.
                 console.error("No message.");
                 userInput.value = '';
                 $("#chatInput").css("border-color", "red");
@@ -146,6 +142,14 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
                 context = response.context; // Store the context for next round of questions
                 //console.log("Got response from Watson: ", JSON.stringify(response));
 
+                 if(response.intents.length > 0 ){
+                    if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
+                        $scope.mostrarEnviar = true;
+                        $scope.mostrarFim = false;
+                        $scope.$apply();
+                    }
+                }
+
                 for (var txt in text) {
                     displayMessage(text[txt], watson);
                 }
@@ -154,13 +158,6 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
 
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
-
-                if(response.intents.length > 0 ){
-                    if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
-                        $scope.mostrarEnviar = true;
-                        $scope.mostrarFim = false;
-                    }
-                }
 
             } else {
                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
@@ -255,5 +252,13 @@ app.controller('chatController', ['$scope','$http', function($scope,$http) {
         }
         return i;
     }
+
+    myRedirect = function(redirectUrl, arg, value) {
+
+         var form = $('<form action="' + redirectUrl + '" method="post">' +
+         '<input type="text" name="'+ arg +'" value="' + value + '"></input>' + '</form>');
+         $('body').append(form);
+         $(form).submit();
+   }
 
 }]);

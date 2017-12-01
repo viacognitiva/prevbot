@@ -12,7 +12,7 @@
     "cloudant": "1.4.x",
     "connect-multiparty": "2.0.x",
     "dotenv": "*",
-    "ejs": "2.4.x",
+    "ejs": "2.5.5",
     "errorhandler": "1.4.x",
     "express": "4.13.x",
     "method-override": "2.3.x",
