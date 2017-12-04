@@ -62,6 +62,9 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
     }
 
     $scope.reiniciarChat = function(){
+
+        $scope.mostrarEnviar = false;
+        $scope.mostrarFim = true;
         document.getElementById('chat_box').innerHTML = '';
         userMessage('olá');
     }
