@@ -62,7 +62,8 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
     }
 
     $scope.reiniciarChat = function(){
-        myRedirect('/','','');
+        document.getElementById('chat_box').innerHTML = '';
+        userMessage('olá');
     }
 
     enviaCorreio = function(dados) {
