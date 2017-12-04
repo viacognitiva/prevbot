@@ -86,8 +86,7 @@
                 <div id="chat_box" class="content" ng-bind-html="chat_box">
 
                 </div>
-                <div class="box-footer">
-
+                <div class="box-footer" style="text-align:center">
                     <div class="input-group ng-hide" ng-hide="mostrarEnviar">
                         <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
                         <input type="text" id="chatInput" ng-keypress="newEvent($event);" class="form-control"/>
@@ -98,11 +97,10 @@
 
                     <div ng-hide="mostrarFim" class="ng-hide">
                         <span class="input-group-btn">
-                            <input type="button" id="novoChat" value="Reiniciar Chat" ng-click="reiniciarChat()" class="btn btn-primary btn-flat">
+                            <input type="button" id="novoChat" value="Reiniciar Chat" ng-click="reiniciarChat()" class="btn btn-primary btn-flat" style="margin-right:15px">
                             <input type="button" id="enviaMail" value="Enviar conversa por e-mail" ng-click="sendHistory()" class="btn btn-primary btn-flat">
                         </span>
                     </div>
-
                 </div>
             </div>
         </div>

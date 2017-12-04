@@ -225,7 +225,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
             var userBox = document.createElement('span');
             user = document.createElement('img');
             user.className = 'direct-chat-img';
-            user.src = '/images/logo_fb.jpg';
+            user.src = 'https://xpersocialunascendent-smithsonite.mybluemix.net/images/logo_fb.jpg';
             div.className = 'direct-chat-text';
 
             userBox.appendChild(user);
