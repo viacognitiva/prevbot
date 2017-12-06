@@ -259,8 +259,8 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
     myRedirect = function(redirectUrl, arg, value) {
 
-         var form = $('<form action="' + redirectUrl + '" method="post">' +
-         '<input type="text" name="'+ arg +'" value="' + value + '"></input>' + '</form>');
+        var form = $('<form action="' + redirectUrl + '" method="post">' +
+        '<input type="text" name="'+ arg +'" value="' + value + '"></input>' + '</form>');
          $('body').append(form);
          $(form).submit();
    }
