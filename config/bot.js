@@ -100,8 +100,8 @@ function insertLogs(req,params,data){
         console.log('Detected intent: #' + data.intents[0].intent);
     }
 
-    //var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
-    var fullUrl = 'http://localhost:2000';
+    var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
+    //var fullUrl = 'http://localhost:2000';
     var options = {
         method: 'POST',
         uri: fullUrl+'/api/logs',
