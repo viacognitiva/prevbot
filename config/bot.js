@@ -50,13 +50,13 @@ var chatbot = {
                 var conv = req.body.context.conversation_id;
                 var context = req.body.context;
                 var res = {
-                    intents: []
-                    , entities: []
-                    , input: req.body.text
-                    , output: {
+                    intents: [],
+                    entities: [],
+                    input: req.body.text,
+                    output: {
                         text: params.message
-                    }
-                    , context: context
+                    },
+                    context: context
                 };
 
                 callback(null, res);
@@ -83,7 +83,7 @@ var chatbot = {
             }
         });
 
-    }//fim sendMessage
+    }
 };
 
 function insertLogs(req,params,data){
@@ -92,7 +92,7 @@ function insertLogs(req,params,data){
         "conversation_id": data.context.conversation_id,
         "messageWatson": data.output.text[0],
         "messageUser": data.input.text,
-        "aplicacao":"xperSocial"
+        "aplicacao": "xperSocial"
     }
 
     if (data.intents.length > 0) {
@@ -100,7 +100,8 @@ function insertLogs(req,params,data){
         console.log('Detected intent: #' + data.intents[0].intent);
     }
 
-    var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
+    //var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
+    var fullUrl = 'http://localhost:2000';
     var options = {
         method: 'POST',
         uri: fullUrl+'/api/logs',
@@ -110,7 +111,7 @@ function insertLogs(req,params,data){
         json: USER_DATA
     };
 
-    //salvar logs em banco
+    //salvar logs no banco
     request(options, callbackLog);
 }
 
@@ -121,7 +122,7 @@ function callbackLog(error, response, body) {
         //console.log(info);
     }
     else {
-        console.log('Error - xperSocial - insertLogs: '+ error);
+        console.log('Error - xperSocial - insertLogs: ' + error);
     }
 }
 
@@ -170,6 +171,7 @@ function chatLogs(owner, conversation, response, callback) {
                 };
 
                 doc.logs.push(logFile);
+
                 Logs.insert(doc, function (err, body) {
                     if (err) {
                         console.log("There was an error creating the log: ", err);

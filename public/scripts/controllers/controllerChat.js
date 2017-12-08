@@ -57,8 +57,13 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
         }
 
         enviaCorreio(mailData);
-        $window.alert('Mensagem enviada');
+        $window.opener = $window;
+        myRedirect('/chat','','');
+    }
 
+    $scope.contChat = function(){
+        $scope.mostrarEnviar = false;
+        $scope.mostrarFim = true;        
     }
 
     $scope.reiniciarChat = function(){
@@ -259,8 +264,8 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
     myRedirect = function(redirectUrl, arg, value) {
 
-        var form = $('<form action="' + redirectUrl + '" method="post">' +
-        '<input type="text" name="'+ arg +'" value="' + value + '"></input>' + '</form>');
+        var form = $('<form action="' + redirectUrl + '" method="get">' +
+        '<input type="text" name="'+ arg +'" value="' + value + '"></input></form>');
          $('body').append(form);
          $(form).submit();
    }
