@@ -15,22 +15,22 @@ var CONVERSATION_NAME = "Conversation-Demo"; // conversation name goes here.
 var fs = require('fs');
 var appEnv = null;
 var conversationWorkspace, conversation;
-
 var request = require('request');
+require('dotenv-safe').load();
 
 // =====================================
 // CREATE THE SERVICE WRAPPER ==========
 // =====================================
 // Create the service wrapper
 conversation = watson.conversation({
-    url: "https://gateway.watsonplatform.net/conversation/api"
-    , username: "d1df6c26-bedc-4965-9a79-e1339c0cff80"
-    , password: "3lUqPxo4kNm2"
-    , version_date: '2017-05-26'
-    , version: 'v1'
+    url: process.env.WATSON_URL,
+    username: process.env.WATSON_USER,
+    password: process.env.WATSON_PASSWORD,
+    version_date: process.env.WATSON_DATE,
+    version: process.env.WATSON_VERSION
 });
 // check if the workspace ID is specified in the environment
-conversationWorkspace = "43a221f4-9a0e-4fbc-9844-eaaa2ce7aa50";
+conversationWorkspace = process.env.WATSON_WS;
 // if not, look it up by name or create one
 // Allow clients to interact
 
@@ -73,10 +73,10 @@ var chatbot = {
                     } else {
 
                         var conv = data.context.conversation_id;
-                        console.log("Got response from Ana: ", JSON.stringify(data));
+                        //console.log("Got response from Ana: ", JSON.stringify(data));
 
                         //insere logs da conversação no cloudant
-                        insertLogs(req,params,data);
+                        //insertLogs(req,params,data);
                         return callback(null, data);
                     }
                 });
@@ -101,7 +101,6 @@ function insertLogs(req,params,data){
     }
 
     var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
-    //var fullUrl = 'http://localhost:2000';
     var options = {
         method: 'POST',
         uri: fullUrl+'/api/logs',

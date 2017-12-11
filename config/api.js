@@ -1,11 +1,12 @@
+require('dotenv-safe').load();
 var nodemailer = require("nodemailer");
-var usuario = 'rodrigo.florentino@vbofficeware.com.br';
-var senha = 'phenrique3'
+var usuario = process.env.MAIL_USER;
+var senha = process.env.MAIL_PASSWORD;
 var enviado = 'Mister Xper '
 
 var smtpTransport = nodemailer.createTransport({
-    host: "mail.vbofficeware.com.br",
-    port: 25,
+    host: process.env.MAIL_SMTP,
+    port: parseInt(process.env.MAIL_PORT,10),
     secure: false,
     auth: {
         user: usuario,

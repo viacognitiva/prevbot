@@ -1,10 +1,12 @@
+require('dotenv-safe').load();
+
 var Cloudant = require('cloudant');
 var fs = require('fs');
 
-var cloudant_url="https://b6a29beb-91ed-4256-81c4-458e3ff55a71-bluemix:2cd1080e5c8ac457d9cbc3105aabfa7f28abfe45e03cae99eaa5910dbc84ab6a@b6a29beb-91ed-4256-81c4-458e3ff55a71-bluemix.cloudant.com";
+var cloudant_url = process.env.CLOUDANT_URL;
 var services = JSON.parse(process.env.VCAP_SERVICES || "{}");
-var user = 'b6a29beb-91ed-4256-81c4-458e3ff55a71-bluemix'; // Set this to your own account
-var password = '2cd1080e5c8ac457d9cbc3105aabfa7f28abfe45e03cae99eaa5910dbc84ab6a';
+var user = process.env.CLOUDANT_USER;
+var password = process.env.CLOUDANT_PASSWORD;
 
 if(process.env.VCAP_SERVICES) {
 
@@ -21,7 +23,7 @@ if(process.env.VCAP_SERVICES) {
     }
 }
 
-var dbname = 'xpersocial';
+var dbname = process.env.CLOUDANT_DB;
 var cloudant = Cloudant({url:cloudant_url,account:user,password:password});
 db = cloudant.db.use(dbname);
 
