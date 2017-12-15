@@ -19,6 +19,7 @@
     "method-override": "2.3.x",
     "morgan": "1.6.x",
     "nodemailer": "^4.4.0",
+    "nodemailer-juice": "^1.0.0",
     "request": "*",
     "watson-developer-cloud": "2.27.1"
   },
