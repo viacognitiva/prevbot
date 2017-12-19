@@ -63,7 +63,7 @@ var chatbot = {
 
             } else if (params) {
 
-                // Send message to the conversation service with the current context
+                //Send message to the conversation service with the current context
                 conversation.message(params, function (err, data) {
 
                     if (err) {
@@ -92,7 +92,7 @@ function insertLogs(req,params,data){
         "conversation_id": data.context.conversation_id,
         "messageWatson": data.output.text[0],
         "messageUser": data.input.text,
-        "aplicacao": "xperSocial"
+        "aplicacao": "abrale"
     }
 
     if (data.intents.length > 0) {

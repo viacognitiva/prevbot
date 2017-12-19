@@ -27,9 +27,9 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: '-',
-            subject: 'Novo Usuário ChatBot - Mister Xper',
+            subject: 'Novo Usuário ChatBot - Abralete',
             vtext: '',
-            vhtml: '<p>Um novo usuário está acessando o Mister Xper, seguem os dados:</p><b>Nome: </b>' + $scope.nome
+            vhtml: '<p>Um novo usuário está acessando o Abralete, seguem os dados:</p><b>Nome: </b>' + $scope.nome
             + '<br><b>E-mail: </b>' + $scope.email + '<br><b>Telefone: </b>' + tfone
         }
 
@@ -51,7 +51,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: $scope.email,
-            subject: 'Histórico - Mister Xper',
+            subject: 'Histórico - Abralete',
             vtext: '',
             vhtml: document.getElementById('chat_box').innerHTML
         }
@@ -149,13 +149,37 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
                 var response = JSON.parse(xhr.responseText);
                 text = response.output.text; // Only display the first response
                 context = response.context; // Store the context for next round of questions
-                //console.log("Got response from Watson: ", JSON.stringify(response));
+                console.log("Got response from Watson: ", JSON.stringify(response));
 
-                 if(response.intents.length > 0 ){
-                    if(response.intents[0].intent == 'Finalizar_Conversa' && response.entities.length == 0){
+                 if(response.intents.length > 0 && response.entities.length >= 0){
+                    
+                    if(response.intents[0].intent == 'FinalizarConversa' 
+                        && response.entities[0].entity == 'FinalizarConversa'){
+                        
                         $scope.mostrarEnviar = true;
                         $scope.mostrarFim = false;
                         $scope.$apply();
+                    }
+                }
+
+                //console.log('Node visitado: ' + response.output.nodes_visited);
+                if(response.output.nodes_visited == 'Outros Assuntos - Retoma a Conversa'){
+
+                    var logData = {
+                        idchat: response.context.conversation_id,
+                        texto: response.input.text
+                    }
+
+                    $http.post('/treinar', logData)
+                        .then(Success)
+                        .catch(Failure);
+
+                    function Success(response) {
+                        return response.data;
+                    }
+
+                    function Failure(error) {
+                        console.log('Error: ' + JSON.stringify(error));
                     }
                 }
 
@@ -178,7 +202,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
             console.error('Network error trying to send message!');
             displayMessage("Ops, acho que meu cérebro está offline. Espera um minutinho para continuarmos por favor.", watson);
         };
-        console.log(JSON.stringify(params));
+        //console.log(JSON.stringify(params));
         //MENSAGEM ENVIADA
         xhr.send(JSON.stringify(params));
     }

@@ -26,6 +26,7 @@ if(process.env.VCAP_SERVICES) {
 var dbname = process.env.CLOUDANT_DB;
 var cloudant = Cloudant({url:cloudant_url,account:user,password:password});
 db = cloudant.db.use(dbname);
+dbTreino = cloudant.db.use(process.env.CLOUDANT_DB_TREINO);
 
 var cloudant = {
 
@@ -40,22 +41,39 @@ var cloudant = {
 
     gravaUsuario : function (req, res) {
 
-        var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+      var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
-        db.insert({ idchat: req.body.idchat,
-                    nome: req.body.nome,
-                    email: req.body.email,
-                    telefone: req.body.telefone,
-                    data: dataNow },
-            'doc_'+req.body.idchat+'_'+new Date().getTime(), function(err, body, header) {
+      db.insert({ idchat: req.body.idchat,
+                  nome: req.body.nome,
+                  email: req.body.email,
+                  telefone: req.body.telefone,
+                  data: dataNow },
+          'doc_'+req.body.idchat+'_'+new Date().getTime(), function(err, body, header) {
 
-                if (err) {
-                    return console.log('[db.insert] ', err.message);
-                }
-               res.status(200).send("/chat");
-
-        });
+              if (err) {
+                  return console.log('[db.insert] ', err.message);
+              }
+             res.status(200).send("/chat");
+      });
     },
+
+    gravaOutros : function(req, res){
+
+      var dados = {
+        idchat: req.body.idchat,
+        texto: req.body.texto,
+        data: new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
+      }
+
+      dbTreino.insert(dados,function(err, body, header) {
+
+        if (err) {
+            console.log('[dbTreino.insert] ', err.message);
+        }
+        res.status(200);
+
+      });
+    }
 };
 
 module.exports = cloudant;

@@ -50,6 +50,7 @@ app.get('/som', routes.textToSpeech);
 
 app.post('/salvar', cloudant.gravaUsuario);
 app.post('/sendmail',correio.enviaCorreio);
+app.post('/treinar',cloudant.gravaOutros);
 
 // =====================================
 // WATSON CONVERSATION FOR ANA =========
