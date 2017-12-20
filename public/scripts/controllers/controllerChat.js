@@ -149,20 +149,15 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
                 var response = JSON.parse(xhr.responseText);
                 text = response.output.text; // Only display the first response
                 context = response.context; // Store the context for next round of questions
-                console.log("Got response from Watson: ", JSON.stringify(response));
+                //console.log("Got response from Watson: ", JSON.stringify(response));
+                //console.log('Node visitado: ' + response.output.nodes_visited);
 
-                 if(response.intents.length > 0 && response.entities.length >= 0){
-                    
-                    if(response.intents[0].intent == 'FinalizarConversa' 
-                        && response.entities[0].entity == 'FinalizarConversa'){
-                        
-                        $scope.mostrarEnviar = true;
-                        $scope.mostrarFim = false;
-                        $scope.$apply();
-                    }
+                if(response.output.nodes_visited == 'Finalização da Conversa'){
+                    $scope.mostrarEnviar = true;
+                    $scope.mostrarFim = false;
+                    $scope.$apply();
                 }
 
-                //console.log('Node visitado: ' + response.output.nodes_visited);
                 if(response.output.nodes_visited == 'Outros Assuntos - Retoma a Conversa'){
 
                     var logData = {
