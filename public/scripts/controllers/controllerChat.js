@@ -27,9 +27,9 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: '-',
-            subject: 'Novo Usuário ChatBot - Abralete',
+            subject: 'Novo Usuário ChatBot - Abraléte',
             vtext: '',
-            vhtml: '<p>Um novo usuário está acessando o Abralete, seguem os dados:</p><b>Nome: </b>' + $scope.nome
+            vhtml: '<p>Um novo usuário está acessando o Abraléte, seguem os dados:</p><b>Nome: </b>' + $scope.nome
             + '<br><b>E-mail: </b>' + $scope.email + '<br><b>Telefone: </b>' + tfone
         }
 
@@ -51,7 +51,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: $scope.email,
-            subject: 'Histórico - Abralete',
+            subject: 'Histórico - Abraléte',
             vtext: '',
             vhtml: document.getElementById('chat_box').innerHTML
         }
