@@ -9,7 +9,7 @@ var enviado = 'Mister Xper '
 var smtpTransport = nodemailer.createTransport({
     host: process.env.MAIL_SMTP,
     port: parseInt(process.env.MAIL_PORT,10),
-    secure: false,
+    secure: true,
     auth: {
         user: usuario,
         pass: senha
