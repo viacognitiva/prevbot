@@ -1,36 +1,37 @@
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 //var context = new AudioContext();
 
+function loadSound(texto, myCallback) {
 
+    var request = new XMLHttpRequest();
+    request.open("POST", "/api/synthesize", true);
+    request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+    request.responseType = "arraybuffer";
 
-function loadSound(texto) {
-  var request = new XMLHttpRequest();
-  request.open("POST", "/api/synthesize", true);
-  request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
-  request.responseType = "arraybuffer";
-  //console.log('Chamando '+texto);
-  const audio = document.getElementById('audio');
-  audio.setAttribute('src', '');
-  request.onload = function() {
-     var Data = request.response;
-     if (request.readyState == 4 && request.status == 200){
-       var blob = new Blob([Data], {type: "audio/wav"});
-       var URLObject = window.webkitURL || window.URL;
-       var url = URLObject.createObjectURL(blob);
-       audio.setAttribute('src', url);
-      }
+    const audio = document.getElementById('audio');
+    audio.setAttribute('src', '');
 
-  };
+    request.onload = function() {
 
-  var jsonStr = JSON.stringify({message: texto});
-  request.send(jsonStr);
+        var Data = request.response;
+
+        if (request.readyState == 4 && request.status == 200){
+            var blob = new Blob([Data], {type: "audio/wav"});
+            var URLObject = window.URL;
+            var url = URLObject.createObjectURL(blob);
+            audio.setAttribute('src', url);
+            myCallback(texto);
+        }
+    };
+
+    var jsonStr = JSON.stringify({message: texto});
+    request.send(jsonStr);
+
 };
 
-
 function mycallback(data) {
-   alert(data);
+   //alert(data);
 }
-
 
 function enviarTextSound(texto,callback) {
 var a = false;

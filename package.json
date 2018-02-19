@@ -21,7 +21,8 @@
     "nodemailer": "^4.4.0",
     "nodemailer-juice": "^1.0.0",
     "request": "*",
-    "watson-developer-cloud": "2.27.1"
+    "watson-developer-cloud": "2.27.1",
+    "websocket": "^1.0.25"
   },
   "repository": {},
   "engines": {

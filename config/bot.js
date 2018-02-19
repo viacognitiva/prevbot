@@ -76,7 +76,7 @@ var chatbot = {
                         //console.log("Got response from Ana: ", JSON.stringify(data));
 
                         //insere logs da conversação no cloudant
-                        //insertLogs(req,params,data);
+                        insertLogs(req,params,data);
                         return callback(null, data);
                     }
                 });
@@ -97,7 +97,6 @@ function insertLogs(req,params,data){
 
     if (data.intents.length > 0) {
         USER_DATA.intencao = data.intents[0].intent;
-        console.log('Detected intent: #' + data.intents[0].intent);
     }
 
     var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
@@ -121,7 +120,7 @@ function callbackLog(error, response, body) {
         //console.log(info);
     }
     else {
-        console.log('Error - xperSocial - insertLogs: ' + error);
+        console.log('Error - Abrale - insertLogs: ' + error);
     }
 }
 

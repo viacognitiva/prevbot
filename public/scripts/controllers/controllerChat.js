@@ -7,8 +7,8 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
     context;
 
     $scope.inicializa = function() {
-        $scope.mostrarChat = true;
-        $scope.mostrarDados = false;
+        $scope.mostrarChat = false;
+        $scope.mostrarDados = true;
         $scope.mostrarEnviar = false;
         $scope.mostrarFim = true;
         userMessage('');
@@ -152,7 +152,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
                 //console.log("Got response from Watson: ", JSON.stringify(response));
                 //console.log('Node visitado: ' + response.output.nodes_visited);
 
-                if(response.output.nodes_visited == 'Finalização da Conversa'){
+                if(response.output.nodes_visited == 'node_4_1517338692242' || response.output.nodes_visited == 'node_5_1517338827579'){
                     $scope.mostrarEnviar = true;
                     $scope.mostrarFim = false;
                     $scope.$apply();
@@ -189,7 +189,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
             } else {
                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
-                displayMessage("Putz, deu um tilt aqui. Você pode tentar novamente.", watson);
+                displayMessage("Ops, acho que meu cérebro está offline.", watson);
             }
         };
 
@@ -271,6 +271,14 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
              var textoFormatado=text;
              textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
 
+             var divEscrevendo = document.createElement('div');
+
+             //Mostra os tres pontos
+             mostraAguarde(divEscrevendo);
+
+             loadSound(textoFormatado, function(){
+                ocultaAguarde(messageBox,divEscrevendo,textoFormatado);
+             }) ;
         }
     }
 
@@ -287,6 +295,28 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
         '<input type="text" name="'+ arg +'" value="' + value + '"></input></form>');
          $('body').append(form);
          $(form).submit();
+   }
+
+   function mostraAguarde(divEscrevendo) {
+
+     var imgEscrevendo = document.createElement('img');
+     imgEscrevendo.className = 'escrevendo-img';
+     imgEscrevendo.src = '/images/escrevendo2.gif';
+     divEscrevendo.appendChild(imgEscrevendo);
+
+     $( ".direct-chat-text" ).last().empty();
+     $( ".direct-chat-text" ).last().css( "width", "65px" );
+     $( ".direct-chat-text" ).last().append(divEscrevendo);
+
+   }
+
+   function ocultaAguarde(messageBox,divEscrevendo, textoFormat) {
+
+        divEscrevendo.style.display = "none";
+        $( ".direct-chat-text" ).last().empty();
+        $( ".direct-chat-text" ).last().css( "width", "" );
+        $( ".direct-chat-text" ).last().append( textoFormat);
+
    }
 
 }]);

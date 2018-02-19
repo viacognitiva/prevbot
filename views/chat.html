@@ -25,8 +25,6 @@
                 </div>
                 <div id="corpo" class="content">
 
-                    <h1 class="text-center">Acesso - Abralete</h1>
-
                     <form ng-submit="enviar()">
 
                         <div class="form-group">
@@ -79,6 +77,7 @@
     <!--CHAT -->
     <div class="row" id="divChat" ng-hide="mostrarChat">
         <div class="col-md-3">
+            <!--<div><a href="#"><i id="iconSom" class="fa fa-volume-down"></i></a></div>-->
             <div class="box box-primary direct-chat direct-chat-primary">
                 <div class="box-header with-border" style="text-align: center;">
                     <h3 class="box-title"><img src="/images/logo_home.png" style="height: 40px;"></h3>
@@ -93,6 +92,8 @@
                         <span class="input-group-btn">
                             <input type="button" id="send_btn" value="Enviar" ng-click="sendMessage();" class="btn btn-primary btn-flat">
                         </span>
+                        <!--<div class="iconeFala"><a href="#" id="idPhone" class="btn btn-block"><i id="iconPhone" class="fa fa-microphone"></i></a></div>-->
+                        <input type="hidden" id="idSoundSession" value="1" />
                     </div>
 
                     <div ng-hide="mostrarFim" class="ng-hide">
@@ -113,6 +114,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
     <script src="scripts/controllers/controllerChat.js"></script>
     <script src="scripts/watson/chat.js"></script>
+    <script src="scripts/watson/audio.js"></script>
+    <audio autoplay='true' id='audio' class='audio' controls='' type='audio/ogg;codecs=opus'></audio>
 
 </body>
 </html>

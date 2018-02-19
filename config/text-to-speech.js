@@ -2,12 +2,13 @@ var TextToSpeechV1 = require('watson-developer-cloud/text-to-speech/v1');
 var fs = require('fs');
 
 var text_to_speech = new TextToSpeechV1({
-  username: 'e474ce1d-69b3-4a40-94ca-6ec20ed53087',
-   password: 'OKm7nSq3dwNe'
+    username: '5563d7a5-747d-42c2-b328-1d878cefc34c',
+    password: '7cSeIyeOM8MB'
 });
 
 
 var textToSpeechWatson = {
+
      converter : (req, res, next) => {
          // console.log("synthesize"+req.body.message);
            //console.dir(req);
@@ -15,7 +16,6 @@ var textToSpeechWatson = {
             var params = {
                      text:req.body.message,
                      voice: 'pt-BR_IsabelaVoice',
-                     //voice: 'en-US_AllisonVoice',
                      accept: 'audio/wav'
              };
 
