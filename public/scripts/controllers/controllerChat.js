@@ -7,11 +7,25 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
     context;
 
     $scope.inicializa = function() {
+        $scope.imgSom = 'fa fa-volume-off';
         $scope.mostrarChat = false;
         $scope.mostrarDados = true;
         $scope.mostrarEnviar = false;
         $scope.mostrarFim = true;
+        $scope.ativaVoz = false;
         userMessage('');
+    }
+
+    $scope.controlaSom = function(){
+
+        if($scope.ativaVoz){
+            $scope.ativaVoz = false;
+            $scope.imgSom = 'fa fa-volume-off';
+        }else{
+            $scope.ativaVoz = true;
+            $scope.imgSom = 'fa fa-volume-up';
+        }
+
     }
 
     $scope.enviar = function() {
@@ -264,17 +278,30 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
             var textoFormat = textoHTML.replace(/&lt;/g,'<').replace(/&gt;/g, '>');
             //$( ".direct-chat-text" ).last().append( textoFormat );
 
-             var textoFormatado=text;
-             textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
+            var textoFormatado=text;
+            textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
 
-             var divEscrevendo = document.createElement('div');
+            var divEscrevendo = document.createElement('div');
 
-             //Mostra os tres pontos
-             mostraAguarde(divEscrevendo);
+            if ($scope.ativaVoz){
 
-             loadSound(textoFormatado, function(){
-                ocultaAguarde(messageBox,divEscrevendo,textoFormatado);
-             }) ;
+                //Mostra os tres pontos
+                mostraAguarde(divEscrevendo);
+
+                loadSound(textoFormatado, function(){
+                    ocultaAguarde(messageBox,divEscrevendo,textoFormatado);
+                }) ;
+
+            }else{
+
+                var divHora = document.createElement('div');
+                var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
+                divHora.style='text-align:right;color:#cfcfcf;font-size:12px';
+                divHora.appendChild(textHora);
+                messageBox.appendChild(divHora);
+
+            }
+
         }
     }
 

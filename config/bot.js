@@ -99,7 +99,7 @@ function insertLogs(req,params,data){
         USER_DATA.intencao = data.intents[0].intent;
     }
 
-    var fullUrl = req.protocol + '://' + 'xpersocial-logunchidden-underlineman.mybluemix.net'
+    var fullUrl = req.protocol + '://' + 'abrale-logconsequential-motorcycle.mybluemix.net/'
     var options = {
         method: 'POST',
         uri: fullUrl+'/api/logs',
