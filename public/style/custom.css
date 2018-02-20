@@ -11,6 +11,15 @@
   .fa{
     color: #00888A;
   }
+  .som{
+      width: 20px;
+      position: absolute;
+      z-index: 2;
+      margin: 23px 0 0 15px;
+  }
+  .som a{
+    padding:5px
+  }
   .btn:active{
     box-shadow:none
   }
