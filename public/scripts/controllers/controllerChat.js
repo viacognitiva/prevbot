@@ -27,9 +27,9 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: '-',
-            subject: 'Novo Usuário ChatBot - Abraléte',
+            subject: 'Novo Usuário ChatBot - Alê',
             vtext: '',
-            vhtml: '<p>Um novo usuário está acessando o Abraléte, seguem os dados:</p><b>Nome: </b>' + $scope.nome
+            vhtml: '<p>Um novo usuário está acessando a Alê, seguem os dados:</p><b>Nome: </b>' + $scope.nome
             + '<br><b>E-mail: </b>' + $scope.email + '<br><b>Telefone: </b>' + tfone
         }
 
@@ -51,7 +51,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
 
         var mailData = {
             sendTo: $scope.email,
-            subject: 'Histórico - Abraléte',
+            subject: 'Histórico - Alê',
             vtext: '',
             vhtml: document.getElementById('chat_box').innerHTML
         }
@@ -223,7 +223,7 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
              div.className = 'direct-chat-text';
              var img = document.createElement('img');
              img.className = 'direct-chat-img';
-             img.src = 'http://intranet.vbofficeware.com.br/fileserver/imagem/img_usuario.png';
+             img.src = 'images/img_usuario.png';
              div0.appendChild(img);
              div0.appendChild(div);
 
@@ -240,16 +240,12 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
         } else {
 
             var div = document.createElement('div');
-            var divHora = document.createElement('div');
-            var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
-            divHora.style='text-align:right;color:#cfcfcf;font-size:12px';
-            divHora.appendChild(textHora);
 
             var user = document.createTextNode(' ');
             var userBox = document.createElement('span');
             user = document.createElement('img');
             user.className = 'direct-chat-img';
-            user.src = 'https://xpersocialunascendent-smithsonite.mybluemix.net/images/logo_fb.jpg';
+            user.src = 'images/logo_fb.jpg';
             div.className = 'direct-chat-text';
 
             userBox.appendChild(user);
@@ -259,14 +255,14 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
             messageBox.appendChild(userBox);
             div.appendChild(message);
             messageBox.appendChild(div);
-            messageBox.appendChild(divHora)
+            //messageBox.appendChild(divHora)
 
             chat.appendChild(messageBox);
 
             var textoHTML = $( ".direct-chat-text" ).last().html();
-            $( ".direct-chat-text" ).last().empty();
+            //$( ".direct-chat-text" ).last().empty();
             var textoFormat = textoHTML.replace(/&lt;/g,'<').replace(/&gt;/g, '>');
-            $( ".direct-chat-text" ).last().append( textoFormat );
+            //$( ".direct-chat-text" ).last().append( textoFormat );
 
              var textoFormatado=text;
              textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
@@ -311,11 +307,16 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
    }
 
    function ocultaAguarde(messageBox,divEscrevendo, textoFormat) {
+        var divHora = document.createElement('div');
+        var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
+        divHora.style='text-align:right;color:#cfcfcf;font-size:12px';
+        divHora.appendChild(textHora);
 
         divEscrevendo.style.display = "none";
         $( ".direct-chat-text" ).last().empty();
         $( ".direct-chat-text" ).last().css( "width", "" );
         $( ".direct-chat-text" ).last().append( textoFormat);
+        messageBox.appendChild(divHora);
 
    }
 
