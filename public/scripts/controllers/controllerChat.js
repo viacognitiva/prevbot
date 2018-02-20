@@ -269,30 +269,27 @@ app.controller('chatController', ['$scope','$http','$window', function($scope,$h
             messageBox.appendChild(userBox);
             div.appendChild(message);
             messageBox.appendChild(div);
-            //messageBox.appendChild(divHora)
 
             chat.appendChild(messageBox);
 
             var textoHTML = $( ".direct-chat-text" ).last().html();
-            //$( ".direct-chat-text" ).last().empty();
             var textoFormat = textoHTML.replace(/&lt;/g,'<').replace(/&gt;/g, '>');
-            //$( ".direct-chat-text" ).last().append( textoFormat );
-
-            var textoFormatado=text;
-            textoFormatado = textoFormatado.replace(/<[^>]*>/g, "");
 
             var divEscrevendo = document.createElement('div');
 
             if ($scope.ativaVoz){
 
-                //Mostra os tres pontos
                 mostraAguarde(divEscrevendo);
 
-                loadSound(textoFormatado, function(){
-                    ocultaAguarde(messageBox,divEscrevendo,textoFormatado);
+                loadSound(textoFormat, function(){
+                    ocultaAguarde(messageBox,divEscrevendo,textoFormat);
                 }) ;
 
             }else{
+
+                $( ".direct-chat-text" ).last().empty();
+                $( ".direct-chat-text" ).last().css( "width", "" );
+                $( ".direct-chat-text" ).last().append( textoFormat);
 
                 var divHora = document.createElement('div');
                 var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
