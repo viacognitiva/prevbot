@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<!--[if lt IE 7]>      <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" data-ng-app="app" data-ng-strict-di class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, width=device-width, initial-scale=1">
+        <title>Abrale Log</title>
+        <meta name="description" content="ChatBot">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" type="image/ico" href="assets/images/favicon.ico">
+        <link href="assets/images/favicon.ico" rel="shortcut icon" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://almsaeedstudio.com/themes/AdminLTE/dist/css/AdminLTE.min.css">
+        <link rel="stylesheet" type="text/css" href="assets/css/custom.css"/>
+
+    </head>
+
+    <body>
+
+        <div ui-view></div>
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-animate.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-sanitize.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+        <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+
+        <!-- Angular Material Library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+
+        <script src="assets/js/chat.js"></script>
+        <script src="assets/js/audio.js"></script>
+        <audio autoplay='true' id='audio' class='audio' controls='' type='audio/ogg;codecs=opus'></audio>
+
+        <!-- Application scripts: -->
+        <script src="core/app.js"></script>
+        <script src="core/app.routes.js"></script>
+        <script src="core/index.js"></script>
+        <script src="core/chat/chatController.js"></script>
+        <script src="core/chat/chatService.js"></script>
+        <script src="common/directives/divSizeDirective.js"></script>
+
+        <script type="text/javascript">
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
+            jQuery(document).ready(function($){
+                if(!isMobile) {
+                  $( "<style>.custom-dialog .modal-dialog { width :20%; min-width: 600px;}</style>" ).appendTo( "head" );
+                }
+            });
+        </script>
+
+    </body>
+</html>

@@ -86,44 +86,6 @@ var chatbot = {
     }
 };
 
-function insertLogs(req,params,data){
-
-    var USER_DATA = {
-        "conversation_id": data.context.conversation_id,
-        "messageWatson": data.output.text[0],
-        "messageUser": data.input.text,
-        "aplicacao": "abrale"
-    }
-
-    if (data.intents.length > 0) {
-        USER_DATA.intencao = data.intents[0].intent;
-    }
-
-    var fullUrl = req.protocol + '://' + 'abrale-logconsequential-motorcycle.mybluemix.net/'
-    var options = {
-        method: 'POST',
-        uri: fullUrl+'/api/logs',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        json: USER_DATA
-    };
-
-    //salvar logs no banco
-    request(options, callbackLog);
-}
-
-function callbackLog(error, response, body) {
-
-    if (!error) {
-        var info = JSON.parse(JSON.stringify(body));
-        //console.log(info);
-    }
-    else {
-        console.log('Error - Abrale - insertLogs: ' + error);
-    }
-}
-
 // ===============================================
 // LOG MANAGEMENT FOR USER INPUT FOR ANA =========
 // ===============================================
