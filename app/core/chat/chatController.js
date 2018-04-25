@@ -16,7 +16,7 @@
 
             vm.imgSom = 'fa fa-volume-off';
             vm.ativaVoz = false;
-
+            vm.showSom = true;
 
             var params = {};
             var context = '';
@@ -24,18 +24,6 @@
             var watson = 'Watson';
 
             userMessage('');
-
-            function controlaSom(){
-
-                if(vm.ativaVoz){
-                    vm.ativaVoz = false;
-                    vm.imgSom = 'fa fa-volume-off';
-                }else{
-                    vm.ativaVoz = true;
-                    vm.imgSom = 'fa fa-volume-up';
-                }
-
-            }
 
             function userMessage(message) {
 
@@ -50,20 +38,17 @@
 
                     function(response){
 
-                        if(response.status==200){
+                        if(response.status == 200){
                             if(response.data.error){
                                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
                                 displayMessage("Ops, acho que meu cérebro está offline.", watson);
                             } else {
-                                text = response.data.output.text; // Only display the first response
+                                text = response.data.output.text;
                                 context = response.context; // Store the context for next round of questions
-                                //console.log("Got response from Watson: ", JSON.stringify(response));
 
                                 for (var txt in text) {
                                     displayMessage(text[txt], watson);
                                 }
-
-                                //$('#idchat').val(response.context.conversation_id).trigger("change");
 
                                 var chat = document.getElementById('chat_box');
                                 chat.scrollTop = chat.scrollHeight;
@@ -210,11 +195,6 @@
                 return i;
             }
 
-            function buscar() {
-                $scope.myPromise = getJson();
-            }
-
-
            function mostraAguarde(divEscrevendo) {
 
              var imgEscrevendo = document.createElement('img');
@@ -239,6 +219,18 @@
                 $( ".direct-chat-text" ).last().css( "width", "" );
                 $( ".direct-chat-text" ).last().append( textoFormat);
                 messageBox.appendChild(divHora);
+
+           }
+
+           function controlaSom(){
+
+               if(vm.ativaVoz){
+                   vm.ativaVoz = false;
+                   vm.imgSom = 'fa fa-volume-off';
+               }else{
+                   vm.ativaVoz = true;
+                   vm.imgSom = 'fa fa-volume-up';
+               }
 
            }
 

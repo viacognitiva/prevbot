@@ -1,205 +1,47 @@
-/**
- * This file contains all of the web and hybrid functions for interacting with
- * Ana and the Watson Conversation service. When API calls are not needed, the
- * functions also do basic messaging between the client and the server.
- *
- * @summary   Functions for Ana Chat Bot.
- *
- * @link      cloudco.mybluemix.net
- * @since     0.0.3
- * @requires  app.js
- *
- */
-var watson = require('watson-developer-cloud');
-var CONVERSATION_NAME = "Conversation-Demo"; // conversation name goes here.
-var fs = require('fs');
-var appEnv = null;
-var conversationWorkspace, conversation;
-var request = require('request');
 require('dotenv-safe').load();
+var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 
-// =====================================
-// CREATE THE SERVICE WRAPPER ==========
-// =====================================
-// Create the service wrapper
-conversation = watson.conversation({
-    url: process.env.WATSON_URL,
+var conversation = new ConversationV1({
     username: process.env.WATSON_USER,
     password: process.env.WATSON_PASSWORD,
-    version_date: process.env.WATSON_DATE,
-    version: process.env.WATSON_VERSION
+    version: '2017-05-26'
 });
-// check if the workspace ID is specified in the environment
-conversationWorkspace = process.env.WATSON_WS;
-// if not, look it up by name or create one
-// Allow clients to interact
 
 var chatbot = {
 
     sendMessage : function (req, callback) {
 
-        buildContextObject(req, function (err, params) {
+        if (req.body.context) {
+            context = req.body.context;
+        } else {
+            context = undefined;
+        }
+
+        var payload = {
+            workspace_id: process.env.WATSON_WS,
+            input: {
+                text: req.body.text
+            },
+            context: context
+        }
+
+        conversation.message(payload, function(err, data) {
 
             if (err) {
-                console.log("Error in building the parameters object : ", err);
+                console.log("Error in sending message: ", err);
                 return callback(err);
-            }
-
-            if (params.message) {
-
-                var conv = req.body.context.conversation_id;
-                var context = req.body.context;
-                var res = {
-                    intents: [],
-                    entities: [],
-                    input: req.body.text,
-                    output: {
-                        text: params.message
-                    },
-                    context: context
-                };
-
-                callback(null, res);
-
-            } else if (params) {
-
-                //Send message to the conversation service with the current context
-                conversation.message(params, function (err, data) {
-
-                    if (err) {
-                        console.log("Error in sending message: ", err);
-                        return callback(err);
-
-                    } else {
-
-                        var conv = data.context.conversation_id;
-                        //console.log("Got response from Ana: ", JSON.stringify(data));
-
-                        //insere logs da conversação no cloudant
-                        insertLogs(req,params,data);
-                        return callback(null, data);
-                    }
-                });
-            }
-        });
-
-    }
-};
-
-// ===============================================
-// LOG MANAGEMENT FOR USER INPUT FOR ANA =========
-// ===============================================
-function chatLogs(owner, conversation, response, callback) {
-
-    console.log("Response object is: ", response);
-
-    //Blank log file to parse down the response object
-    var logFile = {
-        inputText: '',
-        responseText: '',
-        entities: {},
-        intents: {}
-    };
-
-    logFile.inputText = response.input.text;
-    logFile.responseText = response.output.text;
-    logFile.entities = response.entities;
-    logFile.intents = response.intents;
-    logFile.date = new Date();
-    var date = new Date();
-    var doc = {};
-
-    Logs.find({selector: {'conversation': conversation}}, function (err, result) {
-
-        if (err) {
-            console.log("Couldn't find logs.");
-            callback(null);
-
-        } else {
-
-            doc = result.docs[0];
-
-            if (result.docs.length === 0) {
-
-                console.log("No log. Creating new one.");
-                doc = {
-                    owner: owner,
-                    date: date,
-                    conversation: conversation,
-                    lastContext: response.context,
-                    logs: []
-                };
-
-                doc.logs.push(logFile);
-
-                Logs.insert(doc, function (err, body) {
-                    if (err) {
-                        console.log("There was an error creating the log: ", err);
-                    } else {
-                        console.log("Log successfull created: ", body);
-                    }
-
-                    callback(null);
-                });
-
             } else {
 
-                doc.lastContext = response.context;
-                doc.logs.push(logFile);
+                if(process.env.SHOW_LOG == 'S'){
+                    console.log("Got response from Conversation: ", JSON.stringify(data));
+                }
 
-                Logs.insert(doc, function (err, body) {
-                    if (err) {
-                        console.log("There was an error updating the log: ", err);
-                    } else {
-                        console.log("Log successfull updated: ", body);
-                    }
-
-                    callback(null);
-                });
+                return callback(null, data);
             }
-        }
-    });
-}
-// ===============================================
-// UTILITY FUNCTIONS FOR CHATBOT AND LOGS ========
-// ===============================================
-/**
- * @summary Form the parameter object to be sent to the service
- *
- * Update the context object based on the user state in the conversation and
- * the existence of variables.
- *
- * @function buildContextObject
- * @param {Object} req - Req by user sent in POST with session and user message
- */
-function buildContextObject(req, callback) {
+        })
 
-    var message = req.body.text;
-    var context;
-
-    if (!message) {
-        message = '';
     }
 
-    var params = {
-        workspace_id: conversationWorkspace,
-        input: {},
-        context: {}
-    };
-
-    if (req.body.context) {
-        context = req.body.context;
-        params.context = context;
-
-    } else {
-        context = '';
-    }
-
-    params.input = {
-        text: message // User defined text to be sent to service
-    };
-
-    return callback(null, params);
 }
 
 module.exports = chatbot;

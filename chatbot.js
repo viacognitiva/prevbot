@@ -1,7 +1,7 @@
 var	app = require('./api/express')();
 
 var chatbot = require('./api/bot.js');
-
+var params = require('./api/parameters.js');
 var discovery = require('./api/discovery.js');
 var nlu = require('./api/nlu.js');
 var textToSpeech = require('./api/text-to-speech.js');
@@ -25,7 +25,16 @@ app.post('/api/synthesize', (req, res, next) => {
    textToSpeech.converter(req, res , next);
 });
 
+app.get('/api/showSound', function (req, res) {
+    params.showSound(req,res);
+});
+
+app.get('/api/showLog', function (req, res) {
+    params.showLog(req,res);
+});
+
 function processChatMessage(req, res) {
+
     chatbot.sendMessage(req, function (err, data) {
         if (err) {
             console.log("Error in sending message: ", err);
@@ -36,6 +45,7 @@ function processChatMessage(req, res) {
             res.status(200).json(data);
         }
     });
+
 }
 
 app.listen(app.get('port'), function() {

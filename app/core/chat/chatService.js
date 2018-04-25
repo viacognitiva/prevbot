@@ -8,24 +8,36 @@
 
     function chatService($http, $filter, $log, $q) {
 
-
-
-
         return {
-            myRedirect: myRedirect
+            showSound: showSound,
+            showLog: showLog
         };
 
+        function showSound(){
 
+            $http.get('/api/showSound').then(
+                function(response){
+                    if(response.data.retorno == 'true'){
+                        return 'true';
+                    }else{
+                        return 'false';
+                    }
+                }
+            )
+        };
 
-         function myRedirect(redirectUrl, arg, value) {
+        function showLog(){
 
-            var form = $('<form action="' + redirectUrl + '" method="get">' +
-            '<input type="text" name="'+ arg +'" value="' + value + '"></input></form>');
-             $('body').append(form);
-             $(form).submit();
-       }
-
-
+            $http.get('/api/showLog').then(
+                function(response){
+                    if(response.data.retorno == 'true'){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            )
+        }
 
     }
 })();
