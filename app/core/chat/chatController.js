@@ -16,7 +16,8 @@
 
             vm.imgSom = 'fa fa-volume-off';
             vm.ativaVoz = false;
-            vm.showSom = true;
+            vm.showSom = false;
+            vm.showLog = false;
 
             var params = {};
             var context = '';
@@ -24,6 +25,8 @@
             var watson = 'Watson';
 
             userMessage('');
+            showSound();
+            showLog();
 
             function userMessage(message) {
 
@@ -45,6 +48,10 @@
                             } else {
                                 text = response.data.output.text;
                                 context = response.context; // Store the context for next round of questions
+
+                                if (vm.showLog){
+                                    console.log("Got response from Watson: ", JSON.stringify(response));
+                                }
 
                                 for (var txt in text) {
                                     displayMessage(text[txt], watson);
@@ -209,6 +216,7 @@
            }
 
            function ocultaAguarde(messageBox,divEscrevendo, textoFormat) {
+
                 var divHora = document.createElement('div');
                 var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
                 divHora.style='text-align:right;color:#cfcfcf;font-size:12px';
@@ -234,6 +242,34 @@
 
            }
 
+           function showSound(){
+
+               $http.get('/api/showSound').then(
+                   function(response){
+                       console.log('showSound: ' + response.data.retorno);
+                       if(response.data.retorno == 'true'){
+                           vm.showSom = true;
+                       }else{
+                           vm.showSom = false;
+                       }
+
+                   }
+               )
+           }
+
+           function showLog(){
+
+               $http.get('/api/showLog').then(
+                   function(response){
+                       console.log('showLog: ' + response.data.retorno);
+                       if(response.data.retorno == 'true'){
+                           vm.showLog = true;
+                       }else{
+                           vm.showLog = false;
+                       }
+                   }
+               )
+           }
 
         }
 
