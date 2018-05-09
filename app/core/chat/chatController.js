@@ -47,7 +47,7 @@
                                 displayMessage("Ops, acho que meu cérebro está offline.", watson);
                             } else {
                                 text = response.data.output.text;
-                                context = response.context; // Store the context for next round of questions
+                                context = response.data.context; // Store the context for next round of questions
 
                                 if (vm.showLog){
                                     console.log("Got response from Watson: ", JSON.stringify(response));
