@@ -50,7 +50,33 @@
                                 context = response.data.context; // Store the context for next round of questions
 
                                 if (vm.showLog){
-                                    console.log("Got response from Watson: ", JSON.stringify(response));
+                                    console.log("Got response from Watson: ");
+                                    console.log(response);
+                                }
+
+                                if (!message == ''){
+
+                                    if(response.data.output.nodes_visited == 'Outras Opções'){
+
+                                        var logData = {
+                                            idchat: response.data.context.conversation_id,
+                                            texto: response.data.input.text
+                                        }
+
+                                        $http.post('/api/outros', logData).catch(Failure);
+
+                                        function Failure(error) {
+                                            console.log('Error: ' + JSON.stringify(error));
+                                        }
+                                    } else {
+                                        $http.post('/api/gravar', response).catch(Failure);
+
+                                        function Failure(error) {
+                                            console.log('Error: ' + JSON.stringify(error));
+                                        }
+
+                                    }
+
                                 }
 
                                 for (var txt in text) {

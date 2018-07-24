@@ -1,5 +1,5 @@
 {
-  "name": "ChatBot",
+  "name": "ViaBot",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "body-parser": "1.14.x",
+    "cloudant": "^1.10.0-NOTICE",
     "dotenv": "*",
     "dotenv-safe": "^4.0.4",
     "express": "4.13.x",
@@ -15,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/viacognitiva/Template-chatBot-.git"
+    "url": "https://github.com/RodrigoFlorentino/viaBot.git"
   },
   "engines": {
     "node": "6.9.4"

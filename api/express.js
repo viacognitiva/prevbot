@@ -18,7 +18,7 @@ module.exports = function() {
 
     //app.disable('x-powered-by');
     app.use(helmet.hidePoweredBy({setTo: 'PHP 5.5.14'})); //troca powerd-by for uma informação falsa
-    app.use(helmet.frameguard()); //bloqueia o uso de i-frame
+    //app.use(helmet.frameguard()); //bloqueia o uso de i-frame
     app.use(helmet.xssFilter()); //bloqueia o uso de XSS
     app.use(helmet.noSniff()); // não permite o carregamento de MIME types inválidos
 

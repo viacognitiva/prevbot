@@ -5,6 +5,7 @@ var params = require('./api/parameters.js');
 var discovery = require('./api/discovery.js');
 var nlu = require('./api/nlu.js');
 var textToSpeech = require('./api/text-to-speech.js');
+var cloudant = require('./api/cloudant');
 
 // =====================================
 // WATSON CONVERSATION FOR ANA =========
@@ -22,7 +23,7 @@ app.get('/api/nlu/:texto/:url', function (req, res) {
 });
 
 app.post('/api/synthesize', (req, res, next) => {
-   textToSpeech.converter(req, res , next);
+    textToSpeech.converter(req, res , next);
 });
 
 app.get('/api/showSound', function (req, res) {
@@ -30,7 +31,15 @@ app.get('/api/showSound', function (req, res) {
 });
 
 app.get('/api/showLog', function (req, res) {
-    params.showLog(req,res);
+    params.showLog(req, res);
+});
+
+app.post('/api/outros', function (req, res) {
+    cloudant.insertOutros(req,res);
+});
+
+app.post('/api/gravar', function (req, res) {
+    cloudant.insertChat(req,res);
 });
 
 function processChatMessage(req, res) {
