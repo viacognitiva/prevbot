@@ -1,6 +1,3 @@
-  body {
-    background-color: #fcf1f0;
-  }
   html, body, #wrapper {
     margin: 0;
     padding: 0;
@@ -33,16 +30,17 @@
     right:10px
   }
   .box-header{
-    background-color:#ffc4c4;
+    background-color:#3c8dbc;
   }
   .box-header .box-title{
       color:#fff;
+      font-size: 25px;
   }
   .box{
     background-color: rgba(255, 255, 255, 1);
   }
   .box.box-primary{
-    border-top-color:#ffc4c4;
+    border-top-color:#3c8dbc;
   }
   .box-header.with-border{
     border:0
@@ -57,20 +55,22 @@
     padding-bottom: 50px;
   }
   .direct-chat-text{
-    background: #f2f2f2;
-    border: 1px solid #f2f2f2;
-    color:#000;
+    background: #d2d6de;
+    border: 1px solid #d2d6de;
   }
   .direct-chat-text:after, .direct-chat-text:before{
-    border-right-color: #f2f2f2;
+    border-right-color: #d2d6de;
+  }
+  .direct-chat-text, .right .direct-chat-text, .direct-chat-msg{
+          margin:0
   }
   .direct-chat-primary .right>.direct-chat-text{
-    background: #00888A;
-    border-color: #00888A;
+    background: #11605C;
+    border-color: #11605C;
     color:#fff;
   }
   .direct-chat-primary .right>.direct-chat-text:after, .direct-chat-primary .right>.direct-chat-text:before{
-    border-left-color: #00888A;
+    border-left-color: #11605C;
   }
   #footer {
     box-sizing: border-box;
@@ -81,17 +81,17 @@
     background-color: #2980b9;
   }
   .btn-primary {
-    background-color: #00888A;
-    border-color: #00888A;
+    background-color: #3c8dbc;
+    border-color: #367fa9;
   }
   .btn-primary.focus, .btn-primary:focus{
-    background-color: #00888A;
+    background-color: #3c8dbc;
   }
   .btn-primary:hover, .btn-primary:active, .btn-primary.hover{
-    background-color: #00888A;
+    background-color: #367fa9;
   }
   .box-footer{
-    background-color: #ffc4c4;
+    background-color: #d2d6de;
   }
   #footer .content {
     padding-top: 4px;
@@ -126,6 +126,22 @@
   .escrevendo-img{
     width:45px
   }
+  .dataHora{
+    text-align:right;
+    color:#868686;
+    font-size:12px
+  }
+  .dataHoraUser{
+    text-align:left;
+    color:#868686;
+    font-size:12px;
+  }
+  .erro{
+    border:2px solid #f00!important;
+  }
+  .ok{
+    border:0px!important;
+  }
   @media(max-width: 1000px) {
     .content { width: 90%; }
   }
@@ -151,6 +167,5 @@
       position: relative;
       width: 100%;
     }
-    .audio{display: block;}
     #chat_box {height:70%;}
   }
