@@ -5,7 +5,7 @@ var params = require('./api/parameters.js');
 var discovery = require('./api/discovery.js');
 var nlu = require('./api/nlu.js');
 var textToSpeech = require('./api/text-to-speech.js');
-var cloudant = require('./api/cloudant');
+var cloudant = require('./api/cloudant.js');
 
 // =====================================
 // WATSON CONVERSATION FOR ANA =========

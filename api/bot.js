@@ -4,12 +4,14 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
     username: process.env.WATSON_USER,
     password: process.env.WATSON_PASSWORD,
-    version: '2017-05-26'
+    version: '2018-07-10'
 });
 
 var chatbot = {
 
     sendMessage : function (req, callback) {
+
+        var context;
 
         if (req.body.context) {
             context = req.body.context;
@@ -33,7 +35,7 @@ var chatbot = {
             } else {
 
                 if(process.env.SHOW_LOG == 'S'){
-                    console.log("Got response from Conversation: ", JSON.stringify(data));
+                    console.log("Got response from Conversation:", JSON.stringify(data));
                 }
 
                 return callback(null, data);

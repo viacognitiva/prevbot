@@ -23,6 +23,7 @@
             var context = '';
             var text = '';
             var watson = 'Watson';
+            var quest  ='';
 
             userMessage('');
             showSound();
@@ -46,7 +47,8 @@
                                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
                                 displayMessage("Ops, acho que meu cérebro está offline.", watson);
                             } else {
-                                text = response.data.output.text;
+
+
                                 context = response.data.context; // Store the context for next round of questions
 
                                 if (vm.showLog){
@@ -79,8 +81,35 @@
 
                                 }
 
-                                for (var txt in text) {
-                                    displayMessage(text[txt], watson);
+                                if (!response.data.output.text[0] == ''){
+
+                                    text = response.data.output.text;
+
+                                    for (var txt in text) {
+                                        displayMessage(text[txt], watson);
+                                    }
+
+                                } else {
+
+                                    if (response.data.output.generic[0].response_type == 'option'){
+
+                                        quest = '<p>' +response.data.output.generic[0].title + '</p><ul>';
+                                        text = response.data.output.generic[0].options;
+
+                                        for (var txt in text) {
+                                            quest += '<li>' + text[txt].label + '</li>'
+                                        }
+
+                                        quest += '</ul>';
+                                        displayMessage(quest, watson);
+
+
+                                    } else if(response.data.output.generic[0].response_type == 'image'){
+
+                                        displayMessage("<img src='" + response.data.output.generic[0].source + "'>", watson);
+
+                                    }
+
                                 }
 
                                 var chat = document.getElementById('chat_box');
