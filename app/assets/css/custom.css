@@ -148,9 +148,6 @@
   .ok{
     border:0px!important;
   }
-  @media(max-width: 1000px) {
-    .content { width: 90%; }
-  }
   @media (min-width: 992px){
     .col-md-3 {
       width: 50%;
