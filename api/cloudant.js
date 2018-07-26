@@ -58,6 +58,7 @@ var cloudant = {
 
         var dados = req.body;
         dados["dateText"] = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+        datos["treinado"] ='false';
 
         db.insert(dados,'doc_'+req.body.config.data.context.conversation_id+'_'+new Date().getTime(), function(err, body, header) {
             if (err) {
@@ -72,6 +73,7 @@ var cloudant = {
         var dados = {
             idchat: req.body.idchat,
             texto: req.body.texto,
+            treinado: 'false',
             data: new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
         }
 
