@@ -54,7 +54,7 @@
   }
   #chat_box {
     box-sizing: border-box;
-    height:80%;
+    height:90%;
     overflow: auto;
     padding-bottom: 50px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -70,12 +70,12 @@
           margin:0
   }
   .direct-chat-primary .right>.direct-chat-text{
-    background: #11605C;
-    border-color: #11605C;
-    color:#fff;
+    background: #fff;
+    border-color: #fff;
+    color:#000;
   }
   .direct-chat-primary .right>.direct-chat-text:after, .direct-chat-primary .right>.direct-chat-text:before{
-    border-left-color: #11605C;
+    border-left-color: #fff;
   }
   #footer {
     box-sizing: border-box;
