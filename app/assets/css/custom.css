@@ -5,6 +5,19 @@
     margin: 0;
     padding: 0;
   }
+  h1 {
+      font-weight: bold;
+      font-size: 28px;
+      margin: 40px 0;
+      color:#fff
+  }
+  label {
+      color: #fff;
+  }
+  .observacao {
+      color: #fff;
+      font-size: 12px;
+  }
   .audio{
     display: none;
   }
@@ -117,6 +130,7 @@
     width: 100%;
     margin: 0 auto;
     min-height:300px;
+    background-color: rgba(0, 0, 0, 0.4);
   }
 
   #system,
