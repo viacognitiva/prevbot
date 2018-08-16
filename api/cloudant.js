@@ -29,6 +29,7 @@ if(process.env.VCAP_SERVICES) {
 var cloudantDB = Cloudant({url:cloudant_url, account:user, password:password});
 db = cloudantDB.db.use(process.env.CLOUDANT_DB);
 dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
+dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
 
 var cloudant = {
 
@@ -40,18 +41,6 @@ var cloudant = {
         db.get(id, function(err, data) {
             res.status(200).json(data);
         });
-    },
-
-    getOutros : function(req, res){
-
-        dbOutros.list({include_docs:true},function(err, data) {
-            if(err){
-                return console.log('[dbOutros.getOutros] ', err.message);
-                res.status(500);
-            }
-            res.status(200).json(data);
-        });
-
     },
 
     insertChat : function (req, res) {
@@ -85,7 +74,24 @@ var cloudant = {
             res.status(200);
 
         });
-    }
+    },
+
+    insertUser : function (req, res) {
+
+        var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+
+        dbUser.insert({
+            nome: req.body.nome,
+            email: req.body.email,
+            telefone: req.body.telefone,
+            data: dataNow },function(err, body, header) {
+
+                if (err) {
+                    return console.log('[db.insert] ', err.message);
+                }
+                res.status(200).send("/chat");
+            });
+    },
 
 };
 

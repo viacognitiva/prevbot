@@ -1,5 +1,4 @@
 var	app = require('./api/express')();
-
 var chatbot = require('./api/bot.js');
 var params = require('./api/parameters.js');
 var discovery = require('./api/discovery.js');
@@ -40,6 +39,10 @@ app.post('/api/outros', function (req, res) {
 
 app.post('/api/gravar', function (req, res) {
     cloudant.insertChat(req,res);
+});
+
+app.post('/api/user', function (req, res) {
+    cloudant.insertUser(req,res);
 });
 
 function processChatMessage(req, res) {

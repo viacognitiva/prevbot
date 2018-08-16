@@ -36,7 +36,7 @@
                     params.context = context;
                 }
 
-                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}}
+                var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}};
 
                 $http.post('/api/watson',params,config).then(
 
@@ -47,7 +47,6 @@
                                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
                                 displayMessage("Ops, acho que meu cérebro está offline.", watson);
                             } else {
-
 
                                 context = response.data.context; // Store the context for next round of questions
 
@@ -63,7 +62,7 @@
                                         var logData = {
                                             idchat: response.data.context.conversation_id,
                                             texto: response.data.input.text
-                                        }
+                                        };
 
                                         $http.post('/api/outros', logData).catch(Failure);
 
@@ -97,7 +96,7 @@
                                         text = response.data.output.generic[0].options;
 
                                         for (var txt in text) {
-                                            quest += '<li>' + text[txt].label + '</li>'
+                                            quest += '<li>' + text[txt].label + '</li>';
                                         }
 
                                         quest += '</ul>';
@@ -306,7 +305,7 @@
                        }
 
                    }
-               )
+               );
            }
 
            function showLog(){
@@ -319,7 +318,7 @@
                            vm.showLog = false;
                        }
                    }
-               )
+               );
            }
 
         }
