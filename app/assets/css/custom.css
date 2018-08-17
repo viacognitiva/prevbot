@@ -69,7 +69,7 @@
     box-sizing: border-box;
     height:90%;
     overflow: auto;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     background-color: rgba(0, 0, 0, 0.4);
   }
   .direct-chat-text{
@@ -168,21 +168,4 @@
       margin: 0 auto;
       float: none;
     }
-  }
-  @media(max-width: 780px) {
-    #footer { height: 91px; }
-    #chat_box { padding-bottom: 91px; }
-
-    #user { width: 100%; }
-    #message { width: 80%; }
-  }
-
-  @media(max-width: 400px) {
-    #footer { height: 135px; }
-    #message { width: 100%; }
-    #send_btn {
-      position: relative;
-      width: 100%;
-    }
-    #chat_box {height:70%;}
   }
