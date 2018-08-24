@@ -45,6 +45,10 @@ app.post('/api/user', function (req, res) {
     cloudant.insertUser(req,res);
 });
 
+app.post('/api/aval', function (req, res) {
+    cloudant.insertAval(req,res);
+});
+
 function processChatMessage(req, res) {
 
     chatbot.sendMessage(req, function (err, data) {

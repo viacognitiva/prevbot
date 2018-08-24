@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
+    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','ngStorage','app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','chatService'];
+        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location','chatService'];
 
-        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,chatService) {
+        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location,chatService) {
 
             var vm              = this;
             vm.controlaSom      = controlaSom;
@@ -21,11 +21,14 @@
 
             var params = {};
             var context = '';
-            var text = '';
             var watson = 'Watson';
             var quest  ='';
+            var text = '';
+            var idchat = '';
+            var dados = {};
 
-            userMessage('');
+
+            userMessage();
             showSound();
             showLog();
 
@@ -48,6 +51,25 @@
                                 displayMessage("Ops, acho que meu cérebro está offline.", watson);
                             } else {
 
+                                idchat = response.data.context.conversation_id;
+                                dados = $localStorage.dados;
+
+                                if(dados){
+
+                                    dados.chatId = idchat;
+
+                                    $http.post('/api/user', dados).then(
+                                        function(response){
+                                            $localStorage.dadosBKP = dados;
+                                            $localStorage.dados = '';
+                                        },
+                                        function(erro){
+                                            console.log('Erro: ' + JSON.stringify(erro));
+                                        }
+                                    );
+
+                                }
+
                                 context = response.data.context; // Store the context for next round of questions
 
                                 if (vm.showLog){
@@ -57,10 +79,10 @@
 
                                 if (!message == ''){
 
-                                    if(response.data.output.nodes_visited == 'Outras Opções'){
+                                    if(response.data.output.nodes_visited === 'Outras Opções') {
 
                                         var logData = {
-                                            idchat: response.data.context.conversation_id,
+                                            idchat: idchat,
                                             texto: response.data.input.text
                                         };
 
@@ -69,6 +91,11 @@
                                         function Failure(error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         }
+
+                                    } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
+
+                                        $location.path('/aval');
+
                                     } else {
                                         $http.post('/api/gravar', response).catch(Failure);
 
@@ -284,11 +311,11 @@
 
            function controlaSom(){
 
-               if(vm.ativaVoz){
-                   vm.ativaVoz = false;
+               if($scope.ativaVoz){
+                   $scope.ativaVoz = false;
                    vm.imgSom = 'fa fa-volume-off';
                }else{
-                   vm.ativaVoz = true;
+                   $scope.ativaVoz = true;
                    vm.imgSom = 'fa fa-volume-up';
                }
 
@@ -320,7 +347,6 @@
                    }
                );
            }
-
         }
 
 })();

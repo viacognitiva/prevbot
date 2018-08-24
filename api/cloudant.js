@@ -30,6 +30,7 @@ var cloudantDB = Cloudant({url:cloudant_url, account:user, password:password});
 db = cloudantDB.db.use(process.env.CLOUDANT_DB);
 dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
 dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
+dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
 
 var cloudant = {
 
@@ -69,7 +70,7 @@ var cloudant = {
         dbOutros.insert(dados,function(err, body, header) {
 
             if (err) {
-                console.log('[dbTreino.insert] ', err.message);
+                console.log('[dbOutros.insert] ', err.message);
             }
             res.status(200);
 
@@ -84,14 +85,41 @@ var cloudant = {
             nome: req.body.nome,
             email: req.body.email,
             telefone: req.body.telefone,
+            chatId:req.body.chatId,
             data: dataNow },function(err, body, header) {
 
                 if (err) {
-                    return console.log('[db.insert] ', err.message);
+                    return console.log('[dbUser.insert] ', err.message);
                 }
                 res.status(200).send("/chat");
             });
     },
+
+    insertAval : function (req, res) {
+
+        var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
+
+        dbAval.insert({
+            chatId:req.body.chatId,
+            nome: req.body.nome,
+            email: req.body.email,
+            telefone: req.body.telefone,
+            gostou: req.body.gostou,
+            interface:req.body.interface,
+            recomenda:req.body.recomenda,
+            interesse:req.body.interesse,
+            comentario:req.body.comentario,
+            data: dataNow },function(err, body, header) {
+
+            if (err) {
+                return console.log('[dbAval.insert] ', err.message);
+            }
+            res.status(200);
+        });
+
+
+
+    }
 
 };
 

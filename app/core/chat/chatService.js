@@ -4,12 +4,13 @@
     angular.module('app.chatService', [])
         .factory('chatService', chatService);
 
-    chatService.$inject = ['$http','$filter','$log','$q'];
+    chatService.$inject = ['$http'];
 
-    function chatService($http, $filter, $log, $q) {
+    function chatService($http) {
 
         return {
-        };
+
+        }
 
     }
 })();

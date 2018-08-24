@@ -24,6 +24,12 @@
                 controller: 'chatController',
                 controllerAs: 'CC'
             })
+            .state('aval', {
+                url: '/aval',
+                templateUrl: 'core/aval/aval.html',
+                controller: 'avalController',
+                controllerAs: 'AC'
+            })
         };
 
         angular.module('app').run(run);

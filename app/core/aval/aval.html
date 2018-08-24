@@ -1,0 +1,51 @@
+<div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header with-border" style="text-align: center;">
+        <h3 class="box-title">Avaliação <b>Via</b><i>Bot</i></h3>
+    </div>
+    <div id="corpo" class="content">
+
+        <form ng-submit="AC.enviar()">
+
+            <div class="form-group">
+                <label for="like1">Você gostou das respostas do ViaBot?</label><br>
+                <a href="" ng-click="AC.like('1')"><i id="like1" ng-class="AC.like1"></i></a>
+                <a href="" ng-click="AC.nlike('1')"><i id="nlike1" ng-class="AC.nlike1"></i></a>
+            </div>
+
+            <div class="form-group">
+                <label for="like2">Você gostou da interface do ViaBot?</label><br>
+                <a href="" ng-click="AC.like('2')"><i id="like2" ng-class="AC.like2"></i></a>
+                <a href="" ng-click="AC.nlike('2')"><i id="nlike2" ng-class="AC.nlike2""></i></a>
+            </div>
+
+            <div class="form-group">
+                <label for="like3">Você recomendaria o ViaBot?</label><br>
+                <a href="" ng-click="AC.like('3')"><i id="like3" ng-class="AC.like3"></i></a>
+                <a href="" ng-click="AC.nlike('3')"><i id="nlike3" ng-class="AC.nlike3"></i></a>
+            </div>
+
+            <div class="form-group">
+                <label for="like4">Você tem interesse em receber um contato da ViaCognitiva?</label><br>
+                <a href="" ng-click="AC.like('4')"><i id="like4" ng-class="AC.like4"></i></a>
+                <a href="" ng-click="AC.nlike('4')"><i id="nlike4" ng-class="AC.nlike4"></i></a>
+            </div>
+
+            <div class="form-group">
+                <label for="comentario">Comentários</label>
+                <textarea rows="5" class="form-control" id="comentario" name="comentario" ng-model="AC.comentario"></textarea>
+            </div>
+
+
+            <div style="text-align:center;margin-top:30px">
+                <button type="submit" class="btn btn-primary">
+                    Enviar
+                </button>
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+            <div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
+        </div>
+
+    </div>
+</div>

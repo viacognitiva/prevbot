@@ -6,6 +6,7 @@
         'app.index',
         'app.user',
         'app.chat',
+        'app.aval',
         'app.directives.divSize'
     ]);
 })();
