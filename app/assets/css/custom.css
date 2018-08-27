@@ -140,7 +140,11 @@
   }
 
   .avaliacao .form-group{
-    margin-bottom:10px;
+    margin-bottom:11px;
+  }
+
+  .avaliacao label{
+    font-weight:normal
   }
 
   #system,
