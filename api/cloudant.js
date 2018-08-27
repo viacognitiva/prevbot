@@ -107,7 +107,6 @@ var cloudant = {
             gostou: req.body.gostou,
             interface:req.body.interface,
             recomenda:req.body.recomenda,
-            interesse:req.body.interesse,
             comentario:req.body.comentario,
             data: dataNow },function(err, body, header) {
 

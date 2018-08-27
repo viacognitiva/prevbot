@@ -39,7 +39,6 @@
                 gostou: vm.quest1,
                 interface: vm.quest2,
                 recomenda: vm.quest3,
-                interesse: vm.quest4,
                 comentario: vm.comentario
             };
 
@@ -53,7 +52,7 @@
             $localStorage.dadosBKP = '';
             dados.chatId = '';
             $localStorage.dados = dados;
-            $location.path('/chat');
+            $location.path('/fim');
         }
 
         function like(val){
@@ -70,10 +69,6 @@
                 vm.like3 = 'fas fa-thumbs-up';
                 vm.nlike3 = 'far fa-thumbs-down';
                 vm.quest3 = 'Sim';
-            }else if(val == '4') {
-                vm.like4 = 'fas fa-thumbs-up';
-                vm.nlike4 = 'far fa-thumbs-down';
-                vm.quest4 = 'Sim';
             }
 
         }
@@ -92,10 +87,6 @@
                 vm.like3 = 'far fa-thumbs-up';
                 vm.nlike3 = 'fas fa-thumbs-down';
                 vm.quest3 = 'Não';
-            }else if(val == '4'){
-                vm.like4 = 'far fa-thumbs-up';
-                vm.nlike4 = 'fas fa-thumbs-down';
-                vm.quest4 = 'Não';
             }
 
         }

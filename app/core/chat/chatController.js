@@ -4,9 +4,9 @@
     angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','ngStorage','app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location','chatService'];
+        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location','$timeout','chatService'];
 
-        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location,chatService) {
+        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location,$timeout,chatService) {
 
             var vm              = this;
             vm.controlaSom      = controlaSom;
@@ -26,7 +26,6 @@
             var text = '';
             var idchat = '';
             var dados = {};
-
 
             userMessage();
             showSound();
@@ -88,17 +87,19 @@
 
                                         $http.post('/api/outros', logData).catch(Failure);
 
+                                        // noinspection JSAnnotator
                                         function Failure(error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         }
 
+                                    } else if(response.data.output.nodes_visited[0] === 'Despedida'){
+                                        $location.path('/fim');
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
-
                                         $location.path('/aval');
-
                                     } else {
                                         $http.post('/api/gravar', response).catch(Failure);
 
+                                        // noinspection JSAnnotator
                                         function Failure(error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         }
@@ -347,6 +348,7 @@
                    }
                );
            }
+
         }
 
 })();

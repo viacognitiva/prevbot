@@ -30,6 +30,12 @@
                 controller: 'avalController',
                 controllerAs: 'AC'
             })
+            .state('fim', {
+                url: '/fim',
+                templateUrl: 'core/fim/fim.html',
+                controller: 'fimController',
+                controllerAs: 'FC'
+            })
         };
 
         angular.module('app').run(run);

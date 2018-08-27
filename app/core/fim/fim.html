@@ -1,0 +1,21 @@
+<div class="box box-primary direct-chat direct-chat-primary">
+    <div class="box-header with-border" style="text-align: center;">
+        <h3 class="box-title">Fale com o <b>Via</b><i>Bot</i></h3>
+    </div>
+    <form ng-submit="FC.restartChat()">
+        <div id="corpo" class="content avaliacao">
+
+            A ViaCognitiva agradece sua vista.
+
+            <div style="text-align:center;margin-top:25px">
+                <button type="submit" class="btn btn-primary">
+                    Reiniciar Chat
+                </button>
+            </div>
+
+            <div class="social-auth-links text-center">
+                <div class="alert alert-danger" role="alert" ng-if="errorMessage">{{errorMessage}}</div>
+            </div>
+        </div>
+    </form>
+</div>
