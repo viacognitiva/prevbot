@@ -135,7 +135,8 @@
 
    .avaliacao{
     background-color:#666;
-    height:330px
+    height:400px;
+    overflow: auto;
    }
   #system,
   .username {
