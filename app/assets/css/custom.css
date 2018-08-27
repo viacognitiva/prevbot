@@ -133,11 +133,16 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
 
-   .avaliacao{
+  .avaliacao{
     background-color:#666;
     height:400px;
     overflow: auto;
-   }
+  }
+
+  .avaliacao .form-group{
+    margin-bottom:10px;
+  }
+
   #system,
   .username {
     color: #aaa;
@@ -168,12 +173,12 @@
     border:0px!important;
   }
   .joia a.positivo{
-    color: #138889;
+    color: #fff;
     font-size: 23px;
     margin-right: 15px;
   }
   .joia a.negativo{
-    color: #c11507;
+    color: #fff;
     font-size: 23px;
   }
   @media (min-width: 992px){
