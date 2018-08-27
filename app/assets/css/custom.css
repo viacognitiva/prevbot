@@ -70,7 +70,7 @@
     height:90%;
     overflow: auto;
     padding-bottom: 10px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
   }
   .direct-chat-text{
     background: #d2d6de;
@@ -161,6 +161,15 @@
   }
   .ok{
     border:0px!important;
+  }
+  .joia a.positivo{
+    color: #138889;
+    font-size: 23px;
+    margin-right: 15px;
+  }
+  .joia a.negativo{
+    color: #c11507;
+    font-size: 23px;
   }
   @media (min-width: 992px){
     .col-md-3 {
