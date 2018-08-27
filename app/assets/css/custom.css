@@ -130,9 +130,13 @@
     width: 100%;
     margin: 0 auto;
     min-height:300px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
   }
 
+   .avaliacao{
+    background-color:#666;
+    height:330px
+   }
   #system,
   .username {
     color: #aaa;
