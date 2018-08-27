@@ -147,6 +147,13 @@
     font-weight:normal
   }
 
+  .avaliacao p{
+    margin: 100px 0;
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+  }
+
   #system,
   .username {
     color: #aaa;
@@ -190,5 +197,11 @@
       width: 50%;
       margin: 0 auto;
       float: none;
+    }
+
+  }
+  @media (max-width: 600px){
+    .avaliacao p{
+      font-size:16px
     }
   }
