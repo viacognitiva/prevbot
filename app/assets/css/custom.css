@@ -185,12 +185,22 @@
   }
   .joia a.positivo{
     color: #fff;
-    font-size: 23px;
+    font-size: 21px;
     margin:0 15px;
   }
   .joia a.negativo{
     color: #fff;
-    font-size: 23px;
+    font-size: 21px;
+  }
+  .observacao{
+    font-size:11px;
+    color:#fff
+  }
+  .alerta{
+    font-size:12px;
+    color: #cf9292;
+    margin-bottom: 8px;
+    margin-top: -17px;
   }
   @media (min-width: 992px){
     .col-md-3 {
