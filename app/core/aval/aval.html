@@ -35,6 +35,9 @@
                 <textarea rows="3" class="form-control" id="comentario" name="comentario" ng-model="AC.comentario"></textarea>
             </div>
 
+            <div class="social-auth-links text-center">
+                <div class="alert alert-danger" role="alert" ng-if="AC.errorMessage">{{AC.errorMessage}}</div>
+            </div>
 
             <div style="text-align:center;margin-top:25px">
                 <button type="submit" class="btn btn-primary">

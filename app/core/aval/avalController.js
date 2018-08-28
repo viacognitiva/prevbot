@@ -26,10 +26,16 @@
         vm.quest1 = '';
         vm.quest2 = '';
         vm.quest3 = '';
-        vm.quest5 = '';
         vm.comentario = '';
 
+        vm.errorMessage = '';
+
         function enviar(){
+
+            if(vm.quest1 == '' || vm.quest2 == '' || vm.quest3 == ''){
+                vm.errorMessage = 'Favor responder todas as perguntas.'
+                return false;
+            }
 
             var info = $localStorage.dadosBKP;
             var dados = {
