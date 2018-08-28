@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','ngStorage','app.chatService'])
+    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','ngStorage'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location','$timeout','chatService'];
+        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location'];
 
-        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location,$timeout,chatService) {
+        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location) {
 
             var vm              = this;
             vm.controlaSom      = controlaSom;
@@ -26,6 +26,8 @@
             var text = '';
             var idchat = '';
             var dados = {};
+            var ntexto = '';
+            var nome = '';
 
             userMessage();
             showSound();
@@ -94,8 +96,10 @@
 
                                     } else if(response.data.output.nodes_visited[0] === 'Despedida'){
                                         $location.path('/fim');
+                                        return false;
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
                                         $location.path('/aval');
+                                        return false;
                                     } else {
                                         $http.post('/api/gravar', response).catch(Failure);
 
@@ -112,8 +116,15 @@
 
                                     text = response.data.output.text;
 
+                                    if($localStorage.dados.nome){
+                                        nome = $localStorage.dados.nome
+                                    }else{
+                                        nome = $localStorage.dadosBKP.nome
+                                    }
+
                                     for (var txt in text) {
-                                        displayMessage(text[txt], watson);
+                                        ntexto = text[txt].replace('[nome]',nome);
+                                        displayMessage(ntexto, watson);
                                     }
 
                                 } else {
