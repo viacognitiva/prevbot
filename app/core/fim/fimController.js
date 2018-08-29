@@ -10,7 +10,7 @@
 
             var vm          = this;
             vm.restartChat  = restartChat;
-            vm.messageExit = $localStorage.dados.nome + ', a ViaCognitiva agradece sua visita e fica à sua disposição.';
+            vm.messageExit = $localStorage.dados.nome + ', a ViaCognitiva agradece a sua visita e fica à sua disposição.';
 
 
            function restartChat() {
