@@ -87,26 +87,26 @@
                                             texto: response.data.input.text
                                         };
 
-                                        $http.post('/api/outros', logData).catch(Failure);
-
-                                        // noinspection JSAnnotator
-                                        function Failure(error) {
+                                        $http.post('/api/outros', logData).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
-                                        }
+                                        });
 
                                     } else if(response.data.output.nodes_visited[0] === 'Despedida'){
+                                        $http.post('/api/gravar', response).catch(function(error){
+                                            console.log('Error: ' + JSON.stringify(error));
+                                        });
                                         $location.path('/fim');
                                         return false;
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
+                                        $http.post('/api/gravar', response).catch(function(error){
+                                            console.log('Error: ' + JSON.stringify(error));
+                                        });
                                         $location.path('/aval');
                                         return false;
                                     } else {
-                                        $http.post('/api/gravar', response).catch(Failure);
-
-                                        // noinspection JSAnnotator
-                                        function Failure(error) {
+                                        $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
-                                        }
+                                        });
 
                                     }
 
