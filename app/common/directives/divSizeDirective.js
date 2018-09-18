@@ -8,7 +8,7 @@
 
     function divSize($window) {
         return function (scope, elm, attrs) {
-            elm.css('height', $window.innerHeight - 110 + 'px');
+            elm.css('height', $window.innerHeight - 220 + 'px');
         };
     }
 })();

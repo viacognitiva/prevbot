@@ -1,23 +1,21 @@
-<div class="row" id="divChat">
-    <div class="col-md-12">
-        <div class="som" ng-show="CC.showSom"><a href="#"><i id="iconSom" ng-class="CC.imgSom" ng-click="CC.controlaSom()"></i></a></div>
-        <div class="box box-primary direct-chat direct-chat-primary">
-            <div class="box-header with-border" style="text-align: center;">
-                <h3 class="box-title">Fale com o <b>Via</b><i>Bot</i></h3>
-            </div><!-- /.box-header -->
-            <div id="chat_box" class="content" div-size ng-bind-html="CC.chatbox">
+<div class="chat-popup" id="divChat chat-popup" ng-style="CC.abreFecha">
+    <div class="som" ng-show="CC.showSom"><a href="#"><i id="iconSom" ng-class="CC.imgSom" ng-click="CC.controlaSom()"></i></a></div>
+    <div class="box box-primary direct-chat direct-chat-primary">
+        <div class="box-header with-border" style="text-align: center;">
+            <div class="chat-header" ng-click="CC.controlaAbreFecha()">PrevBot</div>
+        </div><!-- /.box-header -->
+        <div id="chat_box" class="content chat-body" div-size ng-bind-html="CC.chatbox">
 
-            </div>
-            <div class="box-footer" style="text-align:center">
-                <div class="input-group ng-hide" ng-hide="mostrarEnviar">
-                    <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
-                    <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control"/>
-                    <span class="input-group-btn">
-                        <input type="button" id="send_btn" value="Enviar" ng-click="CC.sendMessage();" class="btn btn-primary btn-flat">
-                    </span>
-                    <!--<div class="iconeFala"><a href="#" id="idPhone" class="btn btn-block"><i id="iconPhone" class="fa fa-microphone"></i></a></div>-->
-                    <input type="hidden" id="idSoundSession" value="1" />
-                </div>
+        </div>
+        <div class="box-footer chat-footer" style="text-align:center">
+            <div class="input-group ng-hide" ng-hide="mostrarEnviar">
+                <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
+                <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control"/>
+                <span class="input-group-btn">
+                    <input type="button" id="send_btn" value="Enviar" ng-click="CC.sendMessage();" class="btn btn-primary btn-flat">
+                </span>
+                <!--<div class="iconeFala"><a href="#" id="idPhone" class="btn btn-block"><i id="iconPhone" class="fa fa-microphone"></i></a></div>-->
+                <input type="hidden" id="idSoundSession" value="1" />
             </div>
         </div>
     </div>

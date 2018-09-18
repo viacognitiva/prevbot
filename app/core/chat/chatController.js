@@ -13,11 +13,15 @@
             vm.displayMessage   = displayMessage;
             vm.newEvent         = newEvent;
             vm.sendMessage      = sendMessage;
+            vm.controlaAbreFecha = controlaAbreFecha;
 
             vm.imgSom = 'fa fa-volume-off';
             vm.ativaVoz = false;
             vm.showSom = false;
             vm.showLog = false;
+            vm.abreFecha = {'animation-name': 'popup_open'};
+            vm.isOpen = true;
+
 
             var params = {};
             var context = '';
@@ -332,6 +336,16 @@
                }
 
            }
+
+           function controlaAbreFecha(){
+                         if(vm.isOpen){
+                             vm.isOpen = false;
+                             vm.abreFecha = {'animation-name': 'popup_close'};
+                         }else{
+                             vm.isOpen = true;
+                             vm.abreFecha = {'animation-name': 'popup_open'};
+                         }
+                     }
 
            function showSound(){
 
