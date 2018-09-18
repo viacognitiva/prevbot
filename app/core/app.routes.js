@@ -12,18 +12,21 @@
         $urlRouterProvider.otherwise('/chat');
 
         $stateProvider
+            /*
             .state('user', {
                 url: '/user',
                 templateUrl: 'core/user/user.html',
                 controller: 'userController',
                 controllerAs: 'UC'
             })
+            */
             .state('chat', {
                 url: '/chat',
                 templateUrl: 'core/chat/chat.html',
                 controller: 'chatController',
                 controllerAs: 'CC'
             })
+            /*
             .state('aval', {
                 url: '/aval',
                 templateUrl: 'core/aval/aval.html',
@@ -36,6 +39,7 @@
                 controller: 'fimController',
                 controllerAs: 'FC'
             })
+            */
         };
 
         angular.module('app').run(run);
