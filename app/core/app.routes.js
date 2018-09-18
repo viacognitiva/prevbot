@@ -7,9 +7,9 @@
 
     function config($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.when('', '/user');
-        $urlRouterProvider.when('/', '/user');
-        $urlRouterProvider.otherwise('/user');
+        $urlRouterProvider.when('', '/chat');
+        $urlRouterProvider.when('/', '/chat');
+        $urlRouterProvider.otherwise('/chat');
 
         $stateProvider
             .state('user', {
