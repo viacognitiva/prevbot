@@ -120,6 +120,7 @@
 
                                     text = response.data.output.text;
 
+                                    /*
                                     if($localStorage.dados.nome){
                                         nome = $localStorage.dados.nome
                                     }else{
@@ -129,6 +130,11 @@
                                     for (var txt in text) {
                                         ntexto = text[txt].replace('[nome]',nome);
                                         displayMessage(ntexto, watson);
+                                    }
+                                    */
+
+                                    for (var txt in text) {
+                                        displayMessage(text[txt], watson);
                                     }
 
                                 } else {
