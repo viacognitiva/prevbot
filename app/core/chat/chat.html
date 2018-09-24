@@ -10,7 +10,7 @@
         <div class="box-footer chat-footer" style="text-align:center">
             <div class="input-group ng-hide" ng-hide="mostrarEnviar">
                 <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
-                <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control"/>
+                <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control" autofocus/>
                 <span class="input-group-btn">
                     <input type="button" id="send_btn" value="Enviar" ng-click="CC.sendMessage();" class="btn btn-primary btn-flat">
                 </span>

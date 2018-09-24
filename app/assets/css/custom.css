@@ -394,6 +394,26 @@
     font-weight:bold;
     margin-bottom: 8px;
   }
+  #userForm .box-header.with-border{
+    background-color: #000;
+    padding: 14px;
+  }
+  #userForm .form-group{
+    margin-bottom:20px;
+  }
+  #userForm .formulario{
+    background-color:#fff;
+    padding:15px 25px
+  }
+  #userForm label{
+    font-size:15px;
+    color:#000
+  }
+  #userForm .form-control {
+      border: 1px solid #d2d6de;
+      padding: 15px 10px;
+      font-size:18px
+  }
   @media (min-width: 992px){
     .col-md-3 {
       width: 50%;
