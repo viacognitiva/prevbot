@@ -9,8 +9,7 @@
 
         $urlRouterProvider.when('', '/user');
         $urlRouterProvider.when('/', '/user');
-        $urlRouterProvider.otherwise('/user');
-
+       
         $stateProvider
 
             .state('user', {
