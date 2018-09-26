@@ -4,9 +4,9 @@
     angular.module('app.chatService', [])
         .factory('chatService', chatService);
 
-    chatService.$inject = ['$http', '$q'];
+    chatService.$inject = ['$http','$q','$log'];
 
-    function chatService($http, $q) {
+    function chatService($http, $q, $log) {
 
         var config = {
             headers: {
@@ -16,7 +16,8 @@
 
         return {
             getQuestionario: getQuestionario,
-            getCategoria: getCategoria
+            getCategoria: getCategoria,
+            getFundos: getFundos
         };
         
         function getQuestionario() {            
@@ -29,6 +30,14 @@
         function getCategoria(peso) {
 
             return $http.get('/api/getcateg/'+peso, config)
+                .then(procResponse)
+                .catch(procError);
+            
+        }
+
+        function getFundos(valores) {
+
+            return $http.get('/api/getfundos/' + JSON.stringify(valores), config)
                 .then(procResponse)
                 .catch(procError);
             

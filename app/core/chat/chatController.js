@@ -35,6 +35,7 @@
             var nome = '';
             var questoes = [];
             var categoria = [];
+            var fundos = [];
 
             var ctrlPerguntas = false;
             var qtdPerguntas = 0;
@@ -357,15 +358,6 @@
                 
             }
 
-            async function iniciaCategoria(peso) {
-                
-                categoria = await chatService.getCategoria(peso);
-                displayMessage(categoria.data.mensagem, watson);
-                var chat = document.getElementById('chat_box');
-                chat.scrollTop = chat.scrollHeight;
-
-            }
-
             function processaQuestionario(peso) {
                 
                 if(parseInt(peso) > 0 ){
@@ -378,6 +370,28 @@
                     iniciaCategoria(vm.peso);
                     //ctrlPerguntas = false;
                 }
+
+            }
+
+            async function iniciaCategoria(peso) {
+
+                categoria = await chatService.getCategoria(peso);
+                displayMessage(categoria.data.mensagem, watson);
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+                iniciaFundos();
+
+            }
+
+            async function iniciaFundos() {
+
+                var valores = {};
+                valores.risco = categoria.data.investimentos,
+                valores.minimo = 10000
+
+                fundos = await chatService.getFundos(valores);
+                console.log('Fundos:');
+                console.log(fundos)
 
             }
 

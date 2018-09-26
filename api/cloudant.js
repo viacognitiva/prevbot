@@ -17,6 +17,7 @@ dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
 dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
 dbQuestionario = cloudantDB.db.use(process.env.CLOUDANT_DBQUEST);
 dbCategoria = cloudantDB.db.use(process.env.CLOUDANT_DBCATEG);
+dbFundos = cloudantDB.db.use(process.env.CLOUDANT_DBFUNDOS);
 
 var cloudant = {
 
@@ -58,7 +59,7 @@ var cloudant = {
             if (err) {
                 console.log('[dbOutros.insert] ', err.message);
             }
-            res.status(200);
+            res.status(201);
 
         });
     },
@@ -77,7 +78,7 @@ var cloudant = {
                 if (err) {
                     return console.log('[dbUser.insert] ', err.message);
                 }
-                res.status(200).send("/chat");
+                res.status(201).send("/chat");
             });
     },
 
@@ -99,7 +100,7 @@ var cloudant = {
             if (err) {
                 return console.log('[dbAval.insert] ', err.message);
             }
-            res.status(200);
+            res.status(201);
         });
 
     },
@@ -134,11 +135,61 @@ var cloudant = {
             if (err) {
                 res.status(501).json(err);
             } else {
-                res.status(201).json(data.docs[data.docs.length-1]);
+                res.status(200).json(data.docs[data.docs.length-1]);
             }
 
         });
         
+    },
+
+    getFundo : function (req, res) {
+
+        var riscos = [];
+        var valores = JSON.parse(req.params.info);
+
+        for (var txt in valores.risco) {
+            riscos.push({'risco': valores.risco[txt]})
+        }
+
+        var query = {
+            "selector": {
+                "$and": [
+                    {
+                        "$or": riscos
+                    },
+                    {
+                        "aplicacaoMinima": {
+                            "$lte": parseFloat(valores.minimo)
+                        }
+                    }
+                ]
+            },
+            "fields": [
+                "seguradora",
+                "categoria",
+                "nome",
+                "aplicacaoMinima",
+                "taxaAdm",
+                "rentabilidadeMensal",
+                "rentabilidadeAnual",
+                "rentabilidade12Meses",
+                "risco"
+            ],
+            "sort":[
+                {"taxaAdm":"asc"}
+            ]
+        };
+
+        dbFundos.find(query, function (err, data) {
+
+            if (err) {
+                res.status(501).json(err);
+            } else {
+                res.status(200).json(data);
+            }
+
+        });
+
     }
 
 };
