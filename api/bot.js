@@ -33,10 +33,12 @@ var chatbot = {
                 console.log("Error in sending message: ", err);
                 return callback(err);
             } else {
-
+                
+                /*
                 if(process.env.SHOW_LOG == 'S'){
                     console.log("Got response from Conversation:", JSON.stringify(data));
                 }
+                */
 
                 return callback(null, data);
             }

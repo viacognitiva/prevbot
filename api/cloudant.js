@@ -15,6 +15,8 @@ db = cloudantDB.db.use(process.env.CLOUDANT_DB);
 dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
 dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
 dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
+dbQuestionario = cloudantDB.db.use(process.env.CLOUDANT_DBQUEST);
+dbCategoria = cloudantDB.db.use(process.env.CLOUDANT_DBCATEG);
 
 var cloudant = {
 
@@ -84,14 +86,14 @@ var cloudant = {
         var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
         dbAval.insert({
-            chatId:req.body.chatId,
+            chatId: req.body.chatId,
             nome: req.body.nome,
             email: req.body.email,
             telefone: req.body.telefone,
             gostou: req.body.gostou,
-            interface:req.body.interface,
-            recomenda:req.body.recomenda,
-            comentario:req.body.comentario,
+            interface: req.body.interface,
+            recomenda: req.body.recomenda,
+            comentario: req.body.comentario,
             data: dataNow },function(err, body, header) {
 
             if (err) {
@@ -100,8 +102,43 @@ var cloudant = {
             res.status(200);
         });
 
+    },
 
+    getQuestionario : function (req, res) {
+        
+        dbQuestionario.list({include_docs: true}, function (err, data) {
+            if (err) {
+                return res.status(500).json(err);
+            }
+            return res.status(200).json(data);
+        });
+    },
 
+    getCategoria : function (req, res) {
+
+        var query = {
+            "selector": {
+                "range": {
+                    "$elemMatch": 
+                        {
+                            "$gte":0,
+                            "$lt": parseInt(req.params.peso)
+                        }
+                }
+            },
+            "fields": ["categoria", "investimentos", "mensagem"]
+        };
+
+        dbCategoria.find(query, function (err, data) {
+
+            if (err) {
+                res.status(501).json(err);
+            } else {
+                res.status(201).json(data.docs[data.docs.length-1]);
+            }
+
+        });
+        
     }
 
 };

@@ -1,19 +1,21 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','ngStorage'])
+    angular.module('app.chat', ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStorage', 'app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$rootScope','$scope','$log','$http','$uibModal','$window','$localStorage','$location'];
+        chatController.$inject = ['$scope', '$http', '$uibModal', '$window', '$localStorage', '$location', 'chatService'];
 
-        function chatController($rootScope,$scope,$log,$http,$uibModal,$window,$localStorage,$location) {
+        function chatController($scope, $http, $uibModal, $window, $localStorage, $location, chatService) {
 
-            var vm              = this;
-            vm.controlaSom      = controlaSom;
-            vm.displayMessage   = displayMessage;
-            vm.newEvent         = newEvent;
-            vm.sendMessage      = sendMessage;
-            vm.controlaAbreFecha = controlaAbreFecha;
+            var vm                  = this;
+            vm.controlaSom          = controlaSom;
+            vm.displayMessage       = displayMessage;
+            vm.newEvent             = newEvent;
+            vm.sendMessage          = sendMessage;
+            vm.controlaAbreFecha    = controlaAbreFecha;
+            vm.processaQuestionario = processaQuestionario;
+            vm.optionMessage        = optionMessage;
 
             vm.imgSom = 'fa fa-volume-off';
             vm.ativaVoz = false;
@@ -21,18 +23,23 @@
             vm.showLog = false;
             vm.abreFecha = {'animation-name': 'popup_open'};
             vm.isOpen = true;
-
-
+            vm.peso = 0;
+            
             var params = {};
             var context = '';
             var watson = 'Watson';
-            var quest  ='';
             var text = '';
             var idchat = '';
             var dados = {};
             var ntexto = '';
             var nome = '';
+            var questoes = [];
+            var categoria = [];
 
+            var ctrlPerguntas = false;
+            var qtdPerguntas = 0;
+            var idPerguntas = 0;
+            
             userMessage();
             showSound();
             showLog();
@@ -96,18 +103,33 @@
                                         });
 
                                     } else if(response.data.output.nodes_visited[0] === 'Despedida'){
+
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
                                         $location.path('/fim');
                                         return false;
+
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
+
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
                                         $location.path('/aval');
                                         return false;
+
+                                    } else if (response.data.output.nodes_visited[1] === 'node_6_1535477961303') {
+                                    //} else if (response.data.output.text[0] === '[questionario]') {
+
+                                        $http.post('/api/gravar', response).catch(function (error) {
+                                            console.log('Error: ' + JSON.stringify(error));
+                                        });
+
+                                        iniciaQuestionario();
+                                        return false;
+
                                     } else {
+
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
@@ -141,16 +163,17 @@
 
                                     if (response.data.output.generic[0].response_type == 'option'){
 
-                                        quest = '<p>' +response.data.output.generic[0].title + '</p><ul>';
+
+                                        var quest = '<div class="opcao"><p>' + response.data.output.generic[0].title + '</p><ul>';
                                         text = response.data.output.generic[0].options;
 
+
                                         for (var txt in text) {
-                                            quest += '<li>' + text[txt].label + '</li>';
+                                            quest += '<li><a href="" onclick="angularCall(\'' + text[txt].label + '\');return false;">' + text[txt].label + '</a></li>'
                                         }
 
-                                        quest += '</ul>';
+                                        quest += '</ul><div>';
                                         displayMessage(quest, watson);
-
 
                                     } else if(response.data.output.generic[0].response_type == 'image'){
 
@@ -200,10 +223,10 @@
 
             function sendMessage() {
 
-                if($("#chatInput").val()==''){
+                if ($("#chatInput").val() == '') {
                     $("#chatInput").addClass("erro");
                     $("#chatInput").removeClass("ok");
-                   return;
+                    return;
                 }
 
                 $("#chatInput").addClass("ok");
@@ -214,6 +237,7 @@
                 displayMessage(texto, 'user');
                 message.value = '';
                 userMessage(texto);
+                
             }
 
             function displayMessage(text, user) {
@@ -222,31 +246,31 @@
 
                 if (user == "user") {
 
-                     var div = document.createElement('div');
-                     var div0 = document.createElement('div');
+                    var div = document.createElement('div');
+                    var div0 = document.createElement('div');
 
-                     var divHora = document.createElement('div');
-                     var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
-                     divHora.setAttribute("class", "dataHoraUser" );
-                     divHora.appendChild(textHora);
+                    var divHora = document.createElement('div');
+                    var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
+                    divHora.setAttribute("class", "dataHoraUser" );
+                    divHora.appendChild(textHora);
 
-                     var user = document.createTextNode(' ');
-                     var userBox = document.createElement('span');
-                     userBox.className = 'direct-chat-name pull-left';
-                     div0.className = 'direct-chat-msg right';
-                     div.className = 'direct-chat-text';
+                    var user = document.createTextNode(' ');
+                    var userBox = document.createElement('span');
+                    userBox.className = 'direct-chat-name pull-left';
+                    div0.className = 'direct-chat-msg right';
+                    div.className = 'direct-chat-text';
 
-                     div0.appendChild(div);
+                    div0.appendChild(div);
 
-                     userBox.appendChild(user);
+                    userBox.appendChild(user);
 
-                     var message = document.createTextNode(text);
-                     var messageBox = document.createElement('p');
-                     messageBox.appendChild(userBox);
-                     div.appendChild(message);
-                     messageBox.appendChild(div0);
-                     messageBox.appendChild(divHora);
-                     chat.appendChild(messageBox);
+                    var message = document.createTextNode(text);
+                    var messageBox = document.createElement('p');
+                    messageBox.appendChild(userBox);
+                    div.appendChild(message);
+                    messageBox.appendChild(div0);
+                    messageBox.appendChild(divHora);
+                    chat.appendChild(messageBox);
 
                 } else {
 
@@ -283,7 +307,7 @@
 
                         $( ".direct-chat-text" ).last().empty();
                         $( ".direct-chat-text" ).last().css( "width", "" );
-                        $( ".direct-chat-text" ).last().append( textoFormat);
+                        $( ".direct-chat-text" ).last().append(textoFormat);
 
                         var divHora = document.createElement('div');
                         var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
@@ -296,27 +320,20 @@
                 }
             }
 
-            function addZero(i) {
-                if (i < 10) {
-                    i = "0" + i;
-                }
-                return i;
+            function mostraAguarde(divEscrevendo) {
+
+                var imgEscrevendo = document.createElement('img');
+                imgEscrevendo.className = 'escrevendo-img';
+                imgEscrevendo.src = 'assets/images/escrevendo2.gif';
+                divEscrevendo.appendChild(imgEscrevendo);
+
+                $( ".direct-chat-text" ).last().empty();
+                $( ".direct-chat-text" ).last().css( "width", "65px" );
+                $( ".direct-chat-text" ).last().append(divEscrevendo);
+
             }
 
-           function mostraAguarde(divEscrevendo) {
-
-             var imgEscrevendo = document.createElement('img');
-             imgEscrevendo.className = 'escrevendo-img';
-             imgEscrevendo.src = 'assets/images/escrevendo2.gif';
-             divEscrevendo.appendChild(imgEscrevendo);
-
-             $( ".direct-chat-text" ).last().empty();
-             $( ".direct-chat-text" ).last().css( "width", "65px" );
-             $( ".direct-chat-text" ).last().append(divEscrevendo);
-
-           }
-
-           function ocultaAguarde(messageBox,divEscrevendo, textoFormat) {
+            function ocultaAguarde(messageBox,divEscrevendo, textoFormat) {
 
                 var divHora = document.createElement('div');
                 var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
@@ -329,56 +346,124 @@
                 $( ".direct-chat-text" ).last().append( textoFormat);
                 messageBox.appendChild(divHora);
 
-           }
+            }
 
-           function controlaSom(){
+            async function iniciaQuestionario() {
 
-               if($scope.ativaVoz){
-                   $scope.ativaVoz = false;
-                   vm.imgSom = 'fa fa-volume-off';
-               }else{
-                   $scope.ativaVoz = true;
-                   vm.imgSom = 'fa fa-volume-up';
-               }
+                questoes = await chatService.getQuestionario();
+                qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
+                ctrlPerguntas = true;
+                processaQuestionario('0');               
+                
+            }
 
-           }
+            async function iniciaCategoria(peso) {
+                
+                categoria = await chatService.getCategoria(peso);
+                displayMessage(categoria.data.mensagem, watson);
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
 
-           function controlaAbreFecha(){
-                         if(vm.isOpen){
-                             vm.isOpen = false;
-                             vm.abreFecha = {'animation-name': 'popup_close'};
-                         }else{
-                             vm.isOpen = true;
-                             vm.abreFecha = {'animation-name': 'popup_open'};
-                         }
-                     }
+            }
 
-           function showSound(){
+            function processaQuestionario(peso) {
+                
+                if(parseInt(peso) > 0 ){
+                    vm.peso = vm.peso + parseInt(peso);
+                }
 
-               $http.get('/api/showSound').then(
-                   function(response){
-                       if(response.data.retorno == 'true'){
-                           vm.showSom = true;
-                       }else{
-                           vm.showSom = false;
-                       }
+                if (idPerguntas < qtdPerguntas){
+                    montaOpcao(questoes.data.rows[0].doc.perguntas[idPerguntas]);                        
+                }else{
+                    iniciaCategoria(vm.peso);
+                    //ctrlPerguntas = false;
+                }
 
-                   }
-               );
-           }
+            }
 
-           function showLog(){
+            function montaOpcao(pergunta) {
 
-               $http.get('/api/showLog').then(
-                   function(response){
-                       if(response.data.retorno == 'true'){
-                           vm.showLog = true;
-                       }else{
-                           vm.showLog = false;
-                       }
-                   }
-               );
-           }
+                idPerguntas = idPerguntas + 1;
+                ctrlPerguntas = true;
+
+                var quest = '<div class="opcao"><p>' + pergunta.pergunta + '</p><ul>';
+                text = pergunta.opcoes;
+
+                for (var txt in text) {
+                    quest += '<li><a href="" onclick="contQuestionario(\'' + text[txt].opcao + '|' + text[txt].peso + '\');return false;">' + text[txt].opcao + '</a></li>'
+                }
+
+                quest += '</ul><div>';
+                displayMessage(quest, watson);
+
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+                
+            }
+
+            function optionMessage(texto) {
+
+                displayMessage(texto, 'user');
+
+                if (!ctrlPerguntas) {
+                    userMessage(texto);
+                }
+
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+
+            }
+
+            function addZero(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+
+            function controlaSom(){
+
+                if($scope.ativaVoz){
+                    $scope.ativaVoz = false;
+                    vm.imgSom = 'fa fa-volume-off';
+                }else{
+                    $scope.ativaVoz = true;
+                    vm.imgSom = 'fa fa-volume-up';
+                }
+            }
+
+            function controlaAbreFecha(){
+                if(vm.isOpen){
+                    vm.isOpen = false;
+                    vm.abreFecha = {'animation-name': 'popup_close'};
+                }else{
+                    vm.isOpen = true;
+                    vm.abreFecha = {'animation-name': 'popup_open'};
+                }
+            }
+
+            function showSound(){
+
+                $http.get('/api/showSound').then(function(retorno){
+                    if(retorno.data.retorno == 'true'){
+                        vm.showSom = true;
+                    }else{
+                        vm.showSom = false;
+                    }
+
+                });
+            }
+
+            function showLog(){
+
+                $http.get('/api/showLog').then(function(retorno){
+                    if(retorno.data.retorno == 'true'){
+                        vm.showLog = true;
+                    }else{
+                        vm.showLog = false;
+                    }
+                });
+            }
 
         }
 

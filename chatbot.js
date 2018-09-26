@@ -49,6 +49,14 @@ app.post('/api/aval', function (req, res) {
     cloudant.insertAval(req,res);
 });
 
+app.get('/api/getquest', function (req, res) {
+    cloudant.getQuestionario(req,res);
+});
+
+app.get('/api/getcateg/:peso', function (req, res) {
+    cloudant.getCategoria(req, res);
+});
+
 function processChatMessage(req, res) {
 
     chatbot.sendMessage(req, function (err, data) {
