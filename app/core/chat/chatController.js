@@ -36,6 +36,7 @@
             var questoes = [];
             var categoria = [];
             var fundos = [];
+            var valorInvest = 0;
 
             var ctrlPerguntas = false;
             var qtdPerguntas = 0;
@@ -53,7 +54,7 @@
                 }
 
                 var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}};
-
+                
                 $http.post('/api/watson',params,config).then(
 
                     function(response){
@@ -124,7 +125,7 @@
                                                 response.data.output.text[1] === '[questionario]') {
 
                                         var txtTmp = '';
-
+                                        
                                         if (response.data.output.text[1] === '[questionario]') {
                                             txtTmp = response.data.output.text[0]
                                         }
@@ -132,6 +133,10 @@
                                         $http.post('/api/gravar', response).catch(function (error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+
+                                        if(response.data.entities[0].entity == 'sys-number'){
+                                            valorInvest = response.data.entities[0].metadata.numeric_value
+                                        }
 
                                         iniciaQuestionario(txtTmp);
                                         return false;
@@ -389,21 +394,19 @@
                 displayMessage('Os fundos mais adequados para o seu perfil são:', watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
-                iniciaFundos();
+                iniciaFundos(valorInvest);
 
             }
 
-            async function iniciaFundos() {
+            async function iniciaFundos(valorInvest) {
 
                 var quest = '<ul>';
                 var textoTmp = ''
                 var valores = {};
-                valores.risco = categoria.data.investimentos,
-                valores.minimo = 10000
+                valores.risco = categoria.data.investimentos
+                valores.minimo = parseFloat(valorInvest)
 
                 fundos = await chatService.getFundos(valores);
-                console.log('Fundos:');
-                console.log(fundos);
 
                 for(var fds in fundos.data.docs){
                     textoTmp = 'Seguradora:' + fundos.data.docs[fds].seguradora + '<br>Categoria:' + fundos.data.docs[fds].categoria + '<br>Nome:' + fundos.data.docs[fds].nome;
