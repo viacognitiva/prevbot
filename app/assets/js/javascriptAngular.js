@@ -17,3 +17,9 @@ function contQuestionario(objeto) {
     $(".opcao").attr("class", "disabled");
 
 }
+
+function enviaFundo(texto) {
+    var scope = angular.element(document.getElementById('chatScreen')).scope();
+    
+    
+}

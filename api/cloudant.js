@@ -165,6 +165,7 @@ var cloudant = {
                 ]
             },
             "fields": [
+                "id",
                 "seguradora",
                 "categoria",
                 "nome",
@@ -175,6 +176,7 @@ var cloudant = {
                 "rentabilidade12Meses",
                 "risco"
             ],
+            "limit":3,
             "sort":[
                 {"taxaAdm":"asc"}
             ]

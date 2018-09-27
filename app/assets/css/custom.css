@@ -422,8 +422,11 @@
     }
 
   }
-  @media (max-width: 600px){
-    .avaliacao p{
-      font-size:16px
-    }
+  @media (max-width: 600px) {
+    .avaliacao p {
+    font-size: 16px
   }
+  .chat-popup {
+    width: 100%
+  }
+}

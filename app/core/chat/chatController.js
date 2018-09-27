@@ -119,14 +119,21 @@
                                         $location.path('/aval');
                                         return false;
 
-                                    } else if (response.data.output.nodes_visited[1] === 'node_6_1535477961303') {
-                                    //} else if (response.data.output.text[0] === '[questionario]') {
+                                    } else if (response.data.output.nodes_visited[1] === 'node_6_1535477961303' ||
+                                                response.data.output.text[0] === '[questionario]'|| 
+                                                response.data.output.text[1] === '[questionario]') {
+
+                                        var txtTmp = '';
+
+                                        if (response.data.output.text[1] === '[questionario]') {
+                                            txtTmp = response.data.output.text[0]
+                                        }
 
                                         $http.post('/api/gravar', response).catch(function (error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
 
-                                        iniciaQuestionario();
+                                        iniciaQuestionario(txtTmp);
                                         return false;
 
                                     } else {
@@ -164,10 +171,8 @@
 
                                     if (response.data.output.generic[0].response_type == 'option'){
 
-
                                         var quest = '<div class="opcao"><p>' + response.data.output.generic[0].title + '</p><ul>';
                                         text = response.data.output.generic[0].options;
-
 
                                         for (var txt in text) {
                                             quest += '<li><a href="" onclick="angularCall(\'' + text[txt].label + '\');return false;">' + text[txt].label + '</a></li>'
@@ -349,7 +354,11 @@
 
             }
 
-            async function iniciaQuestionario() {
+            async function iniciaQuestionario(txtPre) {
+
+                if(txtPre != ''){
+                    displayMessage(txtPre, watson);
+                }
 
                 questoes = await chatService.getQuestionario();
                 qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
@@ -377,6 +386,7 @@
 
                 categoria = await chatService.getCategoria(peso);
                 displayMessage(categoria.data.mensagem, watson);
+                displayMessage('Os fundos mais adequados para o seu perfil são:', watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
                 iniciaFundos();
@@ -385,13 +395,22 @@
 
             async function iniciaFundos() {
 
+                var quest = '';
+                var textoTmp = ''
                 var valores = {};
                 valores.risco = categoria.data.investimentos,
                 valores.minimo = 10000
 
                 fundos = await chatService.getFundos(valores);
                 console.log('Fundos:');
-                console.log(fundos)
+                console.log(fundos);
+
+                for(var fds in fundos.data.docs){
+                    textoTmp = 'Seguradora:' + fundos.data.docs[fds].seguradora + '<br>Categoria:' + fundos.data.docs[fds].categoria + '<br>Nome:' + fundos.data.docs[fds].nome;
+                    quest += '<li><a href="" onclick="enviaFundo(\'' + fundos.data.docs[fds]._id + '\');return false;">' + textoTmp + '</a></li>'
+                }
+
+                displayMessage(quest, watson);
 
             }
 
