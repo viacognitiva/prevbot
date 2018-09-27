@@ -134,8 +134,10 @@
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
 
-                                        if(response.data.entities[0].entity == 'sys-number'){
-                                            valorInvest = response.data.entities[0].metadata.numeric_value
+                                        const valorInvestInput = response.data.entities.find(obj => obj.entity === 'sys-number')
+                                        
+                                        if (valorInvestInput) {
+                                            valorInvest = valorInvestInput.metadata.numeric_value
                                         }
 
                                         iniciaQuestionario(txtTmp);
@@ -409,7 +411,10 @@
                 fundos = await chatService.getFundos(valores);
 
                 for(var fds in fundos.data.docs){
-                    textoTmp = 'Seguradora:' + fundos.data.docs[fds].seguradora + '<br>Categoria:' + fundos.data.docs[fds].categoria + '<br>Nome:' + fundos.data.docs[fds].nome;
+                    textoTmp = 'Seguradora:' + fundos.data.docs[fds].seguradora + 
+                            '<br>Categoria:' + fundos.data.docs[fds].categoria + 
+                            '<br>Nome:' + fundos.data.docs[fds].nome;
+
                     quest += '<li><a href="" onclick="enviaFundo(\'' + fundos.data.docs[fds]._id + '\');return false;">' + textoTmp + '</a></li>'
                 }
 
