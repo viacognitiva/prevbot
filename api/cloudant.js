@@ -2,22 +2,19 @@ require('dotenv-safe').load();
 
 var Cloudant = require('@cloudant/cloudant');
 var express = require('express');
-var http = require("http");
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
 
-var protocol = process.env.NODE_ENV == 'production' ? "https" : "http" ;
-var cloudant_url = process.env.CLOUDANT_URL;
 var cloudantDB = Cloudant(process.env.CLOUDANT_URL);
 
-db = cloudantDB.db.use(process.env.CLOUDANT_DB);
-dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
-dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
-dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
-dbQuestionario = cloudantDB.db.use(process.env.CLOUDANT_DBQUEST);
-dbCategoria = cloudantDB.db.use(process.env.CLOUDANT_DBCATEG);
-dbFundos = cloudantDB.db.use(process.env.CLOUDANT_DBFUNDOS);
+const db = cloudantDB.db.use(process.env.CLOUDANT_DB);
+const dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
+const dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
+const dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
+const dbQuestionario = cloudantDB.db.use(process.env.CLOUDANT_DBQUEST);
+const dbCategoria = cloudantDB.db.use(process.env.CLOUDANT_DBCATEG);
+const dbFundos = cloudantDB.db.use(process.env.CLOUDANT_DBFUNDOS);
 
 var cloudant = {
 

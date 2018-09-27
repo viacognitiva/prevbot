@@ -400,7 +400,7 @@
 
             async function iniciaFundos(valorInvest) {
 
-                var quest = '<ul>';
+                var quest = '<div class="opcao"><ul>';
                 var textoTmp = ''
                 var valores = {};
                 valores.risco = categoria.data.investimentos
@@ -413,7 +413,7 @@
                     quest += '<li><a href="" onclick="enviaFundo(\'' + fundos.data.docs[fds]._id + '\');return false;">' + textoTmp + '</a></li>'
                 }
 
-                quest += '</ul>';
+                quest += '</ul><div>';
                 displayMessage(quest, watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
