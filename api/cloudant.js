@@ -165,7 +165,7 @@ var cloudant = {
                 ]
             },
             "fields": [
-                "id",
+                "_id",
                 "seguradora",
                 "categoria",
                 "nome",

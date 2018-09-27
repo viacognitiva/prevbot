@@ -395,7 +395,7 @@
 
             async function iniciaFundos() {
 
-                var quest = '';
+                var quest = '<ul>';
                 var textoTmp = ''
                 var valores = {};
                 valores.risco = categoria.data.investimentos,
@@ -410,7 +410,10 @@
                     quest += '<li><a href="" onclick="enviaFundo(\'' + fundos.data.docs[fds]._id + '\');return false;">' + textoTmp + '</a></li>'
                 }
 
+                quest += '</ul>';
                 displayMessage(quest, watson);
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
 
             }
 
