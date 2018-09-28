@@ -37,6 +37,7 @@
             var categoria = [];
             var fundos = [];
             var valorInvest = 0;
+            var respQuest = '';
 
             var ctrlPerguntas = false;
             var qtdPerguntas = 0;
@@ -67,6 +68,10 @@
 
                                 idchat = response.data.context.conversation_id;
                                 dados = $localStorage.dados;
+
+                                if (!respQuest){
+                                    respQuest = response
+                                }
 
                                 if(dados){
 
@@ -411,11 +416,13 @@
                 fundos = await chatService.getFundos(valores);
 
                 for(var fds in fundos.data.docs){
-                    textoTmp = 'Seguradora:' + fundos.data.docs[fds].seguradora + 
-                            '<br>Categoria:' + fundos.data.docs[fds].categoria + 
-                            '<br>Nome:' + fundos.data.docs[fds].nome;
-
-                    quest += '<li><a href="" onclick="enviaFundo(\'' + fundos.data.docs[fds]._id + '\');return false;">' + textoTmp + '</a></li>'
+                    quest += '<li>Seguradora: ' + fundos.data.docs[fds].seguradora +
+                        '<br>Categoria: ' + fundos.data.docs[fds].categoria + 
+                        '<br>Nome: ' + fundos.data.docs[fds].nome +
+                        '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
+                        '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
+                        '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
+                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</li>';
                 }
 
                 quest += '</ul><div>';

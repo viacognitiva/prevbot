@@ -4,7 +4,7 @@ var ConversationV1 = require('watson-developer-cloud/conversation/v1');
 var conversation = new ConversationV1({
     username: process.env.WATSON_USER,
     password: process.env.WATSON_PASSWORD,
-    version: '2018-07-10'
+    version: '2018-09-20'
 });
 
 var chatbot = {
