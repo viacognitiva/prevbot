@@ -10,6 +10,7 @@
 
             var vm          = this;
             vm.restartChat  = restartChat;
+            vm.restartUser  = restartUser;
             var nome        = '';
 
             if($localStorage.dados.nome){
@@ -18,11 +19,14 @@
                 nome = $localStorage.dadosBKP.nome
             }
 
-            vm.messageExit = nome + ', a ViaCognitiva agradece a sua visita e fica à sua disposição.';
+            vm.messageExit = nome + ', o PrevBot agradece a sua visita e fica à sua disposição.';
 
 
            function restartChat() {
                $location.path('/chat');
+           }
+           function restartUser() {
+                $location.path('/saudacao');
            }
 
         }

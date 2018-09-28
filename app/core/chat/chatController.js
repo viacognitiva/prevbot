@@ -257,17 +257,15 @@
                     var div = document.createElement('div');
                     var div0 = document.createElement('div');
 
-                    var divHora = document.createElement('div');
-                    var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
-                    divHora.setAttribute("class", "dataHoraUser" );
-                    divHora.appendChild(textHora);
-
                     var user = document.createTextNode(' ');
                     var userBox = document.createElement('span');
                     userBox.className = 'direct-chat-name pull-left';
                     div0.className = 'direct-chat-msg right';
                     div.className = 'direct-chat-text';
-
+                    var img = document.createElement('img');
+                    img.className = 'direct-chat-img-user';
+                    img.src = 'assets/images/img_usuario.png';
+                    div0.appendChild(img);
                     div0.appendChild(div);
 
                     userBox.appendChild(user);
@@ -277,7 +275,6 @@
                     messageBox.appendChild(userBox);
                     div.appendChild(message);
                     messageBox.appendChild(div0);
-                    messageBox.appendChild(divHora);
                     chat.appendChild(messageBox);
 
                 } else {
@@ -286,7 +283,10 @@
 
                     var user = document.createTextNode(' ');
                     var userBox = document.createElement('span');
-                    div.className = 'direct-chat-text';
+                    user = document.createElement('img');
+                    user.className = 'direct-chat-img';
+                    user.src = 'assets/images/chat_cabeca.png';
+                    div.className = 'direct-chat-text bot';
 
                     userBox.appendChild(user);
 
@@ -316,12 +316,6 @@
                         $( ".direct-chat-text" ).last().empty();
                         $( ".direct-chat-text" ).last().css( "width", "" );
                         $( ".direct-chat-text" ).last().append(textoFormat);
-
-                        var divHora = document.createElement('div');
-                        var textHora= document.createTextNode(addZero(new Date().getDate())+"/"+(addZero(new Date().getMonth()+1))+"  "+addZero(new Date().getHours())+":"+addZero(new Date().getMinutes()));
-                        divHora.setAttribute("class", "dataHora" );
-                        divHora.appendChild(textHora);
-                        messageBox.appendChild(divHora);
 
                     }
 

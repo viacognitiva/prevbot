@@ -47,39 +47,53 @@ label {
     margin:0;
     padding:0;
     width:100%;
-  }
-  .inicio:after {
-    content: "";
     display: table;
-    clear: both;
+    background-color:#e4e4e4
   }
+.textoInicio, .logo{
+    display: table-cell;
+    padding: 16px;
+}
 .direita {
     text-align: right;
 }
 .textoInicio {
-    margin: 50px 5px 200px;
+    padding: 25px 40px;
+    background-color:#90d4dd;
+}
+.textoInicio .titulo{
+    font-size:30px;
+    font-weight:bold;
+    width:100%;
+    text-align:center;
+    margin:10px 0
+}
+.textoInicio .descricao{
+    font-size:25px;
+    width:100%;
+    text-align:center;
+    margin:10px 0;
+    border-bottom:1px solid #333
+
 }
 .textoInicio p {
     font-size: 30px;
     width: 100%;
-    color:#ddd;
+    color: #0d5a50;
 }
+ul.lista1{list-style-type: circle;font-size: 17px;}
+ul.lista2{font-size: 17px;}
 .logo {
-    background-color: #ccc;
-    padding: 20px;
+    text-align: center;
+    margin-top:10%
 }
-.textoInicio{
-    margin: 50px 5px 200px;
+.direita a{
+    color: #0d5a50;
+    font-weight:bold;
+    font-size:26px
 }
-.textoInicio a{
-    color: #C92C49;
-}
-.textoInicio p{
-    font-size:30px;
-    width:100%
-}
-.textoInicio a:hover, .textoInicio a:focus, .textoInicio a:active{
-    color: #943f4e;
+.direita a:hover, .direita a:focus, .direita a:active{
+    color: #37847a;
 }
 .btn{
     padding: 13px 27px;
@@ -135,7 +149,7 @@ label {
   }
   .direct-chat-img{
     border-radius: 0;
-    width: 67px;
+    width: 45px;
     height: auto;
   }
   .direct-chat-img-user{
@@ -156,7 +170,7 @@ label {
     padding:0;
     color:#000;
     font-size: 20px;
-    margin: 0 85px;
+    margin: 0 65px;
   }
   .direct-chat-primary .right>.direct-chat-text{
     margin: 10px 85px 0 85px;
@@ -191,7 +205,7 @@ label {
     transform: scale(1.05);
   }
   .box-footer{
-    background-color: #eef3d5;
+    background-color: #e4e4e4;
     text-align:center;
     position: fixed;
     height: 150px;
@@ -209,13 +223,13 @@ label {
   .form-control{
     background-color:transparent;
     border:0;
-    border-bottom:1px solid #d2d6de;
+    border-bottom:1px solid #ccc;
     font-size:26px;
     height:50px;
     padding:2px;
   }
   .form-control:focus{
-    border-color:#818e45
+    border-color:#696969
   }
   .login .form-control{
     border:1px solid #d2d6de;
@@ -365,12 +379,7 @@ label {
     }
   }
     @media screen and (max-height: 680px) {
-        .textoInicio{
-            margin: 35px 5px 180px;
-        }
-        .textoInicio p{
-            font-size:26px;
-        }
+
         .logos{
             background-size:70%;
             height:30vh;

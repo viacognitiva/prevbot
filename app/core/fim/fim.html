@@ -1,6 +1,6 @@
 <div class="box box-primary direct-chat direct-chat-primary">
     <div class="box-header with-border" style="text-align: center;">
-        <h3 class="box-title">Fale com o <b>Via</b><i>Bot</i></h3>
+        <h3 class="box-title">PrevBot</h3>
     </div>
     <form ng-submit="FC.restartChat()">
         <div id="corpo" class="content avaliacao">
@@ -9,7 +9,10 @@
 
             <div style="text-align:center;margin-top:25px">
                 <button type="submit" class="btn btn-primary">
-                    Reiniciar Chat
+                    Conversar novamente
+                </button>&nbsp;&nbsp;
+                <button type="reset" ng-click="FC.restartUser()" class="btn btn-primary">
+                    Finalizar
                 </button>
             </div>
 
