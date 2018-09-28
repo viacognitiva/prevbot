@@ -30,12 +30,12 @@
                 .catch(procError);
         }
 
-        function setQuestionario(reposta, mensagem, peso) {
+        function setQuestionario(resposta, mensagem, peso) {
             
             resposta.config.data.text = mensagem;
-            resposta.input.text = message;
-            resposta.input.peso = parseFloat(peso);
-            resposta.data.intents[0].intent ='questionario';
+            resposta.data.input.text = mensagem;
+            resposta.data.input.peso = parseFloat(peso);
+            resposta.data.intents.intent = 'questionario';
             resposta.data.output.generic[0].text = '';
             resposta.data.output.text[0] = '';
 

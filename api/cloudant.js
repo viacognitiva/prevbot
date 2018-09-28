@@ -8,8 +8,7 @@ app.set('port', process.env.PORT || 3000);
 
 var cloudantDB = Cloudant(process.env.CLOUDANT_URL);
 
-//const db = cloudantDB.db.use(process.env.CLOUDANT_DB);
-const db = cloudantDB.db.use('temp');
+const db = cloudantDB.db.use(process.env.CLOUDANT_DB);
 const dbOutros = cloudantDB.db.use(process.env.CLOUDANT_DBTREINO);
 const dbUser = cloudantDB.db.use(process.env.CLOUDANT_DBUSUARIO);
 const dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);

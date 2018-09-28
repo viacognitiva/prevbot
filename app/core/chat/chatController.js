@@ -107,32 +107,16 @@
                                         };
                                         
                                         chatService.setOutros(logData);
-                                        /*
-                                        $http.post('/api/outros', logData).catch(function(error){
-                                            console.log('Error: ' + JSON.stringify(error));
-                                        });
-                                        */
 
                                     } else if (response.data.output.nodes_visited[0] === 'node_8_1529351813850') {
                                         
                                         chatService.setLog(response);
-                                        /*
-                                        $http.post('/api/gravar', response).catch(function(error){
-                                            console.log('Error: ' + JSON.stringify(error));
-                                        });
-                                        */
                                         $location.path('/fim');
                                         return false;
 
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
 
                                         chatService.setLog(response);
-                                        /*
-                                        $http.post('/api/gravar', response).catch(function(error){
-                                            console.log('Error: ' + JSON.stringify(error));
-                                        });
-                                        */
-
                                         $location.path('/aval');
                                         return false;
 
@@ -147,12 +131,6 @@
                                         }
 
                                         chatService.setLog(response);
-                                        /*                                            
-                                        $http.post('/api/gravar', response).catch(function (error) {
-                                            console.log('Error: ' + JSON.stringify(error));
-                                        });
-                                        */
-
                                         const valorInvestInput = response.data.entities.find(obj => obj.entity === 'sys-number')
                                         
                                         if (valorInvestInput) {
@@ -165,12 +143,6 @@
                                     } else {
 
                                         chatService.setLog(response);
-
-                                        /*
-                                        $http.post('/api/gravar', response).catch(function(error){
-                                            console.log('Error: ' + JSON.stringify(error));
-                                        });
-                                        */
 
                                     }
 
@@ -407,7 +379,6 @@
                     montaOpcao(questoes.data.rows[0].doc.perguntas[idPerguntas]);                        
                 }else{
                     iniciaCategoria(vm.peso);
-                    //ctrlPerguntas = false;
                 }
 
             }
@@ -445,6 +416,7 @@
 
                 quest += '</ul><div>';
                 displayMessage(quest, watson);
+                ctrlPerguntas = false;
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
 
@@ -483,8 +455,8 @@
 
             }
 
-            function gravaQuestionario(reposta, mensagem, peso) {
-                chatService.setQuestionario(reposta, mensagem, peso)                
+            function gravaQuestionario(resposta, mensagem, peso) {
+                chatService.setQuestionario(resposta, mensagem, peso)                
             }
 
             function addZero(i) {
