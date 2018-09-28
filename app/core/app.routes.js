@@ -7,18 +7,23 @@
 
     function config($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.when('', '/user');
-        $urlRouterProvider.when('/', '/user');
+        $urlRouterProvider.when('', '/saudacao');
+        $urlRouterProvider.when('/', '/saudacao');
        
         $stateProvider
 
+            .state('saudacao', {
+                url: '/saudacao',
+                templateUrl: 'core/saudacao/saudacao.html',
+                controller: 'saudacaoController',
+                controllerAs: 'SC'
+            })
             .state('user', {
                 url: '/user',
                 templateUrl: 'core/user/user.html',
                 controller: 'userController',
                 controllerAs: 'UC'
             })
-
             .state('chat', {
                 url: '/chat',
                 templateUrl: 'core/chat/chat.html',

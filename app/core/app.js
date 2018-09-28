@@ -6,6 +6,7 @@
         'app.index',
         'app.user',
         'app.chat',
+        'app.saudacao',
         'app.directives.divSize'
     ]);
 })();
