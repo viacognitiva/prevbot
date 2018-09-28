@@ -4,9 +4,9 @@
     angular.module('app.saudacao',['ngAnimate','ngSanitize','ui.bootstrap'])
         .controller('saudacaoController', saudacaoController);
 
-    saudacaoController.$inject = ['$scope','$log','$http','$uibModal','$window','$location'];
+    saudacaoController.$inject = ['$location'];
 
-    function saudacaoController($scope,$log,$http,$uibModal,$window,$location) {
+    function saudacaoController($location) {
 
         var vm = this;
         vm.enviar = enviar;

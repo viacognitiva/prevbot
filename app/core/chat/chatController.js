@@ -16,6 +16,7 @@
             vm.controlaAbreFecha    = controlaAbreFecha;
             vm.processaQuestionario = processaQuestionario;
             vm.optionMessage        = optionMessage;
+            vm.gravaQuestionario    = gravaQuestionario;
 
             vm.imgSom = 'fa fa-volume-off';
             vm.ativaVoz = false;
@@ -24,6 +25,7 @@
             vm.abreFecha = {'animation-name': 'popup_open'};
             vm.isOpen = true;
             vm.peso = 0;
+            vm.respQuest = '';
             
             var params = {};
             var context = '';
@@ -37,8 +39,7 @@
             var categoria = [];
             var fundos = [];
             var valorInvest = 0;
-            var respQuest = '';
-
+            
             var ctrlPerguntas = false;
             var qtdPerguntas = 0;
             var idPerguntas = 0;
@@ -69,8 +70,8 @@
                                 idchat = response.data.context.conversation_id;
                                 dados = $localStorage.dados;
 
-                                if (!respQuest){
-                                    respQuest = response
+                                if (!vm.respQuest){
+                                    vm.respQuest = response
                                 }
 
                                 if(dados){
@@ -104,24 +105,34 @@
                                             idchat: idchat,
                                             texto: response.data.input.text
                                         };
-
+                                        
+                                        chatService.setOutros(logData);
+                                        /*
                                         $http.post('/api/outros', logData).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+                                        */
 
-                                    } else if(response.data.output.nodes_visited[0] === 'Despedida'){
-
+                                    } else if (response.data.output.nodes_visited[0] === 'node_8_1529351813850') {
+                                        
+                                        chatService.setLog(response);
+                                        /*
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+                                        */
                                         $location.path('/fim');
                                         return false;
 
                                     } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
 
+                                        chatService.setLog(response);
+                                        /*
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+                                        */
+
                                         $location.path('/aval');
                                         return false;
 
@@ -135,9 +146,12 @@
                                             txtTmp = response.data.output.text[0]
                                         }
 
+                                        chatService.setLog(response);
+                                        /*                                            
                                         $http.post('/api/gravar', response).catch(function (error) {
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+                                        */
 
                                         const valorInvestInput = response.data.entities.find(obj => obj.entity === 'sys-number')
                                         
@@ -150,9 +164,13 @@
 
                                     } else {
 
+                                        chatService.setLog(response);
+
+                                        /*
                                         $http.post('/api/gravar', response).catch(function(error){
                                             console.log('Error: ' + JSON.stringify(error));
                                         });
+                                        */
 
                                     }
 
@@ -463,6 +481,10 @@
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
 
+            }
+
+            function gravaQuestionario(reposta, mensagem, peso) {
+                chatService.setQuestionario(reposta, mensagem, peso)                
             }
 
             function addZero(i) {
