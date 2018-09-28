@@ -335,7 +335,7 @@ ul.lista2{font-size: 17px;}
   .morelink {
       display: block;
   }
-  .opcao p{
+  .opcao p,.disabled p {
     margin: 0;
     width: 100%;
     clear:none
@@ -390,4 +390,13 @@ ul.lista2{font-size: 17px;}
             margin-top: 10%;
         }
     }
+}
+.disabled {
+  color: #AAAAAA;
+  text-decoration: none;
+  cursor: not-allowed;
+}
+
+.disabled a {
+  pointer-events: none;
 }

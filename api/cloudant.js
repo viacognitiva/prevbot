@@ -83,7 +83,7 @@ var cloudant = {
 
         var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
-        dbAval.insert({
+        dbAval.insertok({
             chatId: req.body.chatId,
             nome: req.body.nome,
             email: req.body.email,
