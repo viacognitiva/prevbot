@@ -65,6 +65,9 @@
 
                     function(response){
 
+                        ctrlPerguntas = true;
+                        params.intent = undefined;
+
                         if(response.status == 200){
                             if(response.data.error){
                                 console.error('Server error for Conversation. Return status of: ', xhr.statusText);
@@ -73,6 +76,7 @@
 
                                 idchat = response.data.context.conversation_id;
                                 dados = $localStorage.dados;
+                                
 
                                 if (!vm.respQuest){
                                     vm.respQuest = response
@@ -363,7 +367,9 @@
                 questoes = await chatService.getQuestionario();
                 qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
                 ctrlPerguntas = true;
-                processaQuestionario('0');               
+                idPerguntas = 0
+                vm.peso = 0
+                processaQuestionario(idPerguntas);
                 
             }
 
@@ -385,7 +391,7 @@
 
                 categoria = await chatService.getCategoria(peso);
                 displayMessage(categoria.data.mensagem, watson);
-                displayMessage('Os fundos mais adequados para o seu perfil são:', watson);
+                //displayMessage('Os fundos mais adequados para o seu perfil são:', watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
                 iniciaFundos(valorInvest);
@@ -394,8 +400,8 @@
 
             async function iniciaFundos(valorInvest) {
 
-                var quest = '<div class="opcao"><ul>';
-                var textoTmp = ''
+                //var quest = '<div class="opcao"><ul>';
+                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><ul>';
                 var valores = {};
                 valores.risco = categoria.data.investimentos
                 valores.minimo = parseFloat(valorInvest)
