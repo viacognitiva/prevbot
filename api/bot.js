@@ -12,6 +12,7 @@ var chatbot = {
     sendMessage : function (req, callback) {
 
         var context;
+        var intent = undefined;
 
         if (req.body.context) {
             context = req.body.context;
@@ -19,12 +20,30 @@ var chatbot = {
             context = undefined;
         }
 
-        var payload = {
-            workspace_id: process.env.WATSON_WS,
-            input: {
-                text: req.body.text
-            },
-            context: context
+        if(!req.body.intent){
+
+            var payload = {
+                workspace_id: process.env.WATSON_WS,
+                input: {
+                    text: req.body.text
+                },
+                 context: context
+            }
+
+        } else {
+
+            var payload = {
+                workspace_id: process.env.WATSON_WS,
+                input: {
+                    text: req.body.text
+                },
+                intents: [{
+                    confidence: 1,
+                    intent: req.body.intent
+                }],
+                context: context
+            }
+
         }
 
         conversation.message(payload, function(err, data) {

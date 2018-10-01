@@ -4,9 +4,9 @@
     angular.module('app.chat', ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStorage', 'app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$scope', '$http', '$uibModal', '$window', '$localStorage', '$location', 'chatService'];
+        chatController.$inject = ['$scope', '$http', '$localStorage', '$location', '$timeout', 'chatService'];
 
-        function chatController($scope, $http, $uibModal, $window, $localStorage, $location, chatService) {
+        function chatController($scope, $http, $localStorage, $location, $timeout, chatService) {
 
             var vm                  = this;
             vm.controlaSom          = controlaSom;
@@ -40,7 +40,7 @@
             var fundos = [];
             var valorInvest = 0;
             
-            var ctrlPerguntas = false;
+            var ctrlPerguntas = true;
             var qtdPerguntas = 0;
             var idPerguntas = 0;
             
@@ -53,6 +53,10 @@
                 params.text = message;
                 if (context) {
                     params.context = context;
+                }
+                
+                if (!ctrlPerguntas){
+                    params.intent = 'finalizouAnalisePerfil';
                 }
 
                 var config = {headers : {'Content-Type': 'application/json; charset=utf-8'}};
@@ -409,8 +413,14 @@
                 }
 
                 quest += '</ul><div>';
+
                 displayMessage(quest, watson);
                 ctrlPerguntas = false;
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+               
+                userMessage('finalizouAnalisePerfil')
+
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
 
