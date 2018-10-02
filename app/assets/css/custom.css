@@ -4,9 +4,26 @@ html, body{
   margin: 0;
   padding: 0;
 }
+body{
+    background:url("../images/Family.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+a{
+    color:#8193f3
+}
+.fundo{
+    background:rgba(0,0,0,0.6);
+    height:100%
+}
   p{
     margin: 0 auto 20px;
-    width:57%;
+    width:60%;
     clear: both;
   }
 h1 {
@@ -16,8 +33,9 @@ h1 {
   color:#fff
 }
 label {
-  color: #000;
+  color: #76481a;
   font-size: 17px;
+  margin-bottom:12px
 }
 
 .observacao {
@@ -43,50 +61,45 @@ label {
 .som a{
   padding:5px
 }
-  .inicio{
-    margin:0;
-    padding:0;
-    width:100%;
-    display: table;
-    background-color:#e4e4e4
-  }
-.textoInicio, .logo{
-    display: table-cell;
-    padding: 16px;
+#corpo{
+    background-color:#fff
+}
+.form-group{
+    margin-bottom:28px
+}
+.inicio{
+margin:0;
+padding:0;
+width:100%;
+}
+.inicio .logo{
+    background-color:#fff;
 }
 .direita {
     text-align: right;
 }
-.textoInicio {
-    padding: 70px 40px;
-    background-color:#90d4dd;
+.textoInicio{
+    color:#fff;
+    height:100%;
+    padding:40px
 }
 .textoInicio .titulo{
-    font-size:30px;
+    font-size:48px;
     font-weight:bold;
     width:100%;
-    text-align:center;
-    margin:10px 0
 }
 .textoInicio .descricao{
-    font-size:25px;
+    font-size:22px;
     width:100%;
-    text-align:center;
-    margin:10px 0;
-    border-bottom:1px solid #333
-
+    margin-bottom:40px;
 }
 .textoInicio p {
-    font-size: 30px;
+    font-size: 32px;
     width: 100%;
-    color: #0d5a50;
 }
 ul.lista1{list-style-type: circle;font-size: 17px;}
 ul.lista2{font-size: 17px;}
-.logo {
-    text-align: center;
-    margin-top:12%
-}
+
 .direita a{
     color: #0d5a50;
     font-weight:bold;
@@ -94,6 +107,14 @@ ul.lista2{font-size: 17px;}
 }
 .direita a:hover, .direita a:focus, .direita a:active{
     color: #37847a;
+}
+.butInicio{
+    text-align:center;
+    width:100%;
+    margin-top:100px;
+}
+.butInicio .btn, #corpo .btn{
+    font-weight:bold
 }
 .btn{
     padding: 13px 27px;
@@ -108,14 +129,16 @@ ul.lista2{font-size: 17px;}
   float: left;
   margin: 10px -5px;
 }
-
+.btn.btn-flat{
+    border-radius:15px
+}
 .iconeFala{
   width:100%;
   right:10px
 }
 
 .box-header{
-  background: linear-gradient(45deg,#2882C5,#1294A7);
+  background: linear-gradient(45deg,#76481a,#c37b32);
 }
   .box-header .box-title{
     color:#fff;
@@ -124,11 +147,11 @@ ul.lista2{font-size: 17px;}
     font-weight:bold
   }
   .box{
-    background-color: rgba(255, 255, 255, 1);
     border-radius: 0;
     box-shadow: none;
     border-top: 0;
     margin-bottom: 0;
+    background-color:transparent
   }
   .box.box-primary{
     border-top-color:#ffc4c4;
@@ -168,14 +191,14 @@ ul.lista2{font-size: 17px;}
     background: none;
     border: 0;
     padding:0;
-    color:#000;
+    color:#fff;
     font-size: 20px;
     margin: 0 65px;
   }
   .direct-chat-primary .right>.direct-chat-text{
     margin: 10px 85px 0 85px;
     text-align: right;
-    color: #969696;
+    color: #f1963c;
   }
   .direct-chat-text:after, .direct-chat-text:before{
     border-right-color: transparent;
@@ -192,15 +215,15 @@ ul.lista2{font-size: 17px;}
     background-color: #2980b9;
   }
   .btn-primary {
-    background-color: #1294A7;
-    border-color: #1294A7;
+    background-color: #76481a;
+    border-color: #884e14;
   }
   .btn-primary.focus, .btn-primary:focus, .btn-primary:active:hover{
-    background-color: #1294A7;
+    background-color: #76481a;
     border-color: transparent;
   }
   .btn-primary:hover, .btn-primary:active, .btn-primary.hover{
-    background-color: #1294A7;
+    background-color: #76481a;
     border-color:transparent;
     transform: scale(1.05);
   }
@@ -224,8 +247,8 @@ ul.lista2{font-size: 17px;}
     background-color:transparent;
     border:0;
     border-bottom:1px solid #ccc;
-    font-size:26px;
-    height:50px;
+    font-size:22px;
+    height:51px;
     padding:2px;
   }
   .form-control:focus{
@@ -238,7 +261,7 @@ ul.lista2{font-size: 17px;}
   #user { width: 20%; }
   #message { //width: 68%; }
   #send_btn {
-    border-radius: 28px;
+    border-radius: 27px;
   }
   .content {
     margin: 0px auto;
@@ -248,7 +271,9 @@ ul.lista2{font-size: 17px;}
   }
   .avaliacao, .final{
     overflow: auto;
-    height:100%
+    height:100%;
+    background-color: transparent!important;
+    color: #fff;
   }
   .avaliacao label{
     font-size:22px
@@ -280,10 +305,6 @@ ul.lista2{font-size: 17px;}
   .final{
     float:center
   }
-  .btn{
-    border-radius:27px
-  }
-
   #system,
   .username {
     color: #aaa;
@@ -340,10 +361,15 @@ ul.lista2{font-size: 17px;}
     width: 100%;
     clear:none
   }
-
+.carousel{
+    background-color: #ccc;
+    color: #000;
+    padding: 10px 100px;
+    font-size: 16px;
+}
   @media screen and (max-width: 600px) {
     p{
-        width:90%
+        width:98%
     }
     .row{
         margin-right: 0;
@@ -351,6 +377,9 @@ ul.lista2{font-size: 17px;}
     }
     #chat_box{
         padding: 40px 0;
+    }
+    .butInicio{
+        margin-top:50px
     }
     .direct-chat-img{
         width:58px
@@ -381,13 +410,13 @@ ul.lista2{font-size: 17px;}
         width: 90%;
         margin: 40px auto;
     }
+    .carousel{
+        padding: 10px 50px;
+    }
   }
     @media screen and (max-height: 680px) {
         .textoInicio {
             padding: 30px 40px;
-        }
-        .logo {
-            margin-top: 10%;
         }
     }
 }

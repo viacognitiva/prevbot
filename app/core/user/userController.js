@@ -14,14 +14,7 @@
         function logar(){
 
             $localStorage.dados = '';
-            var dados = {nome: $scope.nome, email: $scope.email, telefone: $scope.telefone};
-            var tfone = '';
-
-            if(typeof $scope.telefone !== undefined && $scope.telefone){
-                tfone = $scope.telefone
-            }else{
-                tfone = '-'
-            }
+            var dados = {nome: $scope.nome, email: $scope.email};
 
             $localStorage.dados = dados;
             $location.path('/chat');

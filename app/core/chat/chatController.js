@@ -270,10 +270,10 @@
                     userBox.className = 'direct-chat-name pull-left';
                     div0.className = 'direct-chat-msg right';
                     div.className = 'direct-chat-text';
-                    var img = document.createElement('img');
+                    /*var img = document.createElement('img');
                     img.className = 'direct-chat-img-user';
                     img.src = 'assets/images/img_usuario.png';
-                    div0.appendChild(img);
+                    div0.appendChild(img); */
                     div0.appendChild(div);
 
                     userBox.appendChild(user);
@@ -291,9 +291,9 @@
 
                     var user = document.createTextNode(' ');
                     var userBox = document.createElement('span');
-                    user = document.createElement('img');
+                    /* user = document.createElement('img');
                     user.className = 'direct-chat-img';
-                    user.src = 'assets/images/chat_cabeca.png';
+                    user.src = 'assets/images/chat_cabeca.png'; */
                     div.className = 'direct-chat-text bot';
 
                     userBox.appendChild(user);
@@ -401,24 +401,32 @@
             async function iniciaFundos(valorInvest) {
 
                 //var quest = '<div class="opcao"><ul>';
-                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><ul>';
+                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><div id="myCarousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner">';
                 var valores = {};
+                var divIni = '';
                 valores.risco = categoria.data.investimentos
                 valores.minimo = parseFloat(valorInvest)
 
                 fundos = await chatService.getFundos(valores);
 
                 for(var fds in fundos.data.docs){
-                    quest += '<li>Seguradora: ' + fundos.data.docs[fds].seguradora +
+
+                    if (fds == 0){
+                        divIni = '<div class="item active">';
+                    }else{
+                        divIni = '<div class="item">';
+                    }
+
+                    quest += divIni + 'Seguradora: ' + fundos.data.docs[fds].seguradora +
                         '<br>Categoria: ' + fundos.data.docs[fds].categoria + 
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
                         '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
                         '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
                         '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
-                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</li>';
+                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</div>';
                 }
 
-                quest += '</ul><div>';
+                quest += '</div><a class="left carousel-control" href="" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div><div>';
 
                 displayMessage(quest, watson);
                 ctrlPerguntas = false;

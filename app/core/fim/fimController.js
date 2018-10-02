@@ -19,7 +19,7 @@
                 nome = $localStorage.dadosBKP.nome
             }
 
-            vm.messageExit = nome + ', o PrevBot agradece a sua visita e fica à sua disposição.';
+            vm.messageExit = nome + ', o PREVBOT agradece a sua visita e fica à sua disposição.';
 
 
            function restartChat() {

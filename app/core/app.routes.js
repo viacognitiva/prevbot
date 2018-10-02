@@ -9,7 +9,7 @@
 
         $urlRouterProvider.when('', '/saudacao');
         $urlRouterProvider.when('/', '/saudacao');
-       
+        $urlRouterProvider.when('#myCarousel', '');
         $stateProvider
 
             .state('saudacao', {
