@@ -1,10 +1,11 @@
-var	app = require('./api/express')();
-var chatbot = require('./api/bot.js');
-var params = require('./api/parameters.js');
-var discovery = require('./api/discovery.js');
-var nlu = require('./api/nlu.js');
-var textToSpeech = require('./api/text-to-speech.js');
-var cloudant = require('./api/cloudant.js');
+const app = require('./api/express')();
+const chatbot = require('./api/bot.js');
+const params = require('./api/parameters.js');
+const discovery = require('./api/discovery.js');
+const nlu = require('./api/nlu.js');
+const textToSpeech = require('./api/text-to-speech.js');
+const cloudant = require('./api/cloudant.js');
+const email = require('./api/mail.js');
 
 // =====================================
 // WATSON CONVERSATION FOR ANA =========
@@ -61,6 +62,10 @@ app.get('/api/getfundos/:info', function (req, res) {
     cloudant.getFundo(req,res);
 });
 
+app.post('/api/sendmail/:dados',function (req, res) {
+    email.enviaCorreio(req,res);
+})
+
 function processChatMessage(req, res) {
 
     chatbot.sendMessage(req, function (err, data) {
@@ -69,7 +74,6 @@ function processChatMessage(req, res) {
             res.status(err.code || 500).json(err);
         }
         else {
-            var context = data.context;
             res.status(200).json(data);
         }
     });

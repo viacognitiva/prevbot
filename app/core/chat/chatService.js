@@ -90,5 +90,13 @@
             return $q.reject(error);
         }
 
+        function sendMail(mailInfo) {
+            
+            $http.post('/api/sendmail/' + mailInfo).catch(function (error) {
+                console.log('Error: ' + JSON.stringify(error));
+            });
+            
+        }
+
     }
 })();
