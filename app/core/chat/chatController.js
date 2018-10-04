@@ -376,7 +376,7 @@
             async function iniciaFundos(valorInvest) {
 
                 //var quest = '<div class="opcao"><ul>';
-                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><ul>';
+                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><div id="myCarousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner">';
                 var valores = {};
                 var divIni = '';
                 valores.risco = categoria.data.investimentos
@@ -384,18 +384,21 @@
 
                 fundos = await chatService.getFundos(valores);
 
-                for(var fds in fundos.data.docs){
+                for (var fds in fundos.data.docs) {
 
-                    if (fds == 0){
+                    if (fds == 0) {
                         divIni = '<div class="item active">';
-                    }else{
+                    } else {
                         divIni = '<div class="item">';
                     }
 
                     quest += divIni + 'Seguradora: ' + fundos.data.docs[fds].seguradora +
-                        
+                        '<br>Categoria: ' + fundos.data.docs[fds].categoria +
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
-                        ;
+                        '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
+                        '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
+                        '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
+                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</div>';
                 }
 
                 quest += '</div><a href="#myCarousel" class="left carousel-control" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div><div>';
@@ -416,7 +419,7 @@
                 ctrlPerguntas = false;
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
-               
+
                 userMessage('finalizouAnalisePerfil')
 
                 var chat = document.getElementById('chat_box');
