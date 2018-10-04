@@ -19,16 +19,6 @@
             $localStorage.dados = dados;
             $location.path('/chat');
 
-            /*
-            $http.post('/api/user', dados).then(
-                function(response){
-                    $location.path('/chat');
-                },
-                function(erro){
-                    console.log('Erro: ' + JSON.stringify(erro));
-                }
-            );
-            */
         }
     }
 })();

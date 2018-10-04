@@ -8,10 +8,7 @@
     function config($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.when('', '/saudacao');
-        $urlRouterProvider.when('/', '/saudacao');
-        $urlRouterProvider.when('#myCarousel', '');
         $stateProvider
-
             .state('saudacao', {
                 url: '/saudacao',
                 templateUrl: 'core/saudacao/saudacao.html',

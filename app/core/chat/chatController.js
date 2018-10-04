@@ -32,9 +32,6 @@
             var watson = 'Watson';
             var text = '';
             var idchat = '';
-            var dados = {};
-            var ntexto = '';
-            var nome = '';
             var questoes = [];
             var categoria = [];
             var fundos = [];
@@ -75,26 +72,18 @@
                             } else {
 
                                 idchat = response.data.context.conversation_id;
-                                dados = $localStorage.dados;
-                                
 
                                 if (!vm.respQuest){
                                     vm.respQuest = response
                                 }
 
-                                if(dados){
+                                if ($localStorage.dados) {
 
-                                    dados.chatId = idchat;
+                                    $localStorage.dados.chatId = idchat;
 
-                                    $http.post('/api/user', dados).then(
-                                        function(response){
-                                            $localStorage.dadosBKP = dados;
-                                            $localStorage.dados = '';
-                                        },
-                                        function(erro){
-                                            console.log('Erro: ' + JSON.stringify(erro));
-                                        }
-                                    );
+                                    $http.post('/api/user', $localStorage.dados).catch(function (error) {
+                                        console.log('Error: ' + JSON.stringify(error));
+                                    });
 
                                 }
 
@@ -159,19 +148,6 @@
                                 if (!response.data.output.text[0] == ''){
 
                                     text = response.data.output.text;
-
-                                    /*
-                                    if($localStorage.dados.nome){
-                                        nome = $localStorage.dados.nome
-                                    }else{
-                                        nome = $localStorage.dadosBKP.nome
-                                    }
-
-                                    for (var txt in text) {
-                                        ntexto = text[txt].replace('[nome]',nome);
-                                        displayMessage(ntexto, watson);
-                                    }
-                                    */
 
                                     for (var txt in text) {
                                         displayMessage(text[txt], watson);
@@ -391,7 +367,6 @@
 
                 categoria = await chatService.getCategoria(peso);
                 displayMessage(categoria.data.mensagem, watson);
-                //displayMessage('Os fundos mais adequados para o seu perfil são:', watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
                 iniciaFundos(valorInvest);
@@ -401,7 +376,7 @@
             async function iniciaFundos(valorInvest) {
 
                 //var quest = '<div class="opcao"><ul>';
-                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><div id="myCarousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner">';
+                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><ul>';
                 var valores = {};
                 var divIni = '';
                 valores.risco = categoria.data.investimentos
@@ -418,17 +393,26 @@
                     }
 
                     quest += divIni + 'Seguradora: ' + fundos.data.docs[fds].seguradora +
-                        '<br>Categoria: ' + fundos.data.docs[fds].categoria + 
+                        
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
-                        '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
-                        '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
-                        '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
-                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</div>';
+                        ;
                 }
 
-                quest += '</div><a class="left carousel-control" href="" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div><div>';
+                quest += '</div><a href="#myCarousel" class="left carousel-control" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div><div>';
+
+                var mailData = {
+                    nome: $localStorage.dados.nome,
+                    email: $localStorage.dados.email,
+                    valorInvest: valorInvest,
+                    categoria: categoria.data.investimentos
+                }
+
+                chatService.sendMail(mailData);
+
+                delete $localStorage.dados
 
                 displayMessage(quest, watson);
+                //$scope.$apply();
                 ctrlPerguntas = false;
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;

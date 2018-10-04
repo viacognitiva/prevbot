@@ -68,7 +68,6 @@ var cloudant = {
         dbUser.insert({
             nome: req.body.nome,
             email: req.body.email,
-            telefone: req.body.telefone,
             chatId:req.body.chatId,
             data: dataNow },function(err, body, header) {
 
@@ -87,7 +86,6 @@ var cloudant = {
             chatId: req.body.chatId,
             nome: req.body.nome,
             email: req.body.email,
-            telefone: req.body.telefone,
             gostou: req.body.gostou,
             interface: req.body.interface,
             recomenda: req.body.recomenda,

@@ -20,7 +20,8 @@
             getFundos: getFundos,
             setQuestionario: setQuestionario,
             setLog: setLog,
-            setOutros: setOutros
+            setOutros: setOutros,
+            sendMail: sendMail
         };
         
         function getQuestionario() {            
@@ -91,8 +92,8 @@
         }
 
         function sendMail(mailInfo) {
-            
-            $http.post('/api/sendmail/' + mailInfo).catch(function (error) {
+
+            $http.post('/api/sendmail',mailInfo).catch(function (error) {
                 console.log('Error: ' + JSON.stringify(error));
             });
             

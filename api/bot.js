@@ -11,13 +11,10 @@ var chatbot = {
 
     sendMessage : function (req, callback) {
 
-        var context;
-        var intent = undefined;
+        var context = undefined;
 
         if (req.body.context) {
             context = req.body.context;
-        } else {
-            context = undefined;
         }
 
         if(!req.body.intent){
@@ -52,13 +49,6 @@ var chatbot = {
                 console.log("Error in sending message: ", err);
                 return callback(err);
             } else {
-                
-                /*
-                if(process.env.SHOW_LOG == 'S'){
-                    console.log("Got response from Conversation:", JSON.stringify(data));
-                }
-                */
-
                 return callback(null, data);
             }
         })

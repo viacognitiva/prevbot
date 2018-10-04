@@ -9,7 +9,7 @@ var enviado = 'Mister Xper '
 var smtpTransport = nodemailer.createTransport({
     host: process.env.MAIL_SMTP,
     port: parseInt(process.env.MAIL_PORT, 10),
-    secure: false,
+    secure: true,
     auth: {
         user: usuario,
         pass: senha
@@ -24,20 +24,15 @@ var correio = {
 
         var enviarP = '';
         var css = '';
-
-        if (req.body.sendTo == '-') {
-            enviarP = usuario
-        } else {
-            enviarP = req.body.sendTo;
-        }
+        var txtHtml = '';        
 
         var mailOptions = {
-            from: enviado + '<' + usuario + '>',
-            sender: enviado + '<' + usuario + '>',
-            to: enviarP,
-            subject: req.body.subject,
-            text: req.body.vtext,
-            html: css + req.body.vhtml
+            from: 'PREVBOT <' + usuario + '>',
+            sender: 'PREVBOT <' + usuario + '>',
+            to: process.env.MAIL_SENDTO,
+            subject: 'Assunto',
+            text: '',
+            html: css + JSON.stringify(req.body)
         }
 
         smtpTransport.sendMail(mailOptions, function (error, response) {

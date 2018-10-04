@@ -50,6 +50,10 @@ app.post('/api/aval', function (req, res) {
     cloudant.insertAval(req,res);
 });
 
+app.post('/api/sendmail', function (req, res) {
+    email.enviaCorreio(req, res);
+})
+
 app.get('/api/getquest', function (req, res) {
     cloudant.getQuestionario(req,res);
 });
@@ -61,10 +65,6 @@ app.get('/api/getcateg/:peso', function (req, res) {
 app.get('/api/getfundos/:info', function (req, res) {
     cloudant.getFundo(req,res);
 });
-
-app.post('/api/sendmail/:dados',function (req, res) {
-    email.enviaCorreio(req,res);
-})
 
 function processChatMessage(req, res) {
 
