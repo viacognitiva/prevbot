@@ -398,13 +398,13 @@
 
                     tmpFundos += fundos.data.docs[fds].nome + ',';
 
-                    quest += '<span class="more">Seguradora: ' + fundos.data.docs[fds].seguradora +
-                        '<br>Categoria: ' + fundos.data.docs[fds].categoria +
+                    quest += '<div class="listaFundos"><b>Seguradora: ' + fundos.data.docs[fds].seguradora + '</b>' +
+                        '<span class="more"><br>    Categoria: ' + fundos.data.docs[fds].categoria +
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
                         '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
                         '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
                         '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
-                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</span><br>';
+                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</span></div>';
                 }
 
                 var mailData = {
@@ -521,8 +521,8 @@
 
             function atualizaFundos() {
 
-                var showChar = 30; // How many characters are shown by default
-                var ellipsestext = "...";
+                var showChar = 0; // How many characters are shown by default
+                //var ellipsestext = "...";
                 var moretext = "Ver mais >";
                 var lesstext = "Ver menos";
 
@@ -535,7 +535,7 @@
                         var c = content.substr(0, showChar);
                         var h = content.substr(showChar, content.length - showChar);
 
-                        var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h +
+                        var html = c + '<span class="moreellipses">' + '&nbsp;</span><span class="morecontent"><span>' + h +
                             '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
 
                         $(this).html(html);

@@ -171,7 +171,6 @@ var cloudant = {
                 "rentabilidade12Meses",
                 "risco"
             ],
-            "limit":3,
             "sort":[
                 {"taxaAdm":"asc"}
             ]
