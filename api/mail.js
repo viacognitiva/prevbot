@@ -4,7 +4,7 @@ var inlineCss = require('nodemailer-juice');
 
 var usuario = process.env.MAIL_USER;
 var senha = process.env.MAIL_PASSWORD;
-var enviado = 'Mister Xper '
+var assunto = process.env.MAIL_SUBJECT;
 
 var smtpTransport = nodemailer.createTransport({
     host: process.env.MAIL_SMTP,
@@ -30,9 +30,12 @@ var correio = {
             from: 'PREVBOT <' + usuario + '>',
             sender: 'PREVBOT <' + usuario + '>',
             to: process.env.MAIL_SENDTO,
-            subject: 'Assunto',
+            subject: assunto,
             text: '',
-            html: css + JSON.stringify(req.body)
+            html: css + '<b>E-mail: </b>' + req.body.email + '<br><b>Nome: </b>' + req.body.nome +
+            '<br><b>Aporte: </b>' + parseFloat(req.body.valorInvest).toLocaleString('pt-br',{style:'currency',currency: 'BRL'}) + 
+            '<br><b>Perfil: </b>' + req.body.categoria + 
+            '<br><b>Fundos: </b>' + req.body.fundos
         }
 
         smtpTransport.sendMail(mailOptions, function (error, response) {

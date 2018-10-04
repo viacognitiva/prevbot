@@ -1,22 +1,19 @@
 (function () {
     'use strict';
 
-    angular.module('app.user',['ngAnimate','ngSanitize','ui.bootstrap','ngStorage'])
+    angular.module('app.user',['ngAnimate','ngSanitize','ui.bootstrap'])
         .controller('userController', userController);
 
-    userController.$inject = ['$scope','$http','$location','$localStorage'];
+    userController.$inject = ['$rootScope','$scope','$location'];
 
-    function userController($scope, $http, $location,$localStorage) {
+    function userController($rootScope, $scope, $location) {
 
         var vm = this;
         vm.logar = logar;
 
         function logar(){
 
-            $localStorage.dados = '';
-            var dados = {nome: $scope.nome, email: $scope.email};
-
-            $localStorage.dados = dados;
+            $rootScope.dados = {nome: $scope.nome, email: $scope.email};
             $location.path('/chat');
 
         }

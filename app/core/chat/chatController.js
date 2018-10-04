@@ -1,12 +1,12 @@
 (function () {
     'use strict';
 
-    angular.module('app.chat', ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ngStorage', 'app.chatService'])
+    angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
         .controller('chatController', chatController);
 
-        chatController.$inject = ['$scope', '$http', '$localStorage', '$location', '$timeout', 'chatService'];
+        chatController.$inject = ['$rootScope','$scope','$http','$location','$timeout','chatService'];
 
-        function chatController($scope, $http, $localStorage, $location, $timeout, chatService) {
+        function chatController($rootScope, $scope, $http,$location, $timeout, chatService) {
 
             var vm                  = this;
             vm.controlaSom          = controlaSom;
@@ -44,6 +44,13 @@
             userMessage();
             showSound();
             showLog();
+            inicio();
+
+            function inicio(){
+                if (!$rootScope.dados) {
+                    $location.path('/user');
+                }
+            }
 
             function userMessage(message) {
 
@@ -77,11 +84,11 @@
                                     vm.respQuest = response
                                 }
 
-                                if ($localStorage.dados) {
+                                if ($rootScope.dados) {
 
-                                    $localStorage.dados.chatId = idchat;
+                                    $rootScope.dados.chatId = idchat;
 
-                                    $http.post('/api/user', $localStorage.dados).catch(function (error) {
+                                    $http.post('/api/user', $rootScope.dados).catch(function (error) {
                                         console.log('Error: ' + JSON.stringify(error));
                                     });
 
@@ -108,6 +115,8 @@
                                     } else if (response.data.output.nodes_visited[0] === 'node_8_1529351813850') {
                                         
                                         chatService.setLog(response);
+                                        $rootScope.nome = $rootScope.dados.nome;
+                                        $rootScope.email = $rootScope.dados.email;
                                         $location.path('/fim');
                                         return false;
 
@@ -376,9 +385,10 @@
             async function iniciaFundos(valorInvest) {
 
                 //var quest = '<div class="opcao"><ul>';
-                var quest = 'Os fundos mais adequados para o seu perfil são:<br><div class="opcao"><div id="myCarousel" class="carousel slide" data-ride="carousel"><div class="carousel-inner">';
+                var quest = 'Os fundos mais adequados para o seu perfil são:<br>';
                 var valores = {};
                 var divIni = '';
+                var tmpFundos = '';
                 valores.risco = categoria.data.investimentos
                 valores.minimo = parseFloat(valorInvest)
 
@@ -386,36 +396,27 @@
 
                 for (var fds in fundos.data.docs) {
 
-                    if (fds == 0) {
-                        divIni = '<div class="item active">';
-                    } else {
-                        divIni = '<div class="item">';
-                    }
+                    tmpFundos += fundos.data.docs[fds].nome + ',';
 
-                    quest += divIni + 'Seguradora: ' + fundos.data.docs[fds].seguradora +
+                    quest += '<span class="more">Seguradora: ' + fundos.data.docs[fds].seguradora +
                         '<br>Categoria: ' + fundos.data.docs[fds].categoria +
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
                         '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
                         '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
                         '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
-                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</div>';
+                        '<br>Rentabilidade 12 Meses: ' + fundos.data.docs[fds].rentabilidade12Meses + '%</span><br>';
                 }
 
-                quest += '</div><a href="#myCarousel" class="left carousel-control" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a></div><div>';
-
                 var mailData = {
-                    nome: $localStorage.dados.nome,
-                    email: $localStorage.dados.email,
+                    nome: $rootScope.dados.nome,
+                    email: $rootScope.dados.email,
                     valorInvest: valorInvest,
-                    categoria: categoria.data.investimentos
+                    categoria: categoria.data.categoria,
+                    fundos: tmpFundos
                 }
 
                 chatService.sendMail(mailData);
-
-                delete $localStorage.dados
-
                 displayMessage(quest, watson);
-                //$scope.$apply();
                 ctrlPerguntas = false;
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
@@ -424,6 +425,9 @@
 
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
+
+                atualizaFundos();
+                $scope.$apply();
 
             }
 
@@ -513,6 +517,47 @@
                         vm.showLog = false;
                     }
                 });
+            }
+
+            function atualizaFundos() {
+
+                var showChar = 30; // How many characters are shown by default
+                var ellipsestext = "...";
+                var moretext = "Ver mais >";
+                var lesstext = "Ver menos";
+
+                $('.more').each(function () {
+
+                    var content = $(this).html();
+
+                    if (content.length > showChar) {
+
+                        var c = content.substr(0, showChar);
+                        var h = content.substr(showChar, content.length - showChar);
+
+                        var html = c + '<span class="moreellipses">' + ellipsestext + '&nbsp;</span><span class="morecontent"><span>' + h +
+                            '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+
+                        $(this).html(html);
+                    }
+
+                });
+
+                $(".morelink").click(function () {
+
+                    if ($(this).hasClass("less")) {
+                        $(this).removeClass("less");
+                        $(this).html(moretext);
+                    } else {
+                        $(this).addClass("less");
+                        $(this).html(lesstext);
+                    }
+
+                    $(this).parent().prev().toggle();
+                    $(this).prev().toggle();
+                    return false;
+                });
+
             }
 
         }

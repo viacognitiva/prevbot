@@ -431,3 +431,9 @@ ul.lista2{font-size: 17px;}
 .disabled a {
   pointer-events: none;
 }
+.morecontent span {
+  display: none;
+}
+.morelink {
+  display: block;
+}
