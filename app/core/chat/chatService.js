@@ -21,7 +21,8 @@
             setQuestionario: setQuestionario,
             setLog: setLog,
             setOutros: setOutros,
-            sendMail: sendMail
+            sendMail: sendMail,
+            getValMinimo: getValMinimo
         };
         
         function getQuestionario() {            
@@ -64,6 +65,20 @@
             
         }
 
+        function getValMinimo() {
+
+            return $http.get('/api/getvalmin', config).then(
+                function successCallback(response) {
+                    return response.data.docs[0].aplicacaoMinima;
+                }, 
+                function errorCallback(error) {
+                    console.log('Error: ' + JSON.stringify(error));
+                    return '0';
+                }
+            );
+
+        }
+
         function setLog(value) {
 
             $http.post('/api/gravar', value).catch(function (error) {
@@ -80,6 +95,14 @@
             
         }
 
+        function sendMail(mailInfo) {
+
+            $http.post('/api/sendmail', mailInfo).catch(function (error) {
+                console.log('Error: ' + JSON.stringify(error));
+            });
+
+        }
+
         function procResponse(response) {
             return response;
         }
@@ -91,13 +114,7 @@
             return $q.reject(error);
         }
 
-        function sendMail(mailInfo) {
-
-            $http.post('/api/sendmail',mailInfo).catch(function (error) {
-                console.log('Error: ' + JSON.stringify(error));
-            });
-            
-        }
+        
 
     }
 })();

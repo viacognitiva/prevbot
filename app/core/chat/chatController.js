@@ -40,6 +40,7 @@
             var ctrlPerguntas = true;
             var qtdPerguntas = 0;
             var idPerguntas = 0;
+            var ctrlValor = false;
             
             userMessage();
             showSound();
@@ -235,10 +236,41 @@
                 var message = document.getElementById('chatInput');
                 var texto = message.value;
                 texto = texto.replace(/(\r\n|\n|\r)/gm, "");
-                displayMessage(texto, 'user');
-                message.value = '';
-                userMessage(texto);
-                
+
+                if (ctrlValor){
+
+                    ctrlValor = false;
+
+                    try {
+                        
+                        valorInvest = texto.match(/[+-]?\d+(?:\.\d+)?/g).map(Number);
+
+                        if (valorInvest.length = 2){
+                            valorInvest = parseFloat(validaValor(valorInvest));
+                        }
+                        
+                        displayMessage(texto, 'user');
+                        message.value = '';
+                        var chat = document.getElementById('chat_box');
+                        chat.scrollTop = chat.scrollHeight;
+
+                        iniciaQuestionario();
+
+                    } catch {
+
+                        displayMessage(texto, 'user');
+                        message.value = '';
+                        userMessage(texto);
+
+                    }
+
+                } else {
+                    
+                    displayMessage(texto, 'user');
+                    message.value = '';
+                    userMessage(texto);
+
+                }
             }
 
             function displayMessage(text, user) {
@@ -345,16 +377,33 @@
 
             async function iniciaQuestionario(txtPre) {
 
-                if(txtPre != ''){
-                    displayMessage(txtPre, watson);
-                }
+                var valor = parseFloat(await chatService.getValMinimo());
 
-                questoes = await chatService.getQuestionario();
-                qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
-                ctrlPerguntas = true;
-                idPerguntas = 0
-                vm.peso = 0
-                processaQuestionario(idPerguntas);
+                if (valorInvest < valor) {
+
+                    ctrlValor = true;
+                    displayMessage('Ops, o valor de aporte não pode ser inferior a ' + 
+                    parseFloat(valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +
+                    '. Sugira outro valor, por favor:', watson);
+                    var chat = document.getElementById('chat_box');
+                    chat.scrollTop = chat.scrollHeight;
+
+                } else {
+
+                    ctrlValor = false;
+
+                    if(txtPre != '' && txtPre != undefined){
+                        displayMessage(txtPre, watson);
+                    }
+
+                    questoes = await chatService.getQuestionario();
+                    qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
+                    ctrlPerguntas = true;
+                    idPerguntas = 0;
+                    vm.peso = 0;
+                    processaQuestionario(idPerguntas);
+
+                }
                 
             }
 
@@ -387,7 +436,6 @@
                 //var quest = '<div class="opcao"><ul>';
                 var quest = 'Os fundos mais adequados para o seu perfil são:<br>';
                 var valores = {};
-                var divIni = '';
                 var tmpFundos = '';
                 valores.risco = categoria.data.investimentos
                 valores.minimo = parseFloat(valorInvest)
@@ -399,8 +447,8 @@
                     tmpFundos += fundos.data.docs[fds].nome + ',';
 
                     quest += '<div class="listaFundos"><b>Seguradora: ' + fundos.data.docs[fds].seguradora + '</b>' +
-                        '<span class="more"><br>    Categoria: ' + fundos.data.docs[fds].categoria +
                         '<br>Nome: ' + fundos.data.docs[fds].nome +
+                        '<span class="more"><br>Categoria: ' + fundos.data.docs[fds].categoria +
                         '<br>Taxa: ' + fundos.data.docs[fds].taxaAdm + '%' +
                         '<br>Rentabilidade Mensal: ' + fundos.data.docs[fds].rentabilidadeMensal + '%' +
                         '<br>Rentabilidade Anual: ' + fundos.data.docs[fds].rentabilidadeAnual + '%' +
@@ -542,7 +590,7 @@
                     }
 
                 });
-
+                
                 $(".morelink").click(function () {
 
                     if ($(this).hasClass("less")) {
@@ -558,6 +606,18 @@
                     return false;
                 });
 
+            }
+
+            function validaValor(valor) {
+
+                if (valor.length = 2){
+                    return valor[0] + '.' + valor[1];
+                }
+                
+            }
+
+            function replaceAt(string, index, replace) {
+                return string.substring(0, index) + replace + string.substring(index + 1);
             }
 
         }

@@ -33,6 +33,7 @@ var cloudant = {
         var dados = req.body;
         dados["dateText"] = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
         dados["treinado"] =false;
+        dados["ativo"] = true;
 
         db.insert(dados,'doc_'+req.body.config.data.context.conversation_id+'_'+new Date().getTime(), function(err, body, header) {
             if (err) {
@@ -115,11 +116,10 @@ var cloudant = {
         var query = {
             "selector": {
                 "range": {
-                    "$elemMatch": 
-                        {
-                            "$gte":0,
-                            "$lt": parseInt(req.params.peso)
-                        }
+                    "$elemMatch": {
+                        "$gte":0,
+                        "$lt": parseInt(req.params.peso)
+                    }
                 }
             },
             "fields": ["categoria", "investimentos", "mensagem"]
@@ -174,6 +174,35 @@ var cloudant = {
             "sort":[
                 {"taxaAdm":"asc"}
             ]
+        };
+
+        dbFundos.find(query, function (err, data) {
+
+            if (err) {
+                res.status(501).json(err);
+            } else {
+                res.status(200).json(data);
+            }
+
+        });
+
+    },
+
+    getValorMinimo : function (req,res) {
+      
+        var query = {
+            "selector": {
+                "aplicacaoMinima": {
+                    "$gt": 0
+                }
+            },
+            "limit": 1,
+            "fields": [
+                "aplicacaoMinima"
+            ],
+            "sort": [{
+                "aplicacaoMinima": "asc"
+            }]
         };
 
         dbFundos.find(query, function (err, data) {

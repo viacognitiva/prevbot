@@ -66,6 +66,10 @@ app.get('/api/getfundos/:info', function (req, res) {
     cloudant.getFundo(req,res);
 });
 
+app.get('/api/getvalmin', function (req, res) {
+    cloudant.getValorMinimo(req, res);
+});
+
 function processChatMessage(req, res) {
 
     chatbot.sendMessage(req, function (err, data) {
