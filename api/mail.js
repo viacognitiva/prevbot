@@ -16,15 +16,31 @@ var smtpTransport = nodemailer.createTransport({
     }
 });
 
-smtpTransport.use('compile', inlineCss())
+smtpTransport.use('compile', inlineCss());
 
 var correio = {
 
     enviaCorreio: function (req, res, next) {
 
-        var enviarP = '';
         var css = '';
         var txtHtml = '';        
+
+
+        txtHtml ='<b>E-mail:</b><br>' + req.body.email + '<br>' +
+            '<br><b>Nome:</b><br>' + req.body.nome + '<br>' +
+            '<br><b>Aporte:</b><br>' + parseFloat(req.body.valorInvest).toLocaleString('pt-br',{style:'currency',currency: 'BRL'}) + '<br>' +
+            '<br><b>Questionário:</b>';
+
+        for(var x=0; x < req.body.questoes.length; x++){
+            txtHtml+= '<br>' + req.body.questoes[x].pergunta + '<br>' + req.body.questoes[x].resposta + '<br>';
+        }
+
+        txtHtml+= '<br><b>Perfil: </b>' + req.body.categoria + '<br>';
+        txtHtml+= '<br><b>Fundos: </b><br>';
+
+        for(var y=0; y < req.body.fundos.length; y++){
+            txtHtml+= req.body.fundos[y].seguradora + ': ' + req.body.fundos[y].nome + '<br>';
+        }
 
         var mailOptions = {
             from: 'PREVBOT <' + usuario + '>',
@@ -32,11 +48,8 @@ var correio = {
             to: process.env.MAIL_SENDTO,
             subject: assunto,
             text: '',
-            html: css + '<b>E-mail: </b>' + req.body.email + '<br><b>Nome: </b>' + req.body.nome +
-            '<br><b>Aporte: </b>' + parseFloat(req.body.valorInvest).toLocaleString('pt-br',{style:'currency',currency: 'BRL'}) + 
-            '<br><b>Perfil: </b>' + req.body.categoria + 
-            '<br><b>Fundos: </b>' + req.body.fundos
-        }
+            html: css + txtHtml
+        };
 
         smtpTransport.sendMail(mailOptions, function (error, response) {
             if (error) {
