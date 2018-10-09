@@ -38,11 +38,11 @@
         var valorInvest = 0;
         var questText = [];
         var ctrlValor = false;
+        var valMinimo = 0;
         
         var ctrlPerguntas = true;
         var qtdPerguntas = 0;
-        var idPerguntas = 0;
-        
+        var idPerguntas = 0;        
         
         userMessage();
         showSound();
@@ -50,9 +50,12 @@
         inicio();
 
         function inicio(){
+
             if (!$rootScope.dados) {
                 $location.path('/user');
                 return false;
+            } else {
+                iniciaVar()
             }
         }
 
@@ -384,15 +387,16 @@
 
         }
 
-        async function iniciaQuestionario(txtPre) {
+        function iniciaQuestionario(txtPre) {            
 
-            var valor = parseFloat(await chatService.getValMinimo());
-
-            if (valorInvest < valor) {
+            if (valorInvest < valMinimo) {
 
                 ctrlValor = true;
                 displayMessage('Ops, o valor de aporte não pode ser inferior a ' + 
-                parseFloat(valor).toLocaleString('pt-br',{style: 'currency', currency: 'BRL'}) +
+                parseFloat(valMinimo).toLocaleString('pt-br', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }) +
                 '. Sugira outro valor, por favor:', watson);
                 var chat = document.getElementById('chat_box');
                 chat.scrollTop = chat.scrollHeight;
@@ -404,13 +408,12 @@
                 if(txtPre != '' && txtPre != undefined){
                     displayMessage(txtPre, watson);
                 }
-
-                questoes = await chatService.getQuestionario();
+                
                 qtdPerguntas = questoes.data.rows[0].doc.perguntas.length;
                 ctrlPerguntas = true;
                 idPerguntas = 0;
                 vm.peso = 0;
-                questoes = [];
+                questText = [];
 
                 angular.forEach(questoes.data.rows[0].doc.perguntas, function(qts){
                     questText.push({'id': qts.id, 'pergunta': qts.pergunta});
@@ -622,6 +625,12 @@
             });
 
         }
+
+        async function iniciaVar(){
+            questoes = await chatService.getQuestionario();
+            valMinimo = parseFloat(await chatService.getValMinimo());
+        }
+
     }
 
 })();

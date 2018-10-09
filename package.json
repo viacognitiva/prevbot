@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "@cloudant/cloudant": "^2.3.0",
-    "angular-async-await": "^1.1.2",
     "body-parser": "^1.18.3",
     "dotenv": "*",
     "dotenv-safe": "^4.0.4",
