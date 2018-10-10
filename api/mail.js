@@ -26,20 +26,20 @@ var correio = {
         var txtHtml = '';        
 
 
-        txtHtml ='<b>E-mail:</b><br>' + req.body.email + '<br>' +
+        txtHtml = '<b>E-mail:</b><br>' + req.body.email + '<br>' +
             '<br><b>Nome:</b><br>' + req.body.nome + '<br>' +
             '<br><b>Aporte:</b><br>' + parseFloat(req.body.valorInvest).toLocaleString('pt-br',{style:'currency',currency: 'BRL'}) + '<br>' +
             '<br><b>Questionário:</b>';
 
-        for(var x=0; x < req.body.questoes.length; x++){
+        for(var x=0; x<req.body.questoes.length; x++){
             txtHtml+= '<br>' + req.body.questoes[x].pergunta + '<br>' + req.body.questoes[x].resposta + '<br>';
         }
 
-        txtHtml+= '<br><b>Perfil: </b>' + req.body.categoria + '<br>';
-        txtHtml+= '<br><b>Fundos: </b><br>';
+        txtHtml += '<br><b>Perfil: </b>' + req.body.categoria + '<br>';
+        txtHtml += '<br><b>Fundos: </b><br>';
 
-        for(var y=0; y < req.body.fundos.length; y++){
-            txtHtml+= req.body.fundos[y].seguradora + ': ' + req.body.fundos[y].nome + '<br>';
+        for(var y=0; y<req.body.fundos.length; y++){
+            txtHtml += req.body.fundos[y].seguradora + ': ' + req.body.fundos[y].nome + '<br>';
         }
 
         var mailOptions = {
@@ -58,7 +58,7 @@ var correio = {
                 res.status(200).send('Message sent: ' + JSON.stringify(response));
             }
         });
-    },
+    }
 
 };
 
