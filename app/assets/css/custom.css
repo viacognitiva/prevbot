@@ -17,6 +17,18 @@ body{
 a{
     color: #2b45d0
 }
+.imgOtto img{
+    height:110px;
+    margin-top:10px
+}
+.imgOttoTopo{
+    float: right;
+}
+.imgOttoTopo img{
+    height: 58px;
+    margin-top: -8px;
+
+}
 .fundo{
     background:rgba(228,228,228,0.8);
     height:100%
@@ -79,7 +91,7 @@ width:100%;
 .textoInicio{
     color:#fff;
     height:100%;
-    padding:40px
+    padding:0 40px
 }
 .textoInicio .titulo{
     font-size:48px;
@@ -90,7 +102,7 @@ width:100%;
 .textoInicio .descricao{
     font-size:22px;
     width:100%;
-    margin-bottom:40px;
+    margin-bottom:110px;
 }
 .textoInicio p {
     font-size: 32px;
@@ -107,12 +119,12 @@ ul.lista2{font-size: 17px;}
 .direita a:hover, .direita a:focus, .direita a:active{
     color: #37847a;
 }
-.butInicio{
-    text-align:center;
-    width:100%;
+.butInicio, .butInicioSaudacao{
+    text-align:right;
     margin-top:100px;
+    padding-right: 166px;
 }
-.butInicio .btn, #corpo .btn{
+.butInicio .btn, #corpo .btn, .butInicioSaudacao .btn{
     font-weight:bold
 }
 .btn{
@@ -232,6 +244,20 @@ ul.lista2{font-size: 17px;}
     border-color:transparent;
     transform: scale(1.05);
   }
+  .butInicioSaudacao .btn-primary {
+      background-color: #ffffff;
+      border-color: #ffffff;
+      color:#333f50;
+    }
+  .butInicioSaudacao .btn-primary.focus,.butInicioSaudacao .btn-primary:focus,.butInicioSaudacao .btn-primary:active:hover,.butInicioSaudacao .btn-primary:active:focus{
+      background-color: #ffffff;
+      border-color: transparent;
+    }
+  .butInicioSaudacao.btn-primary:hover,.butInicioSaudacao .btn-primary:active,.butInicioSaudacao .btn-primary.hover{
+      background-color: #ffffff;
+      border-color:transparent;
+      transform: scale(1.05);
+    }
   .box-footer{
     background-color: #fff;
     text-align:center;
@@ -427,7 +453,7 @@ ul.lista2{font-size: 17px;}
   }
     @media screen and (max-height: 680px) {
         .textoInicio {
-            padding: 30px 40px;
+            padding: 0px 40px;
         }
     }
 }
