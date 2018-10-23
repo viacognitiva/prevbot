@@ -418,6 +418,12 @@ ul.lista2{font-size: 17px;}
     .butInicio{
         margin-top:50px
     }
+    .textoInicio .descricao{
+        margin-bottom:50px;
+    }
+     .butInicioSaudacao{
+        padding-right: 110px;
+    }
     .direct-chat-img{
         width:58px
     }
