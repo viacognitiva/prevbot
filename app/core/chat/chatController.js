@@ -299,10 +299,10 @@
                 userBox.className = 'direct-chat-name pull-left';
                 div0.className = 'direct-chat-msg right';
                 div.className = 'direct-chat-text';
-                /*var img = document.createElement('img');
+                var img = document.createElement('img');
                 img.className = 'direct-chat-img-user';
                 img.src = 'assets/images/img_usuario.png';
-                div0.appendChild(img); */
+                div0.appendChild(img);
                 div0.appendChild(div);
 
                 userBox.appendChild(user);
@@ -320,9 +320,9 @@
 
                 var user = document.createTextNode(' ');
                 var userBox = document.createElement('span');
-                /* user = document.createElement('img');
+                user = document.createElement('img');
                 user.className = 'direct-chat-img';
-                user.src = 'assets/images/chat_cabeca.png'; */
+                user.src = 'assets/images/ImgBot.png';
                 div.className = 'direct-chat-text bot';
 
                 userBox.appendChild(user);

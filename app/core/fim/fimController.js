@@ -12,7 +12,7 @@
         vm.restartChat  = restartChat;
         vm.restartUser  = restartUser;
 
-        vm.messageExit = $rootScope.nome + ', o PREVBOT agradece a sua visita e fica à sua disposição.';
+        vm.messageExit = $rootScope.nome + ', o OTTO agradece a sua visita e fica à sua disposição.';
 
         function restartChat() {
 

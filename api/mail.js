@@ -43,8 +43,8 @@ var correio = {
         }
 
         var mailOptions = {
-            from: 'PREVBOT <' + usuario + '>',
-            sender: 'PREVBOT <' + usuario + '>',
+            from: 'OTTO <' + usuario + '>',
+            sender: 'OTTO <' + usuario + '>',
             to: process.env.MAIL_SENDTO,
             subject: assunto,
             text: '',

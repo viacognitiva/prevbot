@@ -23,7 +23,7 @@ a{
 }
   p{
     margin: 0 auto 20px;
-    width:60%;
+    width:58%;
     clear: both;
   }
 h1 {
@@ -33,7 +33,7 @@ h1 {
   color:#fff
 }
 label {
-  color: #76481a;
+  color: #333f50;
   font-size: 17px;
   margin-bottom:12px
 }
@@ -85,6 +85,7 @@ width:100%;
     font-size:48px;
     font-weight:bold;
     width:100%;
+    font-style: italic;
 }
 .textoInicio .descricao{
     font-size:22px;
@@ -136,13 +137,14 @@ ul.lista2{font-size: 17px;}
 }
 
 .box-header{
-  background: linear-gradient(45deg,#76481a,#c37b32);
+  background: linear-gradient(45deg,#333f50,#0d274c);
 }
   .box-header .box-title{
     color:#fff;
     margin-top: 10px;
     font-size:22px;
-    font-weight:bold
+    font-weight:bold;
+    font-style:italic
   }
   .box{
     border-radius: 0;
@@ -170,14 +172,16 @@ ul.lista2{font-size: 17px;}
   }
   .direct-chat-img{
     border-radius: 0;
-    width: 45px;
+    width: 48px;
     height: auto;
+    margin:0 5px
   }
   .direct-chat-img-user{
     border-radius: 33px;
-    width: 67px;
+    width: 48px;
     height: auto;
     float: right;
+    margin:0 5px
   }
 .direct-chat-text{
   background: #f2f2f2;
@@ -189,14 +193,14 @@ ul.lista2{font-size: 17px;}
     background: none;
     border: 0;
     padding:0;
-    color:#76481a;
+    color:#333f50;
     font-size: 20px;
     margin: 0 65px;
   }
   .direct-chat-primary .right>.direct-chat-text{
-    margin: 10px 85px 0 85px;
+    margin: 10px 65px 0 65px;
     text-align: right;
-    color: #3c3c3c;
+    color: #0070c0;
   }
   .direct-chat-text:after, .direct-chat-text:before{
     border-right-color: transparent;
@@ -216,15 +220,15 @@ ul.lista2{font-size: 17px;}
     outline:0
   }
   .btn-primary {
-    background-color: #76481a;
-    border-color: #884e14;
+    background-color: #333f50;
+    border-color: #24354c;
   }
   .btn-primary.focus, .btn-primary:focus, .btn-primary:active:hover, .btn-primary:active:focus{
-    background-color: #76481a;
+    background-color: #333f50;
     border-color: transparent;
   }
   .btn-primary:hover, .btn-primary:active, .btn-primary.hover{
-    background-color: #76481a;
+    background-color: #333f50;
     border-color:transparent;
     transform: scale(1.05);
   }
@@ -241,7 +245,7 @@ ul.lista2{font-size: 17px;}
     position: relative;
   }
   .box-footer .input-group{
-    width: 85%;
+    width: 88%;
     margin: 25px auto;
   }
   .form-control{
@@ -275,7 +279,7 @@ ul.lista2{font-size: 17px;}
     overflow: auto;
     height:100%;
     background-color: transparent!important;
-    color: #76481a;
+    color: #333f50;
   }
   .avaliacao label{
     font-size:22px
