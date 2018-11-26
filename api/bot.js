@@ -1,10 +1,11 @@
 require('dotenv-safe').load();
-var ConversationV1 = require('watson-developer-cloud/conversation/v1');
+var AssistantV1 = require('watson-developer-cloud/assistant/v1');
 
-var conversation = new ConversationV1({
+var assistant = new AssistantV1({
+    version: '2018-09-20',
     username: process.env.WATSON_USER,
     password: process.env.WATSON_PASSWORD,
-    version: '2018-09-20'
+    url: process.env.APIHOSTNAME
 });
 
 var chatbot = {
@@ -43,7 +44,7 @@ var chatbot = {
 
         }
 
-        conversation.message(payload, function(err, data) {
+        assistant.message(payload, function (err, data) {
 
             if (err) {
                 console.log("Error in sending message: ", err);

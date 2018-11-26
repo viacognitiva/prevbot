@@ -70,6 +70,10 @@ app.get('/api/getvalmin', function (req, res) {
     cloudant.getValorMinimo(req, res);
 });
 
+app.get('/api/getexp/:info', function (req, res) {
+    cloudant.getExpectativa(req, res);
+});
+
 function processChatMessage(req, res) {
 
     chatbot.sendMessage(req, function (err, data) {

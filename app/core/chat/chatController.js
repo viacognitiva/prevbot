@@ -4,9 +4,9 @@
     angular.module('app.chat', ['ngAnimate','ngSanitize','ui.bootstrap','app.chatService'])
         .controller('chatController', chatController);
 
-    chatController.$inject = ['$rootScope','$scope','$http','$location','$timeout','chatService'];
+    chatController.$inject = ['$rootScope', '$scope', '$http', '$location', '$filter', 'chatService'];
 
-    function chatController($rootScope, $scope, $http,$location, $timeout, chatService) {
+    function chatController($rootScope, $scope, $http, $location, $filter, chatService) {
 
         var vm                  = this;
         vm.controlaSom          = controlaSom;
@@ -17,15 +17,20 @@
         vm.processaQuestionario = processaQuestionario;
         vm.optionMessage        = optionMessage;
         vm.gravaQuestionario    = gravaQuestionario;
-
+        vm.processaSimulador    = processaSimulador;
+        vm.simuladorMessage     = simuladorMessage;
+        
         vm.imgSom = 'fa fa-volume-off';
         vm.ativaVoz = false;
         vm.showSom = false;
         vm.showLog = false;
+        vm.mostrarData = false;
         vm.abreFecha = {'animation-name': 'popup_open'};
         vm.isOpen = true;
         vm.peso = 0;
         vm.respQuest = '';
+        vm.dataNasc = '';
+        vm.ativaTexto = false;
         
         var params = {};
         var context = '';
@@ -39,10 +44,15 @@
         var questText = [];
         var ctrlValor = false;
         var valMinimo = 0;
+        var questoesSimulador = [];
+        var questaoSimuladorAtual = {};
+        var tipo = "BR-EMSsb-2015-"
         
         var ctrlPerguntas = true;
+        var ctrlSimulador = false;
         var qtdPerguntas = 0;
-        var idPerguntas = 0;        
+        var idPerguntas = 0;
+        var idSimulador = 0;        
         
         userMessage();
         showSound();
@@ -66,7 +76,7 @@
                 params.context = context;
             }
             
-            if (!ctrlPerguntas){
+            if (!ctrlPerguntas || message == 'finalizouAnalisePerfilS') {
                 params.intent = 'finalizouAnalisePerfil';
             }
 
@@ -80,6 +90,7 @@
                     params.intent = undefined;
 
                     if(response.status == 200){
+
                         if(response.data.error){
                             console.error('Server error for Conversation. Return status of: ', xhr.statusText);
                             displayMessage("Ops, acho que meu cérebro está offline.", watson);
@@ -94,10 +105,11 @@
                             if ($rootScope.dados) {
 
                                 $rootScope.dados.chatId = idchat;
-
+                                
                                 $http.post('/api/user', $rootScope.dados).catch(function (error) {
                                     console.log('Error: ' + JSON.stringify(error));
                                 });
+
 
                             }
 
@@ -110,7 +122,12 @@
 
                             if (!message == ''){
 
-                                if(response.data.output.nodes_visited[0] === 'Anything else') {
+                                if (message == 'abc123') {
+
+                                    processaSimulador();
+                                    return false;
+
+                                } else if (response.data.output.nodes_visited[0] === 'Anything else') {
 
                                     var logData = {
                                         idchat: idchat,
@@ -127,7 +144,7 @@
                                     $location.path('/fim');
                                     return false;
 
-                                } else if(response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
+                                } else if (response.data.output.nodes_visited[0] === 'node_10_1535121665869'){
 
                                     chatService.setLog(response);
                                     $location.path('/aval');
@@ -151,6 +168,12 @@
                                     }
 
                                     iniciaQuestionario(txtTmp);
+                                    return false;
+
+                                } else if (response.data.output.nodes_visited[0] === 'node_4_1541783579797') {
+
+                                    chatService.setLog(response);
+                                    processaSimulador();
                                     return false;
 
                                 } else {
@@ -226,6 +249,39 @@
                         }catch(error){
                             userMessage(text);
                         }
+                    } else if (ctrlSimulador) {
+
+                        if (vm.mostrarData) {
+
+                            vm.mostrarData = false;
+                            var tmpvalor = $filter('date')(new Date(vm.dataNasc), "dd/MM/yyyy");
+                            gravaQuestionario('simulador', vm.respQuest, tmpvalor, '0');
+                            questoesSimulador[idSimulador - 1].resposta = tmpvalor;
+
+                        } else if (questaoSimuladorAtual.tipo == 'numero') {
+
+                            try {
+                                
+                                text = text.replace(',', '.');
+                                var tmpvalor = parseFloat(text.match(/[+-]?\d+(?:\.\d+)?/g).map(Number)).toFixed(2);
+                                gravaQuestionario('simulador', vm.respQuest, tmpvalor, '0');
+                                questoesSimulador[idSimulador - 1].resposta = tmpvalor;
+
+                            } catch (error) {
+                                displayMessage(questaoSimuladorAtual.msgErro, 'watson');
+                                message.value = '';
+                                var chat = document.getElementById('chat_box');
+                                chat.scrollTop = chat.scrollHeight;
+                                return;
+                            }
+
+                        }
+
+                        processaSimulador();
+
+                        var chat = document.getElementById('chat_box');
+                        chat.scrollTop = chat.scrollHeight;
+
                     } else {
                         userMessage(text);
                     }
@@ -241,14 +297,26 @@
 
         function sendMessage() {
 
-            if ($("#chatInput").val() == '') {
-                $("#chatInput").addClass("erro");
-                $("#chatInput").removeClass("ok");
-                return;
-            }
+            if (vm.mostrarData) {
+                if (vm.dataNasc == '') {
+                    $("#dateInput").addClass("erro");
+                    $("#dateInput").removeClass("ok");
+                    return;
+                }else{
+                    $("#dateInput").addClass("ok");
+                    $("#dateInput").removeClass("erro");
+                }
+            } else {
+                if ($("#chatInput").val() == '') {
+                    $("#chatInput").addClass("erro");
+                    $("#chatInput").removeClass("ok");
+                    return;
+                } else {
+                    $("#chatInput").addClass("ok");
+                    $("#chatInput").removeClass("erro");
+                }
+            }            
 
-            $("#chatInput").addClass("ok");
-            $("#chatInput").removeClass("erro");
             var message = document.getElementById('chatInput');
             var texto = message.value;
             texto = texto.replace(/(\r\n|\n|\r)/gm, "");
@@ -275,6 +343,47 @@
                     userMessage(texto);
 
                 }
+
+            } else if (ctrlSimulador){                
+
+                if (vm.mostrarData) {
+
+                    vm.mostrarData = false;
+                    var tmpvalor = $filter('date')(new Date(vm.dataNasc), "dd/MM/yyyy");
+
+                    displayMessage(tmpvalor, 'user');
+                    gravaQuestionario('simulador', vm.respQuest, texto, '0');
+                    questoesSimulador[idSimulador - 1].resposta = tmpvalor;
+
+                } else if (questaoSimuladorAtual.tipo == 'numero'){
+
+                    try{
+
+                        texto = texto.replace(',','.');
+                        var tmpvalor = parseFloat(texto.match(/[+-]?\d+(?:\.\d+)?/g).map(Number)).toFixed(2);
+
+                        displayMessage(texto, 'user');
+
+                        gravaQuestionario('simulador', vm.respQuest, tmpvalor, '0');
+                        questoesSimulador[idSimulador - 1].resposta = tmpvalor;
+
+                    }catch(error){
+                        displayMessage(texto, 'user');
+                        displayMessage(questaoSimuladorAtual.msgErro, 'watson');
+                        message.value = '';
+                        var chat = document.getElementById('chat_box');
+                        chat.scrollTop = chat.scrollHeight;
+                        return false;
+                    }                    
+
+                }                
+
+                processaSimulador();
+
+                message.value = '';
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+
 
             } else {
                 
@@ -427,12 +536,15 @@
 
         function processaQuestionario(peso) {
             
-            if(parseInt(peso) > 0 ){
+            vm.ativaTexto = false;
+
+            if(parseInt(peso) > 0){
                 vm.peso = vm.peso + parseInt(peso);
             }
 
             if (idPerguntas < qtdPerguntas){
-                montaOpcao(questoes.data.rows[0].doc.perguntas[idPerguntas]);                        
+                vm.ativaTexto = true;
+                montaOpcao(questoes.data.rows[0].doc.perguntas[idPerguntas],'questionario');                        
             }else{
                 iniciaCategoria(vm.peso);
             }
@@ -496,17 +608,95 @@
 
         }
 
-        function montaOpcao(pergunta) {
+        async function processaSimulador(){
 
-            idPerguntas = idPerguntas + 1;
+            vm.ativaTexto = false;
+
+            if (idSimulador < questoesSimulador.length){
+
+                questaoSimuladorAtual = questoesSimulador[idSimulador];
+                idSimulador = idSimulador + 1;
+                ctrlSimulador = true;
+
+                if (questaoSimuladorAtual.tipo == 'data') {
+
+                    vm.mostrarData = true;
+                    displayMessage(questaoSimuladorAtual.pergunta, watson);
+                    var chat = document.getElementById('chat_box');
+                    chat.scrollTop = chat.scrollHeight;
+
+                } else if (questaoSimuladorAtual.tipo == 'opcao') {
+
+                    vm.ativaTexto = true;
+                    montaOpcao(questaoSimuladorAtual, 'simulador');
+
+                } else if (questaoSimuladorAtual.tipo == 'numero') {
+
+                    if (questaoSimuladorAtual.pergunta == '-') {
+
+                        if (questoesSimulador[idSimulador - 2].resposta[0].substring(0,1) == 'R') {
+                            displayMessage(questoesSimulador[idSimulador - 2].subpergunta[0], watson);
+                        } else {
+                            displayMessage(questoesSimulador[idSimulador - 2].subpergunta[1], watson);
+                        }
+
+                    } else {
+                        displayMessage(questaoSimuladorAtual.pergunta, watson);
+                    }
+
+                    ctrlSimulador = true;
+                    var chat = document.getElementById('chat_box');
+                    chat.scrollTop = chat.scrollHeight;
+
+                }    
+
+            } else {
+
+
+                if (questoesSimulador[5].resposta == 'Contribuição por mês') {
+
+                    var resposta = await chatService.getCalculoContribMes(questoesSimulador, tipo + questoesSimulador[1].resposta.substring(0, 1).toLowerCase());
+
+                    var quest = 'Renda vitalícia estimada de ' + resposta.VP + ' a partir de ' +
+                        Math.round(questoesSimulador[2].resposta) + ' anos de idade.<br>' +
+                        'Valor acumulado total estimado: ' + resposta.VF + '.'
+
+                }else{
+                    var quest  = 'Em construção...';
+                }                
+
+                displayMessage(quest, watson);
+
+                idSimulador = 0;
+                ctrlSimulador = false;
+                userMessage('finalizouAnalisePerfilS');
+                var chat = document.getElementById('chat_box');
+                chat.scrollTop = chat.scrollHeight;
+
+            }
+
+        }
+
+        function montaOpcao(pergunta,tipo) {
+
+            if (tipo !== 'simulador'){
+                idPerguntas = idPerguntas + 1;
+            }
+            
             ctrlPerguntas = true;
 
             var quest = '<div class="opcao"><p>' + pergunta.pergunta + '</p><ul>';
-            text = pergunta.opcoes;
 
-            for (var txt in text) {
-                quest += '<li><a href="" onclick="contQuestionario(\'' + text[txt].opcao + '|' + text[txt].peso + '\');return false;">' + text[txt].opcao + '</a></li>'
-            }
+            if(tipo == 'simulador'){
+                for (var txt in pergunta.opcoes) {
+                    quest += '<li><a href="" onclick="contSimulador(\'' + pergunta.opcoes[txt] + '\');return false;">' + pergunta.opcoes[txt] + '</a></li>'
+                }
+            } else {
+                text = pergunta.opcoes;
+                for (var txt in text) {
+                    quest += '<li><a href="" onclick="contQuestionario(\'' + text[txt].opcao + '|' + text[txt].peso + '\');return false;">' + text[txt].opcao + '</a></li>'
+                }
+            }            
 
             quest += '</ul><div>';
             displayMessage(quest, watson);
@@ -518,7 +708,7 @@
 
         function optionMessage(texto) {
 
-            questText[idPerguntas-1].resposta = texto;
+            questText[idPerguntas - 1].resposta = texto;
             displayMessage(texto, 'user');
 
             if (!ctrlPerguntas) {
@@ -530,8 +720,17 @@
 
         }
 
-        function gravaQuestionario(resposta, mensagem, peso) {
-            chatService.setQuestionario(resposta, mensagem, peso)                
+        function simuladorMessage(texto) {
+
+            questoesSimulador[idSimulador - 1].resposta = texto;
+            displayMessage(texto, 'user');
+            var chat = document.getElementById('chat_box');
+            chat.scrollTop = chat.scrollHeight;
+
+        }
+
+        function gravaQuestionario(tipo, resposta, mensagem, peso) {
+            chatService.setQuestionario(tipo, resposta, mensagem, peso)                
         }
 
         function addZero(i) {
@@ -587,8 +786,7 @@
 
         function atualizaFundos() {
 
-            var showChar = 0; // How many characters are shown by default
-            //var ellipsestext = "...";
+            var showChar = 0;
             var moretext = "Ver mais >";
             var lesstext = "Ver menos";
 
@@ -608,7 +806,7 @@
                 }
 
             });
-            
+
             $(".morelink").click(function () {
 
                 if ($(this).hasClass("less")) {
@@ -628,7 +826,8 @@
 
         async function iniciaVar(){
             questoes = await chatService.getQuestionario();
-            valMinimo = parseFloat(await chatService.getValMinimo());
+            valMinimo = parseFloat(await chatService.getValMinimo());        
+            questoesSimulador = await chatService.getQuestSimulador();
         }
 
     }

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app.user',['ngAnimate','ngSanitize','ui.bootstrap'])
+    angular.module('app.user', ['ngAnimate', 'ngSanitize', 'ngMaterial', 'ngMessages', 'ui.bootstrap'])
         .controller('userController', userController);
 
     userController.$inject = ['$rootScope','$scope','$location'];
@@ -10,6 +10,7 @@
 
         var vm = this;
         vm.logar = logar;
+        vm.dataNasc = new Date();
 
         function logar(){
 

@@ -15,20 +15,20 @@ const dbAval = cloudantDB.db.use(process.env.CLOUDANT_DBAVALIACAO);
 const dbQuestionario = cloudantDB.db.use(process.env.CLOUDANT_DBQUEST);
 const dbCategoria = cloudantDB.db.use(process.env.CLOUDANT_DBCATEG);
 const dbFundos = cloudantDB.db.use(process.env.CLOUDANT_DBFUNDOS);
+const dbExpec = cloudantDB.db.use(process.env.CLOUDANT_DBEXPECTATIVA);
 
 var cloudant = {
 
-    get : function(req, res) {
+    get : (req, res) => {
 
         var id = req.params.id;
-        console.log('id ='+id);
 
         db.get(id, function(err, data) {
             res.status(200).json(data);
         });
     },
 
-    insertChat : function (req, res) {
+    insertChat : (req, res) => {
 
         var dados = req.body;
         dados["dateText"] = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
@@ -43,7 +43,7 @@ var cloudant = {
         });
     },
 
-    insertOutros : function (req, res) {
+    insertOutros : (req, res) => {
 
         var dados = {
             idchat: req.body.idchat,
@@ -52,7 +52,7 @@ var cloudant = {
             data: new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
         }
 
-        dbOutros.insert(dados,function(err, body, header) {
+        dbOutros.insert(dados,(err, body, header) => {
 
             if (err) {
                 console.log('[dbOutros.insert] ', err.message);
@@ -62,7 +62,7 @@ var cloudant = {
         });
     },
 
-    insertUser : function (req, res) {
+    insertUser : (req, res) => {
 
         var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
@@ -70,7 +70,7 @@ var cloudant = {
             nome: req.body.nome,
             email: req.body.email,
             chatId:req.body.chatId,
-            data: dataNow },function(err, body, header) {
+            data: dataNow },(err, body, header) => {
 
                 if (err) {
                     return console.log('[dbUser.insert] ', err.message);
@@ -79,7 +79,7 @@ var cloudant = {
             });
     },
 
-    insertAval : function (req, res) {
+    insertAval : (req, res) => {
 
         var dataNow = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
 
@@ -91,7 +91,7 @@ var cloudant = {
             interface: req.body.interface,
             recomenda: req.body.recomenda,
             comentario: req.body.comentario,
-            data: dataNow },function(err, body, header) {
+            data: dataNow },(err, body, header) => {
 
             if (err) {
                 return console.log('[dbAval.insert] ', err.message);
@@ -101,9 +101,9 @@ var cloudant = {
 
     },
 
-    getQuestionario : function (req, res) {
+    getQuestionario : (req, res) => {
         
-        dbQuestionario.list({include_docs: true}, function (err, data) {
+        dbQuestionario.list({include_docs: true}, (err, data) => {
             if (err) {
                 return res.status(500).json(err);
             }
@@ -111,7 +111,7 @@ var cloudant = {
         });
     },
 
-    getCategoria : function (req, res) {
+    getCategoria : (req, res) => {
 
         var query = {
             "selector": {
@@ -125,7 +125,7 @@ var cloudant = {
             "fields": ["categoria", "investimentos", "mensagem"]
         };
 
-        dbCategoria.find(query, function (err, data) {
+        dbCategoria.find(query, (err, data) => {
 
             if (err) {
                 res.status(501).json(err);
@@ -137,7 +137,7 @@ var cloudant = {
         
     },
 
-    getFundo : function (req, res) {
+    getFundo : (req, res) => {
 
         var riscos = [];
         var valores = JSON.parse(req.params.info);
@@ -176,7 +176,7 @@ var cloudant = {
             ]
         };
 
-        dbFundos.find(query, function (err, data) {
+        dbFundos.find(query, (err, data) => {
 
             if (err) {
                 res.status(501).json(err);
@@ -188,7 +188,7 @@ var cloudant = {
 
     },
 
-    getValorMinimo : function (req,res) {
+    getValorMinimo : (req,res) => {
       
         var query = {
             "selector": {
@@ -205,7 +205,7 @@ var cloudant = {
             }]
         };
 
-        dbFundos.find(query, function (err, data) {
+        dbFundos.find(query, (err, data) => {
 
             if (err) {
                 res.status(501).json(err);
@@ -215,6 +215,46 @@ var cloudant = {
 
         });
 
+    },
+
+    getExpectativa : (req, res) => {
+
+        var info = JSON.parse(req.params.info);
+
+        var query = {
+            "selector": {
+                "$and": [
+                    {
+                        "map.tipo": {
+                            "$eq": info.tipo
+                        }
+                    },
+                    {
+                        "map.idade": {
+                            "$eq": parseInt(info.idade)
+                        }
+                    }
+                ]
+            }
+        };
+
+        dbExpec.index({
+            type: 'json',
+            index: {
+                fields: ['tipo','idade']
+            }
+        });
+        
+        dbExpec.find(query, (err, data) => {
+
+            if (err) {
+                res.status(501).json(err);
+            } else {
+                res.status(200).json(data.docs[0].map);
+            }
+
+        });
+        
     }
 
 };

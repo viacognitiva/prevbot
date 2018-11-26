@@ -8,6 +8,7 @@
         'app.chat',
         'app.saudacao',
         'app.fim',
-        'app.directives.divSize'
+        'app.directives.divSize',
+        'app.directives.campoData'
     ]);
 })();

@@ -6,16 +6,16 @@
                 <h3 class="box-title">OTTO</h3><div class="imgOttoTopo"><img src="/assets/images/Otto.png"></div>
             </div><!-- /.box-header -->
             <div id="chat_box" class="content" div-size ng-bind-html="CC.chatbox">
-
             </div>
             <div class="box-footer">
                 <div class="col-md-2 col-xs-1"></div>
                 <div class="col-md-8 col-xs-10">
-                    <div class="input-group ng-hide" ng-hide="mostrarEnviar">
+                    <div class="input-group ng-hide" ng-hide="CC.mostrarEnviar">
                         <input type="hidden" id="user" value="Anonimo" placeholder="Who are you?" />
-                        <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control" autofocus/>
+                        <input type="text" id="chatInput" ng-keypress="CC.newEvent($event);" class="form-control" ng-hide="CC.mostrarData" ng-disabled="CC.ativaTexto" autofocus="true"/>
+                        <md-datepicker id="dateInput" ng-model="CC.dataNasc" md-placeholder="Informe a data de Nascimento" ng-show="CC.mostrarData"></md-datepicker>
                         <span class="input-group-btn">
-                            <input type="button" id="send_btn" value="Enviar" ng-click="CC.sendMessage();" class="btn btn-primary btn-flat">
+                            <input type="button" id="send_btn" value="Enviar" ng-click="CC.sendMessage();" ng-disabled="CC.ativaTexto" class="btn btn-primary btn-flat">
                         </span>
                         <!--<div class="iconeFala"><a href="#" id="idPhone" class="btn btn-block"><i id="iconPhone" class="fa fa-microphone"></i></a></div>-->
                         <input type="hidden" id="idSoundSession" value="1" />
