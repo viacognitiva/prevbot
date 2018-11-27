@@ -3,9 +3,9 @@
     angular.module('app')
         .config(config);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider', '$mdDateLocaleProvider'];
+    config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider, $urlRouterProvider, $mdDateLocaleProvider) {
+    function config($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.when('', '/saudacao');
         $stateProvider
@@ -41,15 +41,6 @@
                 controller: 'fimController',
                 controllerAs: 'FC'
             })
-
-            $mdDateLocaleProvider.formatDate = (date) => {
-                 return date ? moment(date).format('DD/MM/YYYY') : '';
-            }
-
-            $mdDateLocaleProvider.parseDate = (dateString) => {
-                var m = moment(dateString, 'DD/MM/YYYY', true);
-                return m.isValid() ? m.toDate() : new Date(NaN);
-            }
 
         };
 
